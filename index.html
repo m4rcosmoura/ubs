@@ -38,6 +38,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .header-logo{width:28px;height:28px;background:var(--green-400);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .header-logo svg{width:14px;height:14px}
 .header-title{font-size:14px;font-weight:500;color:white}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--green-400);display:inline-block;margin-left:6px;transition:background .3s}.sync-dot.syncing{background:var(--amber-400);animation:pulse 1s infinite}.sync-dot.error{background:var(--red-400)}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .header-badge{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);font-size:11px;padding:3px 8px;border-radius:99px;font-family:var(--mono)}
 .header-dt{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,0.5)}
 
@@ -482,6 +483,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
           <div class="field"><label>Operador</label><select id="map-operator"><option value="">Selecionar...</option></select></div>
           <div class="field"><label>Data / hora</label><input type="text" id="map-dt-field" readonly></div>
         </div>
+
+      <div class="field" style="margin-bottom:0">
+        <label>Cultivar</label>
+        <select id="map-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select>
+      </div>
       </div>
       <div class="info-note">Colete a amostra por 6 segundos e pese em kg. O sistema converte para t/h automaticamente.</div>
       <div id="map-machines-container"></div>
@@ -545,6 +551,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
           <label>Entrada — vazão total</label>
           <div class="input-unit-wrap"><input type="number" id="posl-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="poslCalcAll()"><span class="input-unit">t/h</span></div>
         </div>
+
+      <div class="field" style="margin-bottom:0">
+        <label>Cultivar</label>
+        <select id="posl-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select>
+      </div>
       </div>
       <div class="info-note">Descarte: amostra de 6 segundos em kg → t/h. Semente boa: amostra fixa de 500g.</div>
       <div id="posl-mesas-container"></div>
@@ -614,6 +625,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             <div class="input-unit-wrap"><input type="number" id="esp-freq-hz" placeholder="0.0" min="0" step="0.1"><span class="input-unit">Hz</span></div>
           </div>
         </div>
+
+      <div class="field" style="margin-bottom:0">
+        <label>Cultivar</label>
+        <select id="esp-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select>
+      </div>
       </div>
       <div class="card">
         <div class="card-header"><div class="card-pill pill-teal">Descarte</div><div class="card-heading">Amostra de 6 segundos</div></div>
@@ -703,6 +719,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
           <label>Entrada — vazão total</label>
           <div class="input-unit-wrap"><input type="number" id="pad-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="padCalcAll()"><span class="input-unit">t/h</span></div>
         </div>
+
+      <div class="field" style="margin-bottom:0">
+        <label>Cultivar</label>
+        <select id="pad-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select>
+      </div>
       </div>
       <div class="info-note">Colete a amostra por 6 segundos e pese em kg. O sistema converte para t/h automaticamente.</div>
       <div id="pad-machines-container"></div>
@@ -766,6 +787,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
           <label>Entrada — vazão total</label>
           <div class="input-unit-wrap"><input type="number" id="fin-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="finCalcAll()"><span class="input-unit">t/h</span></div>
         </div>
+
+      <div class="field" style="margin-bottom:0">
+        <label>Cultivar</label>
+        <select id="fin-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select>
+      </div>
       </div>
       <div class="info-note">Descarte: amostra de 6 segundos em kg → t/h. Semente boa: 200 sementes. Copinho: pese as três frações (alto, meio, baixo) — ideal é parte alta ≥ parte baixa + 3%.</div>
       <div id="fin-mesas-container"></div>
@@ -826,6 +852,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
           <div class="field"><label>Data / hora</label><input type="text" id="moega-dt-field" readonly></div>
         </div>
 
+
+      <div class="field" style="margin-bottom:0">
+        <label>Cultivar</label>
+        <select id="moega-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select>
+      </div>
       </div>
       <div class="card">
         <div class="card-header"><div class="card-pill pill-blue">Amostra</div><div class="card-heading">200 sementes</div></div>
@@ -1020,7 +1051,7 @@ function doLogin(){
   const btn = document.getElementById('login-submit-btn');
   btn.textContent = 'Entrando...'; btn.disabled = true;
   const dest = cfg.role==='admin' ? 'indicadores' : 'home';
-  setTimeout(()=>{ btn.textContent='Entrar'; btn.disabled=false; navigate(dest); }, 300);
+  setTimeout(()=>{ btn.textContent='Entrar'; btn.disabled=false; navigate(dest); dbSyncAll(); }, 300);
 }
 function showLoginError(msg){ document.getElementById('login-error-text').textContent=msg; document.getElementById('login-error').classList.add('show'); }
 function loginShake(){ const c=document.querySelector('.login-card'); c.style.animation='shake .35s ease'; setTimeout(()=>c.style.animation='',400); }
@@ -1112,106 +1143,141 @@ function prefillEntrada(prefix, value){
 }
 
 // ══════════════════════════════════════════════
-// SHEETS API LAYER
+// SHEETS API LAYER — cache-first, sync in background
 // ══════════════════════════════════════════════
 const API_URL = 'https://script.google.com/macros/s/AKfycbxwPwZznVHuTxk819KYWXwSby7gq1rQURE8fXlCmNBp20DFPcAOmYeZ9xJ4vkSOCHETKA/exec';
+const CACHE_KEY = 'qtrack_db_cache_v1';
+const CACHE_TTL = 5 * 60 * 1000; // 5 min before background revalidation
 
-// In-memory cache: { MAP:[], POSL:[], ... }
+// In-memory DB populated from localStorage on boot
 const DB = { MAP:[], POSL:[], ESP:[], PAD:[], FIN:[], MOEGA:[] };
-let dbLoaded = {}; // tracks which sheets are loaded this session
+let dbSyncedAt = {}; // sheetName → timestamp of last successful sync
+let dbSyncing  = {}; // sheetName → true while in-flight
 
+// ── Persist / restore cache ────────────────────────────
+function cacheWrite(){
+  try{
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ db:DB, syncedAt:dbSyncedAt, ts:Date.now() }));
+  }catch(e){}
+}
+function cacheRead(){
+  try{
+    const raw=localStorage.getItem(CACHE_KEY);
+    if(!raw) return false;
+    const p=JSON.parse(raw);
+    if(!p.db) return false;
+    Object.keys(DB).forEach(s=>{ if(p.db[s]) DB[s]=p.db[s]; });
+    if(p.syncedAt) Object.assign(dbSyncedAt, p.syncedAt);
+    return true;
+  }catch(e){ return false; }
+}
+
+// ── Raw HTTP ───────────────────────────────────────────
 async function apiPost(action, sheetName, payload){
-  const body = { action, sheet: sheetName, ...payload };
-  const r = await fetch(API_URL, {
-    method:'POST',
-    body: JSON.stringify(body),
-  });
-  const json = await r.json();
-  if(!json.ok) throw new Error(json.error || 'API error');
-  return json;
+  const r = await fetch(API_URL,{ method:'POST', body:JSON.stringify({action,sheet:sheetName,...payload}) });
+  const j = await r.json();
+  if(!j.ok) throw new Error(j.error||'API error');
+  return j;
 }
-
 async function apiGet(params){
-  const url = new URL(API_URL);
-  Object.entries(params).forEach(([k,v])=>{ if(v!=null) url.searchParams.set(k,v); });
-  const r = await fetch(url.toString());
-  const json = await r.json();
-  if(!json.ok) throw new Error(json.error || 'API error');
-  return json;
+  const url=new URL(API_URL);
+  Object.entries(params).forEach(([k,v])=>{ if(v!=null) url.searchParams.set(k,String(v)); });
+  const r=await fetch(url.toString());
+  const j=await r.json();
+  if(!j.ok) throw new Error(j.error||'API error');
+  return j;
 }
 
-// Save one record to Sheets + in-memory cache
+// ── Row normaliser ─────────────────────────────────────
+function normaliseRow(r){
+  ['mesas','machines'].forEach(f=>{ if(typeof r[f]==='string'){ try{ r[f]=JSON.parse(r[f]); }catch(_){} } });
+  ['id','entTH','supTH','supPct','infTH','infPct','saidaTH','descTH','pctDesc',
+   'graobomSem','graobomPct','graoruin200','graoruinPct','freqHz',
+   'totalDescTH','totalSem','hiloQtd','hiloPct'].forEach(f=>{
+    if(r[f]!==null&&r[f]!==''&&r[f]!==undefined) r[f]=parseFloat(r[f])||r[f];
+  });
+  return r;
+}
+
+// ── Insert: optimistic local + async remote ────────────
 async function dbInsert(sheetName, record){
-  DB[sheetName] = DB[sheetName] || [];
+  DB[sheetName]=DB[sheetName]||[];
   DB[sheetName].unshift(record);
+  cacheWrite();
   await apiPost('insert', sheetName, { record });
 }
 
-// Load records for a sheet (filtered by unit). Uses cache if already loaded.
-async function dbLoad(sheetName, forceReload){
-  if(dbLoaded[sheetName] && !forceReload) return DB[sheetName]||[];
-  const unit = isAdmin() ? '' : getUnit();
-  const res = await apiGet({ action:'fetch', sheet:sheetName, unidade:unit||undefined });
-  const rows = (res.rows||[]).map(r=>{
-    // parse JSON fields
-    ['mesas','machines'].forEach(f=>{ if(typeof r[f]==='string'){ try{ r[f]=JSON.parse(r[f]); }catch(_){} } });
-    // numeric fields
-    ['id','entTH','supTH','supPct','infTH','infPct','saidaTH','descTH','pctDesc',
-     'graobomSem','graobomPct','graoruin200','graoruinPct','freqHz',
-     'totalDescTH','totalSem','hiloQtd','hiloPct'].forEach(f=>{
-      if(r[f]!==null&&r[f]!=='') r[f]=parseFloat(r[f])||r[f];
-    });
-    return r;
-  });
-  DB[sheetName] = rows.sort((a,b)=>b.id-a.id); // newest first
-  dbLoaded[sheetName] = true;
-  return DB[sheetName];
+// ── Incremental sync for one sheet ────────────────────
+async function dbSync(sheetName){
+  if(dbSyncing[sheetName]) return;
+  dbSyncing[sheetName]=true;
+  try{
+    const unit    = isAdmin()?'':getUnit();
+    const existing= DB[sheetName]||[];
+    const lastId  = existing.reduce((max,r)=>Math.max(max,Number(r.id)||0),0);
+    const params  = { action:'fetch', sheet:sheetName };
+    if(unit)   params.unidade=unit;
+    if(lastId) params.since=lastId;
+    const res=await apiGet(params);
+    const newRows=(res.rows||[]).map(normaliseRow);
+    if(newRows.length){
+      const newIds=new Set(newRows.map(r=>r.id));
+      DB[sheetName]=[...newRows,...existing.filter(r=>!newIds.has(r.id))].sort((a,b)=>b.id-a.id);
+    }
+    dbSyncedAt[sheetName]=Date.now();
+    cacheWrite();
+  }catch(e){ console.warn('Sync failed:',sheetName,e.message); }
+  finally{ dbSyncing[sheetName]=false; }
 }
 
-// Load all sheets at once (used by registros + indicadores)
-async function dbLoadAll(forceReload){
-  const unit = isAdmin() ? '' : getUnit();
-  const res = await apiGet({ action:'fetchAll', unidade:unit||undefined });
-  const data = res.data || {};
-  Object.keys(data).forEach(sheetName=>{
-    const rows = (data[sheetName]||[]).map(r=>{
-      ['mesas','machines'].forEach(f=>{ if(typeof r[f]==='string'){ try{ r[f]=JSON.parse(r[f]); }catch(_){} } });
-      ['id','entTH','supTH','supPct','infTH','infPct','saidaTH','descTH','pctDesc',
-       'graobomSem','graobomPct','graoruin200','graoruinPct','freqHz',
-       'totalDescTH','totalSem','hiloQtd','hiloPct'].forEach(f=>{
-        if(r[f]!==null&&r[f]!=='') r[f]=parseFloat(r[f])||r[f];
-      });
-      return r;
-    });
-    DB[sheetName] = rows.sort((a,b)=>b.id-a.id);
-    dbLoaded[sheetName] = true;
-  });
+// Sync all sheets in parallel (background, non-blocking)
+function dbSyncAll(){ Object.keys(DB).forEach(s=>dbSync(s)); }
+
+// ── Public load: returns cache immediately, syncs if stale ──
+async function dbLoad(sheetName){
+  const stale=!dbSyncedAt[sheetName]||(Date.now()-dbSyncedAt[sheetName])>CACHE_TTL;
+  if(stale) dbSync(sheetName).then(()=>{
+    const el=document.getElementById(sheetName.toLowerCase()+'-rec-list');
+    if(el&&el.children.length){
+      const unit=getUnit();
+      renderLocalRecords(el.id,(DB[sheetName]||[]).filter(r=>!unit||r.unidade===unit),sheetName.toLowerCase());
+    }
+  }).catch(()=>{});
+  return DB[sheetName]||[];
 }
 
-// Get last saida from cache (replaces getLastSaida localStorage version)
+// Load all — returns cache, triggers background sync if stale
+async function dbLoadAll(){
+  const anyStale=Object.keys(DB).some(s=>!dbSyncedAt[s]||(Date.now()-dbSyncedAt[s])>CACHE_TTL);
+  if(anyStale) dbSyncAll();
+}
+
+// ── Last saida from cache ──────────────────────────────
 function dbGetLastSaida(type){
-  const sheetName = type.toUpperCase();
-  const unit = getUnit();
-  const recs = (DB[sheetName]||[]).filter(r=>!unit||r.unidade===unit);
-  const getSaida = {
-    MAP:  r=>r.saidaTH??null,
-    POSL: r=>(r.entTH!=null&&r.totalDescTH!=null)?Math.max(0,r.entTH-r.totalDescTH):null,
-    ESP:  r=>r.saidaTH??null,
-    PAD:  r=>r.saidaTH??null,
-  }[sheetName];
-  if(!getSaida) return null;
-  for(const r of recs){ const s=getSaida(r); if(s!==null&&s>0) return s; }
+  const s=type.toUpperCase(); const unit=getUnit();
+  const recs=(DB[s]||[]).filter(r=>!unit||r.unidade===unit);
+  const fn={MAP:r=>r.saidaTH??null,POSL:r=>(r.entTH!=null&&r.totalDescTH!=null)?Math.max(0,r.entTH-r.totalDescTH):null,ESP:r=>r.saidaTH??null,PAD:r=>r.saidaTH??null}[s];
+  if(!fn) return null;
+  for(const r of recs){ const v=fn(r); if(v!==null&&v>0) return v; }
   return null;
 }
 
-// Operators stored in localStorage only (not in Sheets)
-const OPS_KEY = 'qtrack_operators_v1';
+// ── Operators ─────────────────────────────────────────
+const OPS_KEY='qtrack_operators_v1';
 function loadOperators(){ try{ return JSON.parse(localStorage.getItem(OPS_KEY)||'{}'); }catch(e){ return {}; } }
-function saveOperators(ops){ localStorage.setItem(OPS_KEY, JSON.stringify(ops)); }
+function saveOperators(ops){ localStorage.setItem(OPS_KEY,JSON.stringify(ops)); }
+const ALL_CULTIVARES = ["CZ37B66I2X", "7535I2X (M 7535 I2X)", "CZ37B43IPRO", "O800 I2X", "NEO771 I2X", "CZ37B07I2X", "NEO801 CE", "76SC114 I2X (HO GARÇAS I2X)", "CZ48B18IPRO", "CZ37B39I2X", "CZ58B28IPRO", "761 I2X (NEO761 I2X)", "VA8108IPRO", "77HO111 I2X (Guapo)", "CZ48B08I2X", "81SC120 I2X (Coari)", "SOJA COMERCIAL", "22210I2X (TMG MURICI I2X)", "752 I2X", "O790 IPRO", "CZ47B91I2X", "NEO802 I2X", "C2810CE", "NEO821 I2X", "BSA74483I2X (745I2X)", "O720 I2X", "NEO700 I2X", "67SC115 I2X (HO PRATA I2X)", "BSA64014I2X (CZ26B41I2X)", "810 I2X", "711I2X", "77SC118 I2X (HO NOBRES I2X)", "NEO780 CE", "NEO791 CE", "SSW802443I2X (GH 2581I2X)", "VA6207I2X", "VA5701IPRO", "VA6308I2X", "VA6414IPRO", "VA7501I2X", "VA7703I2X", "VA7804I2X", "VA7905I2X", "VA8002I2X", "VA8006I2X", "81SC118 I2X (HO Mutum)", "CZ58B44I2X", "24428I2X (TMG ITAUBA I2X)", "NEO811 I2X"];
 const ALL_OPERATORS = ["Angelica C. Santos", "Thiago S. Alves", "Lucas L. Matos", "Paulo R. P. Carvalho", "Renato F. Oliveira", "Alessandro B. Gomes", "Fabricio G. G. Oliveira", "Marcio R. P. Junior", "Nathan M. Ribeiro", "Glauber A. Felix", "Marlon F. R. Trindade", "Jose B. S. Moura", "Orlenisia A. Lima", "Warley A. Sousa", "Natanael S. Nunes", "Arthur F. B. Souza", "Alysson D. S. Alves", "Ruan O. Reis", "Ranielly S. Dias", "Weslei C. Lopes", "Ivanio S. Souza", "Derik E. S. Alves", "Janailton V. Coelho", "Erica S. Ruiz", "Francisco C. Neves", "Felipe P. Nascimento", "Maria J. F. Santos", "Eliton N. Pereira", "Victor H. F. Vale", "Pablo A. F. Silva", "Jose Y. R. Lima", "Geovana D. Oliveira", "Lavinha S. Neres", "Bernardo S. Conceicao", "Yorgelys M. G. Lara", "Jose M. S. Oliveira", "Alberto J. V. Rodriguez", "Estefane D. Ferreira", "Iranildo J. S. Alves", "Jorge M. Batista", "David S. Conceicao", "Ryan J. P. Silva", "Geovanna P. Brito", "Alex C. Lima", "Joao M. S. Jesus", "Flavia A. B. Silva", "Jose E. M. Barreto", "Jonatas R. Santos", "Carlos J. G. Sanchez", "Daniel W. A. Sousa", "Nayra R. Lima", "Sandy S. Batista", "Cibele S. Pereira", "Jucineia P. Silva", "Joao P. A. Profirio", "Hugo D. M. Bento", "Diogo R. Ractz", "Uanes N. Ramada", "Thaina F. Anjos", "Ualify G. Oliveira", "Nielson M. Oliveira", "Luiz H. N. Alves", "Antonio L. S. Karlinski", "Adailton P. Pereira", "Billy D. Ferreira", "Kauan G. A. Fonseca", "Gilmar S. Gomes", "Ivan D. S. Armas", "Erick C. C. Gonzalez", "Pablo M. S. Ramos", "Mateus A. Santos", "Matheus S. Teixeira", "Joao G. R. Pereira", "Joao V. Melo", "Keversson C. Gomes", "Warley B. Santos", "Rodrigo S. Jesus", "Reginaldo A. Oliveira", "Delosvan S. Souza", "Jose S. N. Carvalho", "Martinho N. B. Lacal", "Jardeilson R. Silva", "Victor E. S. Santos", "Leonardo Silva", "Fernando S. Costa", "Italo B. L. Conceicao", "Pedro A. A. Silva", "Pedro E. D. Santos", "Lucas M. Rodrigues", "Rodrigo N. Sousa", "Neilho F. Santos", "Auremario O. Lima"];
 function getOperators(type){ const all=loadOperators(); return all[type]||[...ALL_OPERATORS]; }
 function setOperators(type, list){ const all=loadOperators(); all[type]=list; saveOperators(all); }
 
+
+// ── Cultivar helpers ──────────────────────────────────
+function cultivarSelectHtml(prefix){
+  const opts=ALL_CULTIVARES.map(c=>`<option value="${c}">${c}</option>`).join('');
+  return `<select id="${prefix}-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option>${opts}</select>`;
+}
+function getCultivar(prefix){ const e=document.getElementById(prefix+'-cultivar'); return e?e.value:''; }
 // ── Shared async helpers ──────────────────────────────────
 async function saveRecordToSheets(sheetName, record){
   // Optimistic: add to cache immediately, then persist to Sheets
@@ -1233,16 +1299,15 @@ async function saveRecordToSheets(sheetName, record){
 }
 
 async function loadAndRenderRecords(containerId, sheetName, type){
-  showLoading(containerId);
-  try{
-    const recs = await dbLoad(sheetName, true);
-    const unit = getUnit();
-    const filtered = recs.filter(r=>!unit||r.unidade===unit);
-    renderLocalRecords(containerId, filtered, type);
-  }catch(e){
-    const c=document.getElementById(containerId);
-    if(c) c.innerHTML='<div style="text-align:center;padding:32px;color:var(--red-400);font-size:13px">Erro ao carregar: '+e.message+'</div>';
-  }
+  // Render cache immediately
+  const unit=getUnit();
+  const cached=(DB[sheetName]||[]).filter(r=>!unit||r.unidade===unit);
+  renderLocalRecords(containerId, cached, type);
+  // Sync in background, re-render silently
+  dbSync(sheetName).then(()=>{
+    const updated=(DB[sheetName]||[]).filter(r=>!unit||r.unidade===unit);
+    renderLocalRecords(containerId, updated, type);
+  }).catch(()=>{});
 }
 
 function showLoading(containerId){
@@ -1300,15 +1365,19 @@ const REG_SOURCES=[
 let regAllRecs=[], regFilter='all';
 
 async function regLoad(){
+  // Show cache immediately
   regAllRecs=[];
-  showLoading('reg-loading');
-  try{
-    await dbLoadAll(true);
+  REG_SOURCES.forEach(s=>{ (DB[s.sheet]||[]).forEach(r=>regAllRecs.push({...r,_type:s.type,_label:s.label,_color:s.color})); });
+  regAllRecs.sort((a,b)=>b.id-a.id);
+  regRender();
+  // Sync in background — update display when done
+  const syncs = Object.keys(DB).map(s=>dbSync(s));
+  Promise.all(syncs).then(()=>{
+    regAllRecs=[];
     REG_SOURCES.forEach(s=>{ (DB[s.sheet]||[]).forEach(r=>regAllRecs.push({...r,_type:s.type,_label:s.label,_color:s.color})); });
     regAllRecs.sort((a,b)=>b.id-a.id);
     regRender();
-  }catch(e){ toast('Erro ao carregar registros: '+e.message, true); }
-  finally{ hideLoading('reg-loading'); }
+  }).catch(()=>{});
 }
 function regSetFilter(f){
   regFilter=f;
@@ -1497,14 +1566,14 @@ function mapSalvar(){
   const totalSaida=parseFloat(Math.max(0,totalEntTH-totalSupTH-totalInfTH).toFixed(2));
   // For backward compat, keep top-level fields from machine 1 + totals
   const m1=machines[0];
-  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,
+  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,cultivar:getCultivar('pad'),cultivar:getCultivar('map'),
     entTH:parseFloat(totalEntTH.toFixed(2)),supTH:parseFloat(totalSupTH.toFixed(2)),infTH:parseFloat(totalInfTH.toFixed(2)),
     supPct:m1.supPct,infPct:m1.infPct,saidaTH:totalSaida,efic:'',machines,
     obs:document.getElementById('map-obs').value.trim()};
   saveRecordToSheets('MAP', record);
 }
 function mapResetForm(){
-  document.getElementById('map-operator').value='';
+  document.getElementById('map-operator').value=''; const _cvmap=document.getElementById('map-cultivar'); if(_cvmap) _cvmap.value='';
   document.getElementById('map-obs').value='';
   const cfg=getUnitCfg(); const count=cfg.map.count;
   for(let n=1;n<=count;n++){
@@ -1582,12 +1651,12 @@ function poslSalvar(){
     const boaPct=(!isNaN(gb)&&gb>=0)?parseFloat((gb/500*100).toFixed(1)):null;
     mesas.push({descTH:th?parseFloat(th.toFixed(2)):null,boaPct});
   }
-  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,entTH:eVal,mesas,totalDescTH:parseFloat(totalDescTH.toFixed(2)),obs:document.getElementById('posl-obs').value.trim()};
+  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,cultivar:getCultivar('posl'),entTH:eVal,mesas,totalDescTH:parseFloat(totalDescTH.toFixed(2)),obs:document.getElementById('posl-obs').value.trim()};
   saveRecordToSheets('POSL', record);
 }
 function poslResetForm(){
   const cfg=getUnitCfg(); const count=cfg.posl.count;
-  document.getElementById('posl-operator').value=''; document.getElementById('posl-entrada-th').value=''; document.getElementById('posl-obs').value='';
+  document.getElementById('posl-operator').value=''; const _cvposl=document.getElementById('posl-cultivar'); if(_cvposl) _cvposl.value=''; document.getElementById('posl-entrada-th').value=''; document.getElementById('posl-obs').value='';
   for(let n=1;n<=count;n++){ const k=document.getElementById(`posl-m${n}-kg`); if(k)k.value=''; const g=document.getElementById(`posl-m${n}-graobom`); if(g)g.value=''; const t=document.getElementById(`posl-m${n}-th`); if(t)t.textContent='—'; const p=document.getElementById(`posl-m${n}-pct`); if(p)p.textContent='—'; }
   ['posl-sum-entrada','posl-sum-desc','posl-sum-pct','posl-sum-saida'].forEach(id=>document.getElementById(id).textContent='—'); }
 function poslRenderSelect(){ const sel=document.getElementById('posl-operator'); sel.innerHTML='<option value="">Selecionar...</option>'+poslOperators.map(o=>`<option value="${o}">${o}</option>`).join(''); }
@@ -1647,10 +1716,10 @@ function espSalvar(){
   const graoruinPct=(!isNaN(graoruin200)&&graoruin200>=0)?parseFloat((graoruin200/200*100).toFixed(1)):null;
   const eficTxt=document.getElementById('esp-sum-efic').textContent;
   const efic=eficTxt==='—'?'':eficTxt.replace(' %','');
-  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,freqHz,entTH:eVal,descTH:descTH?parseFloat(descTH.toFixed(2)):null,graobomSem:(!isNaN(graobomSem)&&graobomSem>=0)?graobomSem:null,graobomPct,graoruin200:(!isNaN(graoruin200)&&graoruin200>=0)?graoruin200:null,graoruinPct,saidaTH:saidaTH!==null?parseFloat(saidaTH.toFixed(2)):null,pctDesc,efic,obs:document.getElementById('esp-obs').value.trim()};
+  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,cultivar:getCultivar('esp'),freqHz,entTH:eVal,descTH:descTH?parseFloat(descTH.toFixed(2)):null,graobomSem:(!isNaN(graobomSem)&&graobomSem>=0)?graobomSem:null,graobomPct,graoruin200:(!isNaN(graoruin200)&&graoruin200>=0)?graoruin200:null,graoruinPct,saidaTH:saidaTH!==null?parseFloat(saidaTH.toFixed(2)):null,pctDesc,efic,obs:document.getElementById('esp-obs').value.trim()};
   saveRecordToSheets('ESP', record);
 }
-function espResetForm(){ document.getElementById('esp-operator').value=''; ['esp-entrada-th','esp-freq-hz','esp-desc-kg','esp-graobom-200','esp-graoruin-200','esp-obs'].forEach(id=>document.getElementById(id).value=''); ['esp-desc-th','esp-graobom-pct','esp-graoruin-pct','esp-sum-entrada','esp-sum-desc','esp-sum-saida','esp-sum-pct-desc','esp-sum-graobom-pct','esp-sum-efic'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent='—'; }); const b=document.getElementById('esp-efic-bar'); if(b) b.style.width='0%'; }
+function espResetForm(){ document.getElementById('esp-operator').value=''; const _cvesp=document.getElementById('esp-cultivar'); if(_cvesp) _cvesp.value=''; ['esp-entrada-th','esp-freq-hz','esp-desc-kg','esp-graobom-200','esp-graoruin-200','esp-obs'].forEach(id=>document.getElementById(id).value=''); ['esp-desc-th','esp-graobom-pct','esp-graoruin-pct','esp-sum-entrada','esp-sum-desc','esp-sum-saida','esp-sum-pct-desc','esp-sum-graobom-pct','esp-sum-efic'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent='—'; }); const b=document.getElementById('esp-efic-bar'); if(b) b.style.width='0%'; }
 function espRenderSelect(){ const sel=document.getElementById('esp-operator'); sel.innerHTML='<option value="">Selecionar...</option>'+espOperators.map(o=>`<option value="${o}">${o}</option>`).join(''); }
 function espRenderOps(){ const c=document.getElementById('esp-operators-list'); c.innerHTML=espOperators.map((o,i)=>`<div class="op-row"><span class="op-name">${o}</span><button class="op-remove" onclick="espRemoveOperator(${i})">×</button></div>`).join(''); }
 function espAddOperator(){ const inp=document.getElementById('esp-new-op'); const name=inp.value.trim(); if(!name||espOperators.includes(name))return; espOperators.push(name); inp.value=''; setOperators('ESP',espOperators); espRenderSelect(); espRenderOps(); }
@@ -1760,7 +1829,7 @@ function padSalvar(){
 }
 function padResetForm(){
   const cfg=getUnitCfg(); const count=cfg.pad.count;
-  document.getElementById('pad-operator').value=''; document.getElementById('pad-entrada-th').value=''; document.getElementById('pad-obs').value='';
+  document.getElementById('pad-operator').value=''; const _cvpad=document.getElementById('pad-cultivar'); if(_cvpad) _cvpad.value=''; document.getElementById('pad-entrada-th').value=''; document.getElementById('pad-obs').value='';
   for(let n=1;n<=count;n++){[`pad-m${n}-supkg`,`pad-m${n}-supgb`,`pad-m${n}-infkg`,`pad-m${n}-infgb`].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});[`pad-m${n}-supth`,`pad-m${n}-suppct`,`pad-m${n}-infth`,`pad-m${n}-infpct`].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='—';});}
   ['pad-sum-entrada','pad-sum-sup','pad-sum-inf','pad-sum-saida'].forEach(id=>document.getElementById(id).textContent='—');
 }
@@ -1876,11 +1945,11 @@ function finSalvar(){
     const copinho=(!isNaN(copAlto)&&!isNaN(copBaixo)&&copAlto>0&&copBaixo>0)?{alto:copAlto,meio:isNaN(copMeio)?null:copMeio,baixo:copBaixo}:null;
     mesas.push({mesaId:mid,descTH:th?parseFloat(th.toFixed(2)):null,boaPct,copinho});
   });
-  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,entTH:eVal,mesas,totalDescTH:parseFloat(totalDescTH.toFixed(2)),obs:document.getElementById('fin-obs').value.trim()};
+  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,cultivar:getCultivar('fin'),entTH:eVal,mesas,totalDescTH:parseFloat(totalDescTH.toFixed(2)),obs:document.getElementById('fin-obs').value.trim()};
   saveRecordToSheets('FIN', record);
 }
 function finResetForm(){
-  document.getElementById('fin-operator').value=''; document.getElementById('fin-entrada-th').value=''; document.getElementById('fin-obs').value='';
+  document.getElementById('fin-operator').value=''; const _cvfin=document.getElementById('fin-cultivar'); if(_cvfin) _cvfin.value=''; document.getElementById('fin-entrada-th').value=''; document.getElementById('fin-obs').value='';
   finMesaIds.forEach(mid=>{
     [`fin-${mid}-kg`,`fin-${mid}-graobom`,`fin-${mid}-cop-alto`,`fin-${mid}-cop-meio`,`fin-${mid}-cop-baixo`].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
     [`fin-${mid}-th`,`fin-${mid}-pct`].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='—';});
@@ -1968,14 +2037,14 @@ function moegaSalvar(){
       }catch(e){ photoData=moegaPhotoData; }
     }else{ photoData=moegaPhotoData; }
   }
-  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,
+  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,cultivar:getCultivar('moega'),
     totalSem:total, hiloSim:moegaHiloSim, hiloQtd:moegaHiloSim?hiloQtd:null,
     hiloPct, hiloDesc, photo:photoData,
     obs:document.getElementById('moega-obs').value.trim()};
   saveRecordToSheets('MOEGA', record);
 }
 function moegaResetForm(){
-  document.getElementById('moega-operator').value='';
+  document.getElementById('moega-operator').value=''; const _cvmoega=document.getElementById('moega-cultivar'); if(_cvmoega) _cvmoega.value='';
   document.getElementById('moega-total-sem').value='200';
   document.getElementById('moega-obs').value='';
   moegaSetHilo(false);
@@ -1983,9 +2052,8 @@ function moegaResetForm(){
 }
 function moegaRenderSelect(){ const sel=document.getElementById('moega-operator'); sel.innerHTML='<option value="">Selecionar...</option>'+moegaOperators.map(o=>`<option value="${o}">${o}</option>`).join(''); }
 async function moegaLoadAndRender(){
-  showLoading('moega-rec-list');
-  try{ await dbLoad('MOEGA',true); }catch(e){ toast('Erro: '+e.message,true); }
-  finally{ moegaRenderRecords(); }
+  moegaRenderRecords(); // cache first
+  dbSync('MOEGA').then(()=>moegaRenderRecords()).catch(()=>{});
 }
 function moegaRenderRecords(){
   const c=document.getElementById('moega-rec-list');
@@ -2079,11 +2147,12 @@ async function indInit(){
   if(backBtn) backBtn.title=isAdmin()?'Sair':'Voltar';
   const badge=document.getElementById('ind-header-badge');
   if(badge) badge.textContent=isAdmin()?(indSelectedUbs||'Todas as UBSs'):getUnit();
-  // Load data
-  showLoading('ind-loading');
-  try{ await dbLoadAll(true); }catch(e){ toast('Erro ao carregar dados: '+e.message,true); }
-  finally{ hideLoading('ind-loading'); }
+  // Show cache immediately, sync in background
   indSwitchTab(indCurrentTab);
+  // Background sync — re-render when new data arrives
+  Promise.all(Object.keys(DB).map(s=>dbSync(s)))
+    .then(()=>indRender())
+    .catch(()=>{});
 }
 
 function indSwitchTab(tab){
