@@ -1090,12 +1090,12 @@ function navigate(page){
 
   if(page==='home'){ initHomePage(); }
   else if(page==='registros'){ regLoad(); updateDropdowns(); }
-  else if(page==='map'){ navigateWithSync('map','MAP',mapInit); return; }
-  else if(page==='posl'){ navigateWithSync('posl','POSL',poslInit); return; }
-  else if(page==='esp'){ navigateWithSync('esp','ESP',espInit); return; }
-  else if(page==='pad'){ navigateWithSync('pad','PAD',padInit); return; }
-  else if(page==='fin'){ navigateWithSync('fin','FIN',finInit); return; }
-  else if(page==='moega'){ navigateWithSync('moega','MOEGA',moegaInit); return; }
+  else if(page==='map'){ mapInit(); updateDropdowns(); }
+  else if(page==='posl'){ poslInit(); updateDropdowns(); }
+  else if(page==='esp'){ espInit(); updateDropdowns(); }
+  else if(page==='pad'){ padInit(); updateDropdowns(); }
+  else if(page==='fin'){ finInit(); updateDropdowns(); }
+  else if(page==='moega'){ moegaInit(); updateDropdowns(); }
   else if(page==='indicadores'){ indInit(); updateDropdowns(); }
   window.scrollTo(0,0);
 }
@@ -1481,7 +1481,10 @@ function regRender(){
 let mapOperators=getOperators('MAP');
 let mapDtTimer=null;
 
-function mapInit(){
+async function mapInit(){
+  showModuleLoader('Sincronizando MAP...','Buscando dados recentes. Pode levar até 10 segundos.');
+  try{ await dbSync('MAP'); }catch(e){}
+  hideModuleLoader();
   mapOperators=getOperators('MAP');
   mapBuildMachines(); mapRenderSelect(); mapUpdateDt();
   clearInterval(mapDtTimer); mapDtTimer=setInterval(mapUpdateDt,1000);
@@ -1623,7 +1626,10 @@ function mapRemoveOperator(i){ mapOperators.splice(i,1); setOperators('MAP',mapO
 let poslOperators=getOperators('POSL');
 let poslDtTimer=null;
 
-function poslInit(){
+async function poslInit(){
+  showModuleLoader('Sincronizando POSL...','Buscando dados recentes. Pode levar até 10 segundos.');
+  try{ await dbSync('POSL'); }catch(e){}
+  hideModuleLoader();
   poslOperators=getOperators('POSL');
   poslBuildMesas(); poslRenderSelect(); poslUpdateDt();
   clearInterval(poslDtTimer); poslDtTimer=setInterval(poslUpdateDt,1000);
@@ -1700,7 +1706,10 @@ function poslRemoveOperator(i){ poslOperators.splice(i,1); setOperators('POSL',p
 let espOperators=getOperators('ESP');
 let espDtTimer=null;
 
-function espInit(){
+async function espInit(){
+  showModuleLoader('Sincronizando ESP...','Buscando dados recentes. Pode levar até 10 segundos.');
+  try{ await dbSync('ESP'); }catch(e){}
+  hideModuleLoader();
   espOperators=getOperators('ESP');
   espRenderSelect(); espUpdateDt();
   clearInterval(espDtTimer); espDtTimer=setInterval(espUpdateDt,1000);
@@ -1761,7 +1770,10 @@ function espRemoveOperator(i){ espOperators.splice(i,1); setOperators('ESP',espO
 let padOperators=getOperators('PAD');
 let padDtTimer=null;
 
-function padInit(){
+async function padInit(){
+  showModuleLoader('Sincronizando PAD...','Buscando dados recentes. Pode levar até 10 segundos.');
+  try{ await dbSync('PAD'); }catch(e){}
+  hideModuleLoader();
   padOperators=getOperators('PAD');
   padBuildMachines(); padRenderSelect(); padUpdateDt();
   clearInterval(padDtTimer); padDtTimer=setInterval(padUpdateDt,1000);
@@ -1876,7 +1888,10 @@ let finDtTimer=null;
 // flat list of all mesa IDs rendered: e.g. ['p1-m1','p1-m2','p2-m1']
 let finMesaIds=[];
 
-function finInit(){
+async function finInit(){
+  showModuleLoader('Sincronizando FIN...','Buscando dados recentes. Pode levar até 10 segundos.');
+  try{ await dbSync('FIN'); }catch(e){}
+  hideModuleLoader();
   finOperators=getOperators('FIN');
   finBuildMesas(); finRenderSelect(); finUpdateDt();
   clearInterval(finDtTimer); finDtTimer=setInterval(finUpdateDt,1000);
@@ -2000,7 +2015,10 @@ let moegaDtTimer=null;
 let moegaHiloSim=false;
 let moegaPhotoData=null;
 
-function moegaInit(){
+async function moegaInit(){
+  showModuleLoader('Sincronizando MOEGA...','Buscando dados recentes. Pode levar até 10 segundos.');
+  try{ await dbSync('MOEGA'); }catch(e){}
+  hideModuleLoader();
   moegaOperators=getOperators('MOEGA');
   moegaRenderSelect(); moegaUpdateDt();
   clearInterval(moegaDtTimer); moegaDtTimer=setInterval(moegaUpdateDt,1000);
@@ -2340,28 +2358,14 @@ function closeLightbox(){ document.getElementById('lightbox').classList.remove('
 // ── Module loader ─────────────────────────────────────
 let _loaderTimer = null;
 function showModuleLoader(title, sub){
-  const el=document.getElementById('module-loader');
   document.getElementById('loader-title').textContent=title||'Sincronizando dados...';
   document.getElementById('loader-sub').textContent=sub||'Pode levar até 10 segundos na primeira vez';
-  el.style.display='flex';
+  document.getElementById('module-loader').style.display='flex';
 }
 function hideModuleLoader(){
   document.getElementById('module-loader').style.display='none';
 }
-async function navigateWithSync(page, sheetName, initFn){
-  // Show all pages hidden first
-  PAGE_IDS.forEach(id=>{ const p=document.getElementById('page-'+id); if(p) p.style.display='none'; });
-  showModuleLoader('Sincronizando '+page.toUpperCase()+'...','Buscando registros recentes. Pode levar até 10 segundos.');
-  try{
-    await dbSync(sheetName);
-  }catch(e){ /* silent — show stale data */ }
-  hideModuleLoader();
-  // Now show page and init
-  const pg=document.getElementById('page-'+page);
-  if(pg) pg.style.display='block';
-  initFn();
-  updateDropdowns();
-}
+
 // ══════════════════════════════════════════════
 // BOOT
 // ══════════════════════════════════════════════
