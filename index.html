@@ -1,0 +1,2250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QualityTrack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-50:#E1F5EE;--green-100:#9FE1CB;--green-400:#1D9E75;--green-600:#0F6E56;
+  --green-800:#085041;--green-900:#04342C;--amber-50:#FAEEDA;--amber-100:#FAC775;
+  --amber-400:#BA7517;--amber-600:#854F0B;--amber-800:#633806;
+  --teal-50:#E0F7FA;--teal-100:#80DEEA;--teal-400:#00ACC1;--teal-600:#00838F;
+  --orange-50:#FFF3E0;--orange-100:#FFCC80;--orange-400:#FB8C00;--orange-600:#E65100;
+  --purple-50:#F3EFFE;--purple-100:#D9CAFE;--purple-400:#7C3AED;--purple-600:#5B21B6;
+  --blue-50:#E6F1FB;--blue-100:#B5D4F4;--blue-400:#378ADD;--blue-800:#0C447C;
+  --red-50:#FCEBEB;--red-100:#F7C1C1;--red-400:#E24B4A;--red-800:#791F1F;
+  --gray-50:#F7F6F2;--gray-100:#EEECE6;--gray-200:#D8D6CE;
+  --bg:#F4F2ED;--surface:#FFFFFF;
+  --border:rgba(0,0,0,0.08);--border-md:rgba(0,0,0,0.14);
+  --text:#1A1917;--text-muted:#6B6A65;--text-hint:#9A9893;
+  --radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-xl:18px;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ── PAGE SYSTEM ── */
+.page{display:none;min-height:100vh;flex-direction:column}
+.page.active{display:flex}
+
+/* ── SHARED HEADER ── */
+.header{background:var(--green-900);padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;flex-shrink:0}
+.h-left{display:flex;align-items:center;gap:10px}
+.back-btn{width:30px;height:30px;border-radius:var(--radius-sm);background:rgba(255,255,255,0.1);color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;border:none}
+.back-btn:hover{background:rgba(255,255,255,0.2)}
+.header-logo{width:28px;height:28px;background:var(--green-400);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.header-logo svg{width:14px;height:14px}
+.header-title{font-size:14px;font-weight:500;color:white}
+.header-badge{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);font-size:11px;padding:3px 8px;border-radius:99px;font-family:var(--mono)}
+.header-dt{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,0.5)}
+
+/* ── USER ICON BUTTON ── */
+.user-btn-icon{width:32px;height:32px;border-radius:50%;background:var(--green-400);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:white;font-family:var(--font);flex-shrink:0;position:relative;transition:background .15s}
+.user-btn-icon:hover{background:var(--green-600)}
+
+/* ── USER DROPDOWN ── */
+.user-dropdown{position:fixed;top:60px;right:14px;background:var(--surface);border:0.5px solid var(--border-md);border-radius:var(--radius-lg);box-shadow:0 8px 32px rgba(0,0,0,0.16);width:220px;z-index:200;display:none;overflow:hidden}
+.user-dropdown.open{display:block}
+.user-dd-info{padding:14px 16px;border-bottom:0.5px solid var(--border)}
+.user-dd-unit{font-size:13px;font-weight:500;color:var(--text)}
+.user-dd-session{font-size:11px;color:var(--text-hint);font-family:var(--mono);margin-top:2px}
+.user-dd-item{display:flex;align-items:center;gap:8px;padding:11px 16px;font-size:13px;color:var(--text-muted);cursor:pointer;text-decoration:none;border:none;background:none;font-family:var(--font);width:100%;text-align:left;transition:background .1s}
+.user-dd-item:hover{background:var(--gray-50)}
+.user-dd-item.danger{color:var(--red-400)}
+.user-dd-divider{height:0.5px;background:var(--border)}
+
+/* ── LOGIN PAGE ── */
+#page-login{align-items:center;justify-content:center;padding:20px}
+.login-wrap{width:100%;max-width:360px}
+.logo-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:36px}
+.logo-mark{width:56px;height:56px;background:var(--green-900);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.logo-mark svg{width:28px;height:28px}
+.logo-title{font-size:20px;font-weight:500;color:var(--text);letter-spacing:-.01em}
+.logo-sub{font-size:13px;color:var(--text-hint);margin-top:4px}
+.login-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:28px 24px;box-shadow:0 2px 16px rgba(0,0,0,0.06)}
+.login-card-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:20px}
+.error-msg{background:var(--red-50);border:0.5px solid rgba(226,75,74,0.25);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--red-800);margin-bottom:14px;display:none;align-items:center;gap:8px}
+.error-msg.show{display:flex}
+.login-version{text-align:center;font-size:11px;color:var(--text-hint);margin-top:24px;font-family:var(--mono)}
+
+/* ── SHARED FORM ELEMENTS ── */
+.field{margin-bottom:14px}.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:12px;color:var(--text-muted);margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;padding:9px 12px;font-size:14px;font-family:var(--font);color:var(--text);background:var(--surface);border:0.5px solid var(--border-md);border-radius:var(--radius-md);outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green-400);box-shadow:0 0 0 3px rgba(29,158,117,0.12)}
+.field input[readonly]{background:var(--gray-50);color:var(--text-muted);font-family:var(--mono);font-size:13px}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%239A9893' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px}
+.field textarea{resize:vertical;min-height:70px;line-height:1.5}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.input-unit-wrap{position:relative}.input-unit-wrap input{padding-right:42px}
+.input-unit{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text-hint);font-family:var(--mono);pointer-events:none}
+.btn{width:100%;padding:13px;background:var(--green-400);color:white;border:none;border-radius:var(--radius-md);font-size:15px;font-weight:500;font-family:var(--font);cursor:pointer;transition:background .15s;letter-spacing:.01em;margin-top:4px}
+.btn:hover{background:var(--green-600)}.btn:active{background:var(--green-800)}
+.btn:disabled{background:var(--gray-200);color:var(--text-hint);cursor:not-allowed}
+.submit-btn{width:100%;padding:13px;background:var(--green-400);color:white;border:none;border-radius:var(--radius-md);font-size:14px;font-weight:500;font-family:var(--font);cursor:pointer;transition:background .15s}
+.submit-btn:hover{background:var(--green-600)}
+
+/* ── HOME PAGE ── */
+#page-home .main{flex:1;max-width:560px;margin:0 auto;width:100%;padding:16px 14px 60px}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.stat{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:12px}
+.stat-val{font-size:22px;font-weight:500;font-family:var(--mono);color:var(--text);line-height:1}
+.stat-lbl{font-size:11px;color:var(--text-hint);margin-top:3px}
+.flow-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:12px 14px;margin-bottom:16px}
+.flow-lbl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--text-hint);margin-bottom:10px}
+.flow{display:flex;align-items:center;overflow-x:auto;gap:0;padding-bottom:2px}
+.fstep{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:52px;text-decoration:none;cursor:pointer;border:none;background:none;font-family:var(--font)}
+.fstep-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:white}
+.fstep-name{font-size:9px;color:var(--text-muted);text-align:center;line-height:1.3}
+.farr{color:var(--text-hint);font-size:14px;margin:0 1px;margin-bottom:14px;flex-shrink:0}
+.sec-lbl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--text-hint);margin-bottom:10px}
+.tests{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.tc{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-xl);padding:13px 15px;display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit;position:relative;overflow:hidden;transition:border-color .15s;cursor:pointer;border:none;font-family:var(--font);width:100%;text-align:left}
+.tc:hover{border-color:var(--border-md);background:var(--gray-50)}
+.tc-accent{position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:var(--radius-xl) 0 0 var(--radius-xl)}
+.tc-icon{width:38px;height:38px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tc-icon svg{width:19px;height:19px}
+.tc-info{flex:1}
+.tc-name{font-size:13px;font-weight:500;margin-bottom:2px;display:flex;align-items:center;flex-wrap:wrap;gap:5px}
+.tc-desc{font-size:11px;color:var(--text-muted);line-height:1.4}
+.tc-badge{font-size:9px;font-weight:500;text-transform:uppercase;padding:2px 6px;border-radius:99px}
+.arr{font-size:16px;color:var(--text-hint)}
+
+/* ── TEST PAGE SHARED ── */
+.test-page-body{flex:1;overflow-y:auto}
+.nav-tabs{background:var(--surface);border-bottom:0.5px solid var(--border);display:flex;padding:0 16px;position:sticky;top:56px;z-index:99}
+.ntab{padding:11px 14px;font-size:13px;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.ntab.active{color:var(--green-600);border-bottom-color:var(--green-400);font-weight:500}
+.test-main{max-width:640px;margin:0 auto;padding:20px 16px 60px}
+.card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:12px}
+.card-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.card-pill{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;padding:3px 9px;border-radius:99px}
+.pill-green{background:var(--green-50);color:var(--green-800)}.pill-amber{background:var(--amber-50);color:var(--amber-800)}.pill-blue{background:var(--blue-50);color:var(--blue-800)}.pill-teal{background:var(--teal-50);color:var(--teal-600)}.pill-orange{background:var(--orange-50);color:var(--orange-600)}.pill-purple{background:var(--purple-50);color:var(--purple-600)}
+.card-heading{font-size:14px;font-weight:500;color:var(--text)}
+.calc-box{background:var(--gray-50);border:0.5px solid var(--border);border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.calc-box-label{font-size:12px;color:var(--text-muted)}
+.calc-box-value{font-family:var(--mono);font-size:24px;font-weight:500;color:var(--green-600);line-height:1}
+.calc-box-unit{font-size:12px;color:var(--text-hint);margin-left:4px}
+.info-note{background:var(--blue-50);border:0.5px solid var(--blue-100);border-radius:var(--radius-md);padding:10px 12px;font-size:12px;color:var(--blue-800);margin-bottom:12px}
+.descarte-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.descarte-box{border:0.5px solid var(--border);border-radius:var(--radius-md);padding:14px}
+.descarte-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.title-sup{color:var(--amber-400)}.title-inf{color:var(--blue-400)}
+.mini-result{background:var(--gray-50);border-radius:var(--radius-sm);padding:8px 10px;display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;margin-bottom:10px}
+.mini-label{font-size:11px;color:var(--text-hint)}
+.mini-val,.mini-pct{font-family:var(--mono);font-size:15px;font-weight:500}
+.val-sup{color:var(--amber-400)}.val-inf{color:var(--blue-400)}.val-pct{color:var(--green-600)}
+.summary-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.summary-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.summary-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.metric{background:var(--gray-50);border-radius:var(--radius-md);padding:12px}
+.metric-label{font-size:11px;color:var(--text-hint);margin-bottom:4px}
+.metric-value{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--text)}
+.metric-unit{font-size:11px;color:var(--text-hint);font-weight:400}
+.metric.highlight{background:var(--green-50)}.metric.highlight .metric-label{color:var(--green-800)}.metric.highlight .metric-value{color:var(--green-600)}
+.metric.highlight-teal{background:var(--teal-50)}.metric.highlight-teal .metric-label{color:var(--teal-600)}.metric.highlight-teal .metric-value{color:var(--teal-400)}
+.efic-wrap{background:var(--gray-50);border-radius:var(--radius-md);padding:12px}
+.efic-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.efic-label{font-size:11px;color:var(--text-hint)}
+.efic-value{font-family:var(--mono);font-size:20px;font-weight:500}
+.bar-bg{height:6px;background:var(--gray-200);border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px;transition:width .4s,background .4s}
+.mesa-card{border:0.5px solid var(--border);border-radius:var(--radius-md);padding:14px;margin-bottom:10px}
+.mesa-title{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:0.5px solid var(--border)}
+.mesa-status-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.mesa-status{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--gray-50);border-radius:var(--radius-sm)}
+.mesa-status-name{font-size:11px;color:var(--text-muted)}
+.mesa-status-vals{font-family:var(--mono);font-size:11px;color:var(--text)}
+.op-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:0.5px solid var(--border);border-radius:var(--radius-sm);margin-bottom:5px}
+.op-name{font-size:13px}.op-remove{width:24px;height:24px;border:0.5px solid var(--border-md);border-radius:var(--radius-sm);background:transparent;color:var(--text-muted);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+.op-remove:hover{background:var(--red-50);color:var(--red-400);border-color:var(--red-400)}
+.add-op-row{display:grid;grid-template-columns:1fr 36px;gap:8px;margin-top:8px}
+.add-op-btn{background:var(--green-400);border:none;color:white;border-radius:var(--radius-md);cursor:pointer;font-size:20px}
+
+/* ── RECORDS PAGE TABLE ── */
+#page-registros .main{flex:1;overflow-y:auto}
+.reg-toolbar{background:var(--surface);border-bottom:0.5px solid var(--border);padding:10px 14px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;position:sticky;top:56px;z-index:99}
+.filter-chip{padding:5px 11px;border-radius:99px;font-size:11px;font-weight:500;cursor:pointer;border:0.5px solid var(--border-md);background:transparent;color:var(--text-muted);font-family:var(--font);transition:all .15s;white-space:nowrap}
+.filter-chip.active{color:white}
+.filter-chip[data-f="all"].active{background:var(--green-900);border-color:var(--green-900)}
+.filter-chip[data-f="map"].active{background:#1D9E75;border-color:#1D9E75}
+.filter-chip[data-f="posl"].active{background:#BA7517;border-color:#BA7517}
+.filter-chip[data-f="esp"].active{background:#00ACC1;border-color:#00ACC1}
+.filter-chip[data-f="pad"].active{background:#FB8C00;border-color:#FB8C00}
+.filter-chip[data-f="fin"].active{background:#7C3AED;border-color:#7C3AED}
+.filter-chip[data-f="moega"].active{background:#378ADD;border-color:#378ADD}
+.date-input{padding:5px 9px;border:0.5px solid var(--border-md);border-radius:var(--radius-md);font-size:11px;font-family:var(--font);color:var(--text);background:var(--surface);outline:none;margin-left:auto}
+.date-input:focus{border-color:var(--green-400)}
+.reg-stats-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:10px 14px;background:var(--surface);border-bottom:0.5px solid var(--border);flex-shrink:0}
+.sbar{text-align:center}
+.sbar-val{font-size:16px;font-weight:500;font-family:var(--mono)}
+.sbar-lbl{font-size:9px;color:var(--text-hint);margin-top:1px}
+.reg-table-wrap{padding:12px 14px 60px;overflow-x:auto}
+.reg-table{width:100%;border-collapse:collapse;font-size:12px;min-width:540px}
+.reg-table thead th{background:var(--gray-50);border:0.5px solid var(--border-md);padding:7px 10px;text-align:left;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text-hint);white-space:nowrap}
+.reg-table tbody td{border:0.5px solid var(--border);padding:7px 10px;vertical-align:middle;color:var(--text-muted)}
+.reg-table tbody tr:hover td{background:var(--gray-50)}
+.reg-table tbody td.td-val{font-family:var(--mono);color:var(--text)}
+.reg-table tbody td.td-saida{font-family:var(--mono);color:var(--green-600);font-weight:500}
+.type-badge{font-size:9px;font-weight:500;padding:2px 7px;border-radius:99px;white-space:nowrap}
+.reg-empty{text-align:center;padding:48px 20px;color:var(--text-hint);font-size:13px;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-lg);margin:12px 14px}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--green-900);color:white;padding:10px 20px;border-radius:var(--radius-md);font-size:13px;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:999;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.toast.error{background:var(--red-800)}
+
+/* ── OVERLAY ── */
+.overlay-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;align-items:flex-end;justify-content:center}
+.overlay-backdrop.open{display:flex}
+.bottom-sheet{background:var(--surface);border-radius:18px 18px 0 0;width:100%;max-width:560px;padding:20px 16px 32px}
+.sheet-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:14px;text-align:center}
+.sheet-opts{display:flex;flex-direction:column;gap:8px}
+.sheet-opt{padding:13px 16px;border-radius:var(--radius-lg);border:0.5px solid var(--border-md);font-size:14px;font-weight:500;color:var(--text);background:transparent;cursor:pointer;font-family:var(--font);text-align:left;display:flex;align-items:center;gap:10px;transition:all .15s}
+.sheet-opt:hover{background:var(--gray-50)}
+.sheet-opt.selected{border-color:var(--green-400);background:var(--green-50);color:var(--green-800)}
+.sheet-opt-check{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sheet-opt.selected .sheet-opt-check{background:var(--green-400);border-color:var(--green-400)}
+.sheet-cancel{margin-top:10px;width:100%;padding:11px;border:0.5px solid var(--border-md);border-radius:var(--radius-md);background:transparent;font-size:13px;color:var(--text-muted);cursor:pointer;font-family:var(--font)}
+
+@media(max-width:480px){
+  .descarte-grid{grid-template-columns:1fr}.summary-grid-4{grid-template-columns:1fr 1fr}
+  .field-row{grid-template-columns:1fr}.summary-grid-3{grid-template-columns:1fr 1fr}
+  #ind-summary-grid{grid-template-columns:1fr 1fr}
+}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+/* ── INDICADORES TABS ── */
+.ind-tab-btn{padding:8px 16px;border-radius:var(--radius-md);border:0.5px solid var(--border-md);background:transparent;font-size:13px;font-weight:500;color:var(--text-muted);cursor:pointer;font-family:var(--font);transition:all .15s}
+.ind-tab-btn.active{background:var(--green-900);color:white;border-color:var(--green-900)}
+/* ── LOSS CARD ── */
+.loss-card{background:var(--red-50);border:0.5px solid var(--red-100);border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.loss-machine{font-size:12px;font-weight:500;color:var(--red-800)}
+.loss-val{font-family:var(--mono);font-size:15px;font-weight:500;color:var(--red-400)}
+.loss-sub{font-size:10px;color:var(--red-400)}
+/* ── MACHINE INDICATOR CARD ── */
+.mach-ind-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:16px;margin-bottom:12px}
+.mach-ind-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.mach-ind-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.mach-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.mach-kpi{background:var(--gray-50);border-radius:var(--radius-sm);padding:10px;text-align:center}
+.mach-kpi-val{font-family:var(--mono);font-size:16px;font-weight:500;line-height:1.2}
+.mach-kpi-lbl{font-size:10px;color:var(--text-hint);margin-top:3px}
+.mach-efic-bar{height:5px;background:var(--gray-200);border-radius:99px;overflow:hidden;margin-top:8px}
+.mach-efic-fill{height:100%;border-radius:99px;transition:width .4s}
+/* ── MOEGA PHOTO ── */
+
+/* ── LIGHTBOX ── */
+.lightbox-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out}
+.lightbox-overlay.open{display:flex}
+.lightbox-overlay img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:var(--radius-md);box-shadow:0 24px 64px rgba(0,0,0,.6)}
+.lightbox-close{position:absolute;top:16px;right:20px;color:white;font-size:28px;font-weight:300;line-height:1;cursor:pointer;opacity:.8}
+.lightbox-close:hover{opacity:1}
+.photo-thumb-btn{cursor:zoom-in;border:none;background:none;padding:0;flex-shrink:0;margin-left:auto}
+.photo-thumb-btn img{width:52px;height:52px;object-fit:cover;border-radius:8px;display:block;transition:opacity .15s}
+.photo-thumb-btn:hover img{opacity:.85}
+.photo-upload-area{border:1.5px dashed var(--border-md);border-radius:var(--radius-lg);padding:20px;text-align:center;cursor:pointer;transition:all .15s;background:var(--gray-50)}
+.photo-upload-area:hover{border-color:var(--blue-400);background:var(--blue-50)}
+.photo-preview{width:100%;border-radius:var(--radius-md);margin-top:10px;max-height:220px;object-fit:cover;display:none}
+.hilo-toggle-row{display:flex;gap:8px;margin-top:6px}
+.hilo-btn{flex:1;padding:10px;border-radius:var(--radius-md);border:0.5px solid var(--border-md);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font);background:transparent;transition:all .15s}
+.hilo-btn.sim{border-color:var(--amber-400);background:var(--amber-50);color:var(--amber-600)}
+.hilo-btn.nao{border-color:var(--green-400);background:var(--green-50);color:var(--green-600)}
+
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     LOGIN PAGE
+════════════════════════════════════════════════ -->
+<div class="page active" id="page-login">
+  <div class="login-wrap">
+    <div class="logo-wrap">
+      <div class="logo-mark">
+        <svg viewBox="0 0 28 28" fill="none">
+          <rect x="2" y="2" width="10" height="10" rx="3" fill="white" fill-opacity=".9"/>
+          <rect x="16" y="2" width="10" height="10" rx="3" fill="white" fill-opacity=".5"/>
+          <rect x="2" y="16" width="10" height="10" rx="3" fill="white" fill-opacity=".5"/>
+          <rect x="16" y="16" width="10" height="10" rx="3" fill="white" fill-opacity=".9"/>
+        </svg>
+      </div>
+      <div class="logo-title">QualityTrack</div>
+      <div class="logo-sub">Controle de qualidade — sementes de soja</div>
+    </div>
+    <div class="login-card">
+      <div class="login-card-title">Entrar na aplicação</div>
+      <div class="error-msg" id="login-error">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6.5" stroke="#E24B4A" stroke-width="1.2"/><path d="M7.5 4.5v4M7.5 10v.5" stroke="#E24B4A" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <span id="login-error-text">Senha incorreta.</span>
+      </div>
+      <div class="field">
+        <label>Unidade / perfil</label>
+        <select id="login-profile" style="-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22%3E%3Cpath d=%22M2 4l4 4 4-4%22 stroke=%22%239A9893%22 stroke-width=%221.5%22 fill=%22none%22 stroke-linecap=%22round%22/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;width:100%;padding:11px 14px;font-size:15px;font-family:var(--font);color:var(--text);background-color:var(--surface);border:0.5px solid var(--border-md);border-radius:var(--radius-md);outline:none">
+          <option value="">Selecionar...</option>
+          <option value="ubs01">UBS 01</option>
+          <option value="ubs03">UBS 03</option>
+          <option value="ubs04">UBS 04</option>
+          <option value="admin">Administrador</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Senha</label>
+        <input type="password" id="login-password" placeholder="••••••" autocomplete="current-password">
+      </div>
+      <button class="btn" id="login-submit-btn">Entrar</button>
+    </div>
+    <div class="login-version">v1.0 · Beneficiamento de sementes</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     HOME PAGE
+════════════════════════════════════════════════ -->
+<div class="page" id="page-home">
+  <header class="header">
+    <div class="h-left">
+      <div class="header-logo">
+        <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" fill="white" fill-opacity=".9"/><rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" fill-opacity=".5"/><rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" fill-opacity=".5"/><rect x="9" y="9" width="6" height="6" rx="1.5" fill="white" fill-opacity=".9"/></svg>
+      </div>
+      <span class="header-title">QualityTrack</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="back-btn" style="background:rgba(255,255,255,0.1);border-radius:var(--radius-sm);font-size:12px;font-weight:500;padding:0 10px;width:auto;white-space:nowrap" onclick="navigate('registros')">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="margin-right:4px"><path d="M2 3h8M2 6h5M2 9h6" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg>Registros
+      </button>
+      <button class="back-btn" style="background:rgba(255,255,255,0.1);border-radius:var(--radius-sm);font-size:12px;font-weight:500;padding:0 10px;width:auto;white-space:nowrap" onclick="navigate('indicadores')">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="margin-right:4px"><path d="M1 10L4 6L7 8L11 3" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Indicadores
+      </button>
+      <button class="user-btn-icon" id="home-user-btn" onclick="toggleDropdown('home-dd')"></button>
+    </div>
+  </header>
+  <div class="user-dropdown" id="home-dd">
+    <div class="user-dd-info">
+      <div class="user-dd-unit" id="home-dd-unit">—</div>
+      <div class="user-dd-session" id="home-dd-session">—</div>
+    </div>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item danger" onclick="doLogout()">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M5.5 2.5H3.5a1 1 0 00-1 1v8a1 1 0 001 1h2M10 10.5L13 7.5 10 4.5M13 7.5H5.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Sair / Trocar usuário
+    </button>
+  </div>
+  <main class="main">
+    <div class="sec-lbl">Testes disponíveis</div>
+    <div class="tests">
+      <button class="tc" onclick="navigate('map')">
+        <div class="tc-accent" style="background:#1D9E75"></div>
+        <div class="tc-icon" style="background:var(--green-50)"><svg viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="13" rx="2" stroke="#1D9E75" stroke-width="1.4"/><path d="M5 7h5M5 10h7M5 13h4" stroke="#1D9E75" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+        <div class="tc-info">
+          <div class="tc-name">MAP <span class="tc-badge" style="background:var(--green-50);color:var(--green-800)">Pós MAP</span></div>
+          <div class="tc-desc">Entrada kg/6s · Descartes sup+inf · % semente boa 500g</div>
+        </div>
+        <div class="arr">›</div>
+      </button>
+      <button class="tc" onclick="navigate('posl')">
+        <div class="tc-accent" style="background:#BA7517"></div>
+        <div class="tc-icon" style="background:var(--amber-50)"><svg viewBox="0 0 20 20" fill="none"><rect x="2" y="6" width="16" height="9" rx="2" stroke="#BA7517" stroke-width="1.4"/><path d="M2 9h16M6 9v6M14 9v6" stroke="#BA7517" stroke-width="1.4" stroke-linecap="round"/><path d="M5 3h10l1 3H4l1-3z" stroke="#BA7517" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+        <div class="tc-info">
+          <div class="tc-name">Densimétricas <span class="tc-badge" style="background:var(--amber-50);color:#854F0B">Pós-limpeza</span></div>
+          <div class="tc-desc">Mesas por unidade · Descarte kg/6s → t/h · % semente boa 500g</div>
+        </div>
+        <div class="arr">›</div>
+      </button>
+      <button class="tc" onclick="navigate('esp')">
+        <div class="tc-accent" style="background:#00ACC1"></div>
+        <div class="tc-icon" style="background:var(--teal-50)"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2C6 2 3 5 3 10C3 14 6 18 10 18C14 18 17 14 17 10" stroke="#00ACC1" stroke-width="1.4" stroke-linecap="round"/><path d="M10 2C12 5 13 8 12 10C11 12 9 13 10 16" stroke="#00ACC1" stroke-width="1.2" stroke-linecap="round"/><circle cx="10" cy="10" r="2" stroke="#00ACC1" stroke-width="1.4"/></svg></div>
+        <div class="tc-info">
+          <div class="tc-name">Espirais rotativos <span class="tc-badge" style="background:var(--teal-50);color:#00838F">Pré-finais</span></div>
+          <div class="tc-desc">Entrada t/h · Descarte kg/6s → t/h · % grão bom 100g</div>
+        </div>
+        <div class="arr">›</div>
+      </button>
+      <button class="tc" onclick="navigate('pad')">
+        <div class="tc-accent" style="background:#FB8C00"></div>
+        <div class="tc-icon" style="background:var(--orange-50)"><svg viewBox="0 0 20 20" fill="none"><rect x="3" y="7" width="14" height="9" rx="1.5" stroke="#FB8C00" stroke-width="1.4"/><path d="M6 7V5.5a4 4 0 018 0V7" stroke="#FB8C00" stroke-width="1.4"/><path d="M6 11h8M10 11v3" stroke="#FB8C00" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+        <div class="tc-info">
+          <div class="tc-name">Padronizadores <span class="tc-badge" style="background:var(--orange-50);color:#E65100">Pré-finais</span></div>
+          <div class="tc-desc">Entrada t/h · Descartes sup+inf kg/6s → t/h · % semente boa 500g</div>
+        </div>
+        <div class="arr">›</div>
+      </button>
+      <button class="tc" onclick="navigate('fin')">
+        <div class="tc-accent" style="background:#7C3AED"></div>
+        <div class="tc-icon" style="background:var(--purple-50)"><svg viewBox="0 0 20 20" fill="none"><rect x="2" y="6" width="16" height="9" rx="2" stroke="#7C3AED" stroke-width="1.4"/><path d="M2 9h16M6 9v6M14 9v6" stroke="#7C3AED" stroke-width="1.4" stroke-linecap="round"/><path d="M5 3h10l1 3H4l1-3z" stroke="#7C3AED" stroke-width="1.4" stroke-linejoin="round"/><circle cx="10" cy="12" r="1.5" fill="#7C3AED"/></svg></div>
+        <div class="tc-info">
+          <div class="tc-name">Densimétricas <span class="tc-badge" style="background:var(--purple-50);color:#5B21B6">Finais</span></div>
+          <div class="tc-desc">Peneiras com mesas · Descarte kg/6s → t/h · % semente boa 200 sem · Copinho</div>
+        </div>
+        <div class="arr">›</div>
+      </button>
+      <button class="tc" onclick="navigate('moega')">
+        <div class="tc-accent" style="background:#378ADD"></div>
+        <div class="tc-icon" style="background:var(--blue-50)"><svg viewBox="0 0 20 20" fill="none"><path d="M4 4h12l-1.5 8H5.5L4 4z" stroke="#378ADD" stroke-width="1.4" stroke-linejoin="round"/><path d="M2 4h16" stroke="#378ADD" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="16" r="1.2" fill="#378ADD"/><circle cx="13" cy="16" r="1.2" fill="#378ADD"/></svg></div>
+        <div class="tc-info">
+          <div class="tc-name">Moega <span class="tc-badge" style="background:var(--blue-50);color:#0C447C">Recebimento</span></div>
+          <div class="tc-desc">200 sementes · Variação de hilo · Foto opcional</div>
+        </div>
+        <div class="arr">›</div>
+      </button>
+    </div>
+  </main>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     REGISTROS PAGE
+════════════════════════════════════════════════ -->
+<div class="page" id="page-registros">
+  <header class="header">
+    <div class="h-left">
+      <button class="back-btn" onclick="navigate('home')">&#8592;</button>
+      <div class="header-logo"><svg viewBox="0 0 14 14" fill="none"><path d="M2 3h10M2 7h7M2 11h8" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+      <span class="header-title">Registros</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span id="reg-header-count" style="font-family:var(--mono);font-size:11px;color:rgba(255,255,255,0.5)">—</span>
+      <button class="user-btn-icon" id="reg-user-btn" onclick="toggleDropdown('reg-dd')"></button>
+    </div>
+  </header>
+  <div class="user-dropdown" id="reg-dd">
+    <div class="user-dd-info">
+      <div class="user-dd-unit" id="reg-dd-unit">—</div>
+      <div class="user-dd-session" id="reg-dd-session">—</div>
+    </div>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item" onclick="navigate('home')">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="1" width="5" height="5" rx="1.5" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="5" height="5" rx="1.5" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="5" height="5" rx="1.5" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="5" height="5" rx="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
+      Tela inicial
+    </button>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item danger" onclick="doLogout()">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M5.5 2.5H3.5a1 1 0 00-1 1v8a1 1 0 001 1h2M10 10.5L13 7.5 10 4.5M13 7.5H5.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Sair / Trocar usuário
+    </button>
+  </div>
+  <div class="reg-toolbar">
+    <button class="filter-chip active" data-f="all" onclick="regSetFilter('all')">Todos</button>
+    <button class="filter-chip" data-f="moega" onclick="regSetFilter('moega')">Moega</button>
+    <button class="filter-chip" data-f="map" onclick="regSetFilter('map')">MAP</button>
+    <button class="filter-chip" data-f="posl" onclick="regSetFilter('posl')">Pós-limpeza</button>
+    <button class="filter-chip" data-f="esp" onclick="regSetFilter('esp')">Espirais</button>
+    <button class="filter-chip" data-f="pad" onclick="regSetFilter('pad')">Padroniz.</button>
+    <button class="filter-chip" data-f="fin" onclick="regSetFilter('fin')">Finais</button>
+    <input type="date" class="date-input" id="reg-date-filter" onchange="regRender()">
+  </div>
+  <div class="reg-stats-bar" style="grid-template-columns:repeat(6,1fr)">
+    <div class="sbar"><div class="sbar-val" id="cnt-moega" style="color:#378ADD">0</div><div class="sbar-lbl">Moega</div></div>
+    <div class="sbar"><div class="sbar-val" id="cnt-map" style="color:#1D9E75">0</div><div class="sbar-lbl">MAP</div></div>
+    <div class="sbar"><div class="sbar-val" id="cnt-posl" style="color:#BA7517">0</div><div class="sbar-lbl">Pós-limp.</div></div>
+    <div class="sbar"><div class="sbar-val" id="cnt-esp" style="color:#00ACC1">0</div><div class="sbar-lbl">Espirais</div></div>
+    <div class="sbar"><div class="sbar-val" id="cnt-pad" style="color:#FB8C00">0</div><div class="sbar-lbl">Padroniz.</div></div>
+    <div class="sbar"><div class="sbar-val" id="cnt-fin" style="color:#7C3AED">0</div><div class="sbar-lbl">Finais</div></div>
+  </div>
+  <div class="main reg-table-wrap">
+    <div id="reg-list"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     MAP PAGE
+════════════════════════════════════════════════ -->
+<div class="page" id="page-map">
+  <header class="header">
+    <div class="h-left">
+      <button class="back-btn" onclick="navigate('home')">&#8592;</button>
+      <div class="header-logo"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1.5" fill="white" fill-opacity=".9"/><rect x="9" y="2" width="5" height="5" rx="1.5" fill="white" fill-opacity=".5"/><rect x="2" y="9" width="5" height="5" rx="1.5" fill="white" fill-opacity=".5"/><rect x="9" y="9" width="5" height="5" rx="1.5" fill="white" fill-opacity=".9"/></svg></div>
+      <span class="header-title">MAP</span>
+      <span class="header-badge">Máquina de ar e peneira</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="header-dt" id="map-header-dt">—</span>
+      <button class="user-btn-icon" id="map-user-btn" onclick="toggleDropdown('map-dd')"></button>
+    </div>
+  </header>
+  <div class="user-dropdown" id="map-dd">
+    <div class="user-dd-info"><div class="user-dd-unit" id="map-dd-unit">—</div></div>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item" onclick="navigate('home')">← Tela inicial</button>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item danger" onclick="doLogout()">Sair</button>
+  </div>
+  <nav class="nav-tabs">
+    <div class="ntab active" onclick="mapSwitchTab('form')">Lançamento</div>
+    <div class="ntab" onclick="mapSwitchTab('records')">Registros</div>
+  </nav>
+  <div class="test-page-body">
+    <div class="test-main" id="map-tab-form">
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-green">Identificação</div></div>
+        <div class="field-row">
+          <div class="field"><label>Operador</label><select id="map-operator"><option value="">Selecionar...</option></select></div>
+          <div class="field"><label>Data / hora</label><input type="text" id="map-dt-field" readonly></div>
+        </div>
+      </div>
+      <div class="info-note">Colete a amostra por 6 segundos e pese em kg. O sistema converte para t/h automaticamente.</div>
+      <div id="map-machines-container"></div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-green">Resumo</div><div class="card-heading">Balanço total das MAPs</div></div>
+        <div class="summary-grid-4">
+          <div class="metric"><div class="metric-label">Ent. total</div><div class="metric-value" id="map-sum-entrada">—</div><div class="metric-unit">t/h</div></div>
+          <div class="metric"><div class="metric-label">Desc. sup total</div><div class="metric-value" id="map-sum-sup">—</div><div class="metric-unit">t/h</div></div>
+          <div class="metric"><div class="metric-label">Desc. inf total</div><div class="metric-value" id="map-sum-inf">—</div><div class="metric-unit">t/h</div></div>
+          <div class="metric highlight"><div class="metric-label">Saída total</div><div class="metric-value" id="map-sum-saida">—</div><div class="metric-unit">t/h</div></div>
+        </div>
+        <div class="mesa-status-list" id="map-machine-status-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-amber">Observações</div></div>
+        <div class="field" style="margin-bottom:14px"><label>Observações do teste</label><textarea id="map-obs" placeholder="Condições, irregularidades, ajustes realizados..."></textarea></div>
+        <button class="submit-btn" onclick="mapSalvar()">Salvar registro</button>
+      </div>
+    </div>
+    <div class="test-main" id="map-tab-records" style="display:none"><div id="map-rec-list"></div></div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     PÓS-LIMPEZA PAGE
+════════════════════════════════════════════════ -->
+<div class="page" id="page-posl">
+  <header class="header">
+    <div class="h-left">
+      <button class="back-btn" onclick="navigate('home')">&#8592;</button>
+      <div class="header-logo"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="14" height="8" rx="1.5" stroke="white" stroke-width="1.2"/><path d="M4 5V4a3 3 0 016 0v1" stroke="white" stroke-width="1.2"/><path d="M4 9h8" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+      <span class="header-title">Densimétricas</span>
+      <span class="header-badge">Pós-limpeza</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="header-dt" id="posl-header-dt">—</span>
+      <button class="user-btn-icon" id="posl-user-btn" onclick="toggleDropdown('posl-dd')"></button>
+    </div>
+  </header>
+  <div class="user-dropdown" id="posl-dd">
+    <div class="user-dd-info"><div class="user-dd-unit" id="posl-dd-unit">—</div></div>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item" onclick="navigate('home')">← Tela inicial</button>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item danger" onclick="doLogout()">Sair</button>
+  </div>
+  <nav class="nav-tabs">
+    <div class="ntab active" onclick="poslSwitchTab('form')">Lançamento</div>
+    <div class="ntab" onclick="poslSwitchTab('records')">Registros</div>
+  </nav>
+  <div class="test-page-body">
+    <div class="test-main" id="posl-tab-form">
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-amber">Identificação</div></div>
+        <div class="field-row">
+          <div class="field"><label>Operador</label><select id="posl-operator"><option value="">Selecionar...</option></select></div>
+          <div class="field"><label>Data / hora</label><input type="text" id="posl-dt-field" readonly></div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Entrada — vazão total</label>
+          <div class="input-unit-wrap"><input type="number" id="posl-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="poslCalcAll()"><span class="input-unit">t/h</span></div>
+        </div>
+      </div>
+      <div class="info-note">Descarte: amostra de 6 segundos em kg → t/h. Semente boa: amostra fixa de 500g.</div>
+      <div id="posl-mesas-container"></div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-amber">Resumo</div><div class="card-heading" id="posl-sum-title">Balanço das mesas</div></div>
+        <div class="summary-grid-4">
+          <div class="metric"><div class="metric-label">Entrada</div><div class="metric-value" id="posl-sum-entrada">—</div><div class="metric-unit">t/h</div></div>
+          <div class="metric"><div class="metric-label">Desc. total</div><div class="metric-value" id="posl-sum-desc">—</div><div class="metric-unit">t/h</div></div>
+          <div class="metric"><div class="metric-label">% descarte</div><div class="metric-value" id="posl-sum-pct">—</div><div class="metric-unit">%</div></div>
+          <div class="metric highlight"><div class="metric-label">Saída est.</div><div class="metric-value" id="posl-sum-saida">—</div><div class="metric-unit">t/h</div></div>
+        </div>
+        <div class="mesa-status-list" id="posl-mesa-status-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-amber">Observações</div></div>
+        <div class="field" style="margin-bottom:14px"><label>Observações gerais</label><textarea id="posl-obs" placeholder="Condições, ajustes, irregularidades..."></textarea></div>
+        <button class="submit-btn" onclick="poslSalvar()">Salvar registro</button>
+      </div>
+    </div>
+    <div class="test-main" id="posl-tab-records" style="display:none"><div id="posl-rec-list"></div></div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     ESPIRAIS PAGE
+════════════════════════════════════════════════ -->
+<div class="page" id="page-esp">
+  <header class="header">
+    <div class="h-left">
+      <button class="back-btn" onclick="navigate('home')">&#8592;</button>
+      <div class="header-logo"><svg viewBox="0 0 16 16" fill="none"><path d="M8 2C5 2 3 4.5 3 8C3 11 5 14 8 14C11 14 13 11 13 8" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+      <span class="header-title">Espirais rotativos</span>
+      <span class="header-badge">Pré-finais</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="header-dt" id="esp-header-dt">—</span>
+      <button class="user-btn-icon" id="esp-user-btn" onclick="toggleDropdown('esp-dd')"></button>
+    </div>
+  </header>
+  <div class="user-dropdown" id="esp-dd">
+    <div class="user-dd-info"><div class="user-dd-unit" id="esp-dd-unit">—</div></div>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item" onclick="navigate('home')">← Tela inicial</button>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item danger" onclick="doLogout()">Sair</button>
+  </div>
+  <nav class="nav-tabs">
+    <div class="ntab active" onclick="espSwitchTab('form')">Lançamento</div>
+    <div class="ntab" onclick="espSwitchTab('records')">Registros</div>
+  </nav>
+  <div class="test-page-body">
+    <div class="test-main" id="esp-tab-form">
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-teal">Identificação</div></div>
+        <div class="field-row">
+          <div class="field"><label>Operador</label><select id="esp-operator"><option value="">Selecionar...</option></select></div>
+          <div class="field"><label>Data / hora</label><input type="text" id="esp-dt-field" readonly></div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Entrada — vazão total</label>
+            <div class="input-unit-wrap"><input type="number" id="esp-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="espCalcAll()"><span class="input-unit">t/h</span></div>
+          </div>
+          <div class="field">
+            <label>Frequência</label>
+            <div class="input-unit-wrap"><input type="number" id="esp-freq-hz" placeholder="0.0" min="0" step="0.1"><span class="input-unit">Hz</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-teal">Descarte</div><div class="card-heading">Amostra de 6 segundos</div></div>
+        <div class="field">
+          <label>Peso amostra descarte 6s</label>
+          <div class="input-unit-wrap"><input type="number" id="esp-desc-kg" placeholder="0.000" min="0" step="0.001" oninput="espCalcAll()"><span class="input-unit">kg</span></div>
+        </div>
+        <div class="mini-result"><span class="mini-label">Descarte t/h</span><span class="mini-val" id="esp-desc-th" style="color:var(--teal-400)">—</span></div>
+        <div class="field" style="margin-bottom:0">
+          <label>Grão bom na amostra de 200 sementes</label>
+          <div class="input-unit-wrap"><input type="number" id="esp-graobom-200" placeholder="0" min="0" max="200" step="1" oninput="espCalcAll()"><span class="input-unit">sem.</span></div>
+        </div>
+        <div class="mini-result" style="margin-bottom:0"><span class="mini-label">% grão bom no descarte</span><span class="mini-pct" id="esp-graobom-pct">—</span></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-teal">Qualidade saída</div><div class="card-heading">Grão ruim na amostra de grão bom</div></div>
+        <div class="info-note">Colete 200 sementes da saída (produto bom) e conte quantas são grãos ruins (danificados, chochos, etc.).</div>
+        <div class="field">
+          <label>Grão ruim na amostra de 200 sementes (grão bom)</label>
+          <div class="input-unit-wrap"><input type="number" id="esp-graoruin-200" placeholder="0" min="0" max="200" step="1" oninput="espCalcAll()"><span class="input-unit">sem.</span></div>
+        </div>
+        <div class="mini-result" style="margin-bottom:0"><span class="mini-label">% grão ruim no produto bom</span><span class="mini-pct" id="esp-graoruin-pct" style="color:var(--teal-400)">—</span></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-teal">Resumo</div><div class="card-heading">Balanço de processamento</div></div>
+        <div class="summary-grid-3">
+          <div class="metric"><div class="metric-label">Entrada</div><div class="metric-value" id="esp-sum-entrada">—</div><div class="metric-unit">t/h</div></div>
+          <div class="metric highlight-teal"><div class="metric-label">Descarte</div><div class="metric-value" id="esp-sum-desc">—</div><div class="metric-unit">t/h</div></div>
+          <div class="metric highlight"><div class="metric-label">Saída</div><div class="metric-value" id="esp-sum-saida">—</div><div class="metric-unit">t/h</div></div>
+        </div>
+        <div class="summary-grid-2">
+          <div class="metric"><div class="metric-label">% descarte</div><div class="metric-value" id="esp-sum-pct-desc">—</div><div class="metric-unit">%</div></div>
+          <div class="metric"><div class="metric-label">% grão bom no descarte</div><div class="metric-value" id="esp-sum-graobom-pct">—</div><div class="metric-unit">%</div></div>
+        </div>
+        <div class="efic-wrap">
+          <div class="efic-top"><span class="efic-label">Eficiência estimada</span><span class="efic-value" id="esp-sum-efic" style="color:var(--green-600)">—</span></div>
+          <div class="bar-bg"><div class="bar-fill" id="esp-efic-bar" style="width:0%;background:var(--teal-400)"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-amber">Observações</div></div>
+        <div class="field" style="margin-bottom:14px"><label>Observações do teste</label><textarea id="esp-obs" placeholder="Condições, irregularidades, ajustes realizados..."></textarea></div>
+        <button class="submit-btn" onclick="espSalvar()">Salvar registro</button>
+      </div>
+    </div>
+    <div class="test-main" id="esp-tab-records" style="display:none"><div id="esp-rec-list"></div></div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     PADRONIZADORES PAGE
+════════════════════════════════════════════════ -->
+<div class="page" id="page-pad">
+  <header class="header">
+    <div class="h-left">
+      <button class="back-btn" onclick="navigate('home')">&#8592;</button>
+      <div class="header-logo"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="6" width="12" height="8" rx="1.5" stroke="white" stroke-width="1.2"/><path d="M5 6V5a3 3 0 016 0v1" stroke="white" stroke-width="1.2"/><path d="M5 10h6M8 10v2.5" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+      <span class="header-title">Padronizadores</span>
+      <span class="header-badge">Pré-finais</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="header-dt" id="pad-header-dt">—</span>
+      <button class="user-btn-icon" id="pad-user-btn" onclick="toggleDropdown('pad-dd')"></button>
+    </div>
+  </header>
+  <div class="user-dropdown" id="pad-dd">
+    <div class="user-dd-info"><div class="user-dd-unit" id="pad-dd-unit">—</div></div>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item" onclick="navigate('home')">← Tela inicial</button>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item danger" onclick="doLogout()">Sair</button>
+  </div>
+  <nav class="nav-tabs">
+    <div class="ntab active" onclick="padSwitchTab('form')">Lançamento</div>
+    <div class="ntab" onclick="padSwitchTab('records')">Registros</div>
+  </nav>
+  <div class="test-page-body">
+    <div class="test-main" id="pad-tab-form">
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-orange">Identificação</div></div>
+        <div class="field-row">
+          <div class="field"><label>Operador</label><select id="pad-operator"><option value="">Selecionar...</option></select></div>
+          <div class="field"><label>Data / hora</label><input type="text" id="pad-dt-field" readonly></div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Entrada — vazão total</label>
+          <div class="input-unit-wrap"><input type="number" id="pad-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="padCalcAll()"><span class="input-unit">t/h</span></div>
+        </div>
+      </div>
+      <div class="info-note">Colete a amostra por 6 segundos e pese em kg. O sistema converte para t/h automaticamente.</div>
+      <div id="pad-machines-container"></div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-orange">Resumo</div><div class="card-heading" id="pad-sum-title">Balanço total</div></div>
+        <div class="summary-grid-4">
+          <div class="metric"><div class="metric-label">Entrada</div><div class="metric-value" id="pad-sum-entrada">—</div><div class="metric-unit">t/h</div></div>
+          <div class="metric"><div class="metric-label">Desc. sup total</div><div class="metric-value" id="pad-sum-sup">—</div><div class="metric-unit">t/h</div></div>
+          <div class="metric"><div class="metric-label">Desc. inf total</div><div class="metric-value" id="pad-sum-inf">—</div><div class="metric-unit">t/h</div></div>
+          <div class="metric highlight"><div class="metric-label">Saída</div><div class="metric-value" id="pad-sum-saida">—</div><div class="metric-unit">t/h</div></div>
+        </div>
+        <div class="mesa-status-list" id="pad-machine-status-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-amber">Observações</div></div>
+        <div class="field" style="margin-bottom:14px"><label>Observações do teste</label><textarea id="pad-obs" placeholder="Condições, irregularidades, ajustes realizados..."></textarea></div>
+        <button class="submit-btn" onclick="padSalvar()">Salvar registro</button>
+      </div>
+    </div>
+    <div class="test-main" id="pad-tab-records" style="display:none"><div id="pad-rec-list"></div></div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     DENSIMÉTRICA FINAIS PAGE
+════════════════════════════════════════════════ -->
+<div class="page" id="page-fin">
+  <header class="header">
+    <div class="h-left">
+      <button class="back-btn" onclick="navigate('home')">&#8592;</button>
+      <div class="header-logo"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="14" height="8" rx="1.5" stroke="white" stroke-width="1.2"/><path d="M4 5V4a3 3 0 016 0v1" stroke="white" stroke-width="1.2"/><path d="M4 9h8M6 9v3M10 9v3" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+      <span class="header-title">Densimétricas finais</span>
+      <span class="header-badge" id="fin-header-badge">Mesas</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="header-dt" id="fin-header-dt">—</span>
+      <button class="user-btn-icon" id="fin-user-btn" onclick="toggleDropdown('fin-dd')"></button>
+    </div>
+  </header>
+  <div class="user-dropdown" id="fin-dd">
+    <div class="user-dd-info"><div class="user-dd-unit" id="fin-dd-unit">—</div></div>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item" onclick="navigate('home')">← Tela inicial</button>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item danger" onclick="doLogout()">Sair</button>
+  </div>
+  <nav class="nav-tabs">
+    <div class="ntab active" onclick="finSwitchTab('form')">Lançamento</div>
+    <div class="ntab" onclick="finSwitchTab('records')">Registros</div>
+  </nav>
+  <div class="test-page-body">
+    <div class="test-main" id="fin-tab-form">
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-purple">Identificação</div></div>
+        <div class="field-row">
+          <div class="field"><label>Operador</label><select id="fin-operator"><option value="">Selecionar...</option></select></div>
+          <div class="field"><label>Data / hora</label><input type="text" id="fin-dt-field" readonly></div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Entrada — vazão total</label>
+          <div class="input-unit-wrap"><input type="number" id="fin-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="finCalcAll()"><span class="input-unit">t/h</span></div>
+        </div>
+      </div>
+      <div class="info-note">Descarte: amostra de 6 segundos em kg → t/h. Semente boa: 200 sementes. Copinho: pese as três frações (alto, meio, baixo) — ideal é parte alta ≥ parte baixa + 3%.</div>
+      <div id="fin-mesas-container"></div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-purple">Resumo</div><div class="card-heading" id="fin-sum-title">Balanço das mesas</div></div>
+        <div class="summary-grid-4">
+          <div class="metric"><div class="metric-label">Entrada</div><div class="metric-value" id="fin-sum-entrada">—</div><div class="metric-unit">t/h</div></div>
+          <div class="metric"><div class="metric-label">Desc. total</div><div class="metric-value" id="fin-sum-desc">—</div><div class="metric-unit">t/h</div></div>
+          <div class="metric"><div class="metric-label">% descarte</div><div class="metric-value" id="fin-sum-pct">—</div><div class="metric-unit">%</div></div>
+          <div class="metric highlight"><div class="metric-label">Saída est.</div><div class="metric-value" id="fin-sum-saida">—</div><div class="metric-unit">t/h</div></div>
+        </div>
+        <div class="mesa-status-list" id="fin-mesa-status-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-amber">Observações</div></div>
+        <div class="field" style="margin-bottom:14px"><label>Observações gerais</label><textarea id="fin-obs" placeholder="Condições, ajustes, irregularidades..."></textarea></div>
+        <button class="submit-btn" onclick="finSalvar()">Salvar registro</button>
+      </div>
+    </div>
+    <div class="test-main" id="fin-tab-records" style="display:none"><div id="fin-rec-list"></div></div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     MOEGA PAGE
+════════════════════════════════════════════════ -->
+<div class="page" id="page-moega">
+  <header class="header">
+    <div class="h-left">
+      <button class="back-btn" onclick="navigate('home')">&#8592;</button>
+      <div class="header-logo"><svg viewBox="0 0 16 16" fill="none"><path d="M3 3h10l-1.2 6.5H4.2L3 3z" stroke="white" stroke-width="1.2" stroke-linejoin="round"/><path d="M1.5 3h13" stroke="white" stroke-width="1.2" stroke-linecap="round"/><circle cx="6.5" cy="13.5" r="1" fill="white"/><circle cx="10.5" cy="13.5" r="1" fill="white"/></svg></div>
+      <span class="header-title">Moega</span>
+      <span class="header-badge">Recebimento</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="header-dt" id="moega-header-dt">—</span>
+      <button class="user-btn-icon" id="moega-user-btn" onclick="toggleDropdown('moega-dd')"></button>
+    </div>
+  </header>
+  <div class="user-dropdown" id="moega-dd">
+    <div class="user-dd-info"><div class="user-dd-unit" id="moega-dd-unit">—</div><div class="user-dd-session" id="moega-dd-session">—</div></div>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item" onclick="navigate('home')">← Tela inicial</button>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item danger" onclick="doLogout()">Sair</button>
+  </div>
+  <nav class="nav-tabs">
+    <div class="ntab active" onclick="moegaSwitchTab('form')">Lançamento</div>
+    <div class="ntab" onclick="moegaSwitchTab('records')">Registros</div>
+  </nav>
+  <div class="test-page-body">
+    <div class="test-main" id="moega-tab-form">
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-blue">Identificação</div></div>
+        <div class="field-row">
+          <div class="field"><label>Operador</label><select id="moega-operator"><option value="">Selecionar...</option></select></div>
+          <div class="field"><label>Data / hora</label><input type="text" id="moega-dt-field" readonly></div>
+        </div>
+
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-blue">Amostra</div><div class="card-heading">200 sementes</div></div>
+        <div class="info-note">Colete 200 sementes representativas da carga e realize a análise visual abaixo.</div>
+        <div class="field">
+          <label>Total de sementes analisadas</label>
+          <div class="input-unit-wrap"><input type="number" id="moega-total-sem" value="200" min="1" max="500" step="1"><span class="input-unit">sem.</span></div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Sementes com variação de hilo</label>
+          <div class="hilo-toggle-row">
+            <button class="hilo-btn" id="moega-hilo-nao" onclick="moegaSetHilo(false)">✓ Sem variação</button>
+            <button class="hilo-btn" id="moega-hilo-sim" onclick="moegaSetHilo(true)">⚠ Com variação</button>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="moega-hilo-detalhe" style="display:none">
+        <div class="card-header"><div class="card-pill" style="background:var(--amber-50);color:var(--amber-800)">Hilo</div><div class="card-heading">Detalhe da variação</div></div>
+        <div class="field">
+          <label>Quantidade com hilo alterado (sementes)</label>
+          <div class="input-unit-wrap"><input type="number" id="moega-hilo-qtd" placeholder="0" min="0" step="1" oninput="moegaCalc()"><span class="input-unit">sem.</span></div>
+        </div>
+        <div class="mini-result"><span class="mini-label">% hilo alterado</span><span class="mini-val" id="moega-hilo-pct" style="color:var(--amber-400)">—</span></div>
+        <div class="field" style="margin-bottom:0">
+          <label>Descrição da variação</label>
+          <input type="text" id="moega-hilo-desc" placeholder="Ex: hilo escuro, manchado, variação de cor...">
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-blue">Foto</div><div class="card-heading">Registro fotográfico (opcional)</div></div>
+        <div class="photo-upload-area" id="moega-photo-area" onclick="document.getElementById('moega-photo-input').click()">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 8px;display:block"><rect x="2" y="6" width="24" height="17" rx="3" stroke="#9A9893" stroke-width="1.4"/><circle cx="14" cy="14.5" r="4" stroke="#9A9893" stroke-width="1.4"/><path d="M9 6l1.5-3h7L19 6" stroke="#9A9893" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          <div style="font-size:13px;color:var(--text-muted);font-weight:500">Toque para tirar ou selecionar foto</div>
+          <div style="font-size:11px;color:var(--text-hint);margin-top:3px">JPG, PNG — opcional</div>
+        </div>
+        <input type="file" id="moega-photo-input" accept="image/*" capture="environment" style="display:none" onchange="moegaPhotoSelected(this)">
+        <img id="moega-photo-preview" class="photo-preview" alt="Foto da amostra">
+        <button id="moega-photo-remove" style="display:none;margin-top:8px;width:100%;padding:8px;border:0.5px solid var(--red-100);border-radius:var(--radius-md);background:var(--red-50);color:var(--red-400);font-size:12px;cursor:pointer;font-family:var(--font)" onclick="moegaRemovePhoto()">✕ Remover foto</button>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-pill pill-amber">Observações</div></div>
+        <div class="field" style="margin-bottom:14px"><label>Observações gerais</label><textarea id="moega-obs" placeholder="Condições da carga, umidade aparente, presença de impurezas..."></textarea></div>
+        <button class="submit-btn" onclick="moegaSalvar()">Salvar registro</button>
+      </div>
+    </div>
+    <div class="test-main" id="moega-tab-records" style="display:none"><div id="moega-rec-list"></div></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     INDICADORES PAGE
+════════════════════════════════════════════════ -->
+<div class="page" id="page-indicadores">
+  <header class="header">
+    <div class="h-left">
+      <button class="back-btn" id="ind-back-btn" onclick="isAdmin()?doLogout():navigate('home')">&#8592;</button>
+      <div class="header-logo"><svg viewBox="0 0 16 16" fill="none"><path d="M1 13L5 8L8 10L14 4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <span class="header-title">Indicadores</span>
+      <span class="header-badge" id="ind-header-badge">Volume por etapa</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="user-btn-icon" id="ind-user-btn" onclick="toggleDropdown('ind-dd')"></button>
+    </div>
+  </header>
+  <div class="user-dropdown" id="ind-dd">
+    <div class="user-dd-info"><div class="user-dd-unit" id="ind-dd-unit">—</div><div class="user-dd-session" id="ind-dd-session">—</div></div>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item" onclick="navigate('home')">← Tela inicial</button>
+    <div class="user-dd-divider"></div>
+    <button class="user-dd-item danger" onclick="doLogout()">Sair</button>
+  </div>
+  <div class="test-page-body">
+    <div class="test-main" style="max-width:720px">
+      <!-- Filter -->
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-header" style="margin-bottom:8px"><div class="card-pill pill-green">Filtro</div><div class="card-heading">Período e unidade</div></div>
+        <!-- UBS selector — visível apenas para admin -->
+        <div id="ind-ubs-filter" style="display:none;margin-bottom:12px">
+          <label style="font-size:12px;font-weight:500;color:var(--text-muted);display:block;margin-bottom:6px">Unidade</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="ind-tab-btn active" id="ind-ubs-all"  onclick="indSetUbs('')">Todas</button>
+            <button class="ind-tab-btn" id="ind-ubs-01" onclick="indSetUbs('UBS 01')">UBS 01</button>
+            <button class="ind-tab-btn" id="ind-ubs-03" onclick="indSetUbs('UBS 03')">UBS 03</button>
+            <button class="ind-tab-btn" id="ind-ubs-04" onclick="indSetUbs('UBS 04')">UBS 04</button>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field" style="margin-bottom:0"><label>Data início</label><input type="date" id="ind-date-start" onchange="indRender()"></div>
+          <div class="field" style="margin-bottom:0"><label>Data fim</label><input type="date" id="ind-date-end" onchange="indRender()"></div>
+        </div>
+      </div>
+      <!-- Fluxo de volume -->
+      <div id="ind-tab-fluxo">
+        <div class="card" style="margin-bottom:12px">
+          <div style="font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text-hint);margin-bottom:14px">Volume de processamento — t/h por etapa</div>
+          <div style="position:relative;width:100%;height:320px"><canvas id="ind-chart" style="width:100%;height:100%"></canvas></div>
+          <div id="ind-legend" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;font-size:11px"></div>
+        </div>
+        <div class="card" style="margin-bottom:12px">
+          <div style="font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text-hint);margin-bottom:12px">Últimas leituras por etapa</div>
+          <div id="ind-summary-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"></div>
+        </div>
+        <!-- Tabela: % grão bom no descarte por equipamento -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-pill" style="background:var(--red-50);color:var(--red-800)">Qualidade</div>
+            <div class="card-heading">% grão bom no descarte</div>
+          </div>
+          <div class="info-note">Percentual do volume bruto de entrada que sai como grão bom junto ao descarte. Calculado por equipamento com base no último registro do período. Ideal: &lt; 1%.</div>
+          <div id="ind-perda-tabela"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">×</span>
+  <img id="lightbox-img" src="" alt="foto ampliada">
+</div>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════════════
+const AUTH_CONFIG = {
+  ubs01:{ pass:'ubs01', unit:'UBS 01', role:'ubs' },
+  ubs03:{ pass:'ubs03', unit:'UBS 03', role:'ubs' },
+  ubs04:{ pass:'ubs04', unit:'UBS 04', role:'ubs' },
+  admin:{ pass:'admin@2025', unit:'', role:'admin' },
+};
+const SESSION_HOURS = 4;
+
+// ── Configuração de máquinas por unidade ──
+const UNIT_CONFIG = {
+  'UBS 01': {
+    map:  { count:2, serial:true },
+    posl: { count:7 },
+    pad:  { count:4 },
+    fin:  { peneiras:[ {id:'p1',label:'Peneira 1',mesas:1}, {id:'p2',label:'Peneira 2',mesas:2} ] },
+  },
+  'UBS 03': {
+    map:  { count:1 },
+    posl: { count:3 },
+    pad:  { count:2 },
+    fin:  { peneiras:[ {id:'p1',label:'Peneira 1',mesas:2}, {id:'p2',label:'Peneira 2',mesas:2} ] },
+  },
+  'UBS 04': {
+    map:  { count:1 },
+    posl: { count:4 },
+    pad:  { count:4 },
+    fin:  { peneiras:[ {id:'p1',label:'Peneira 1',mesas:4}, {id:'p2',label:'Peneira 2',mesas:4} ] },
+  },
+};
+function getUnitCfg(){ return UNIT_CONFIG[getUnit()] || UNIT_CONFIG['UBS 04']; }
+
+function getSession(){
+  try{ const s=JSON.parse(localStorage.getItem('qtrack_session')||'null'); return s&&s.expires>Date.now()?s:null; }catch(e){ return null; }
+}
+function getUnit(){ try{ return getSession()?.unit||localStorage.getItem('qtrack_active_unit')||''; }catch(e){return '';} }
+function getRole(){ try{ return getSession()?.role||'ubs'; }catch(e){return 'ubs';} }
+function isAdmin(){ return getRole()==='admin'; }
+
+function doLogout(){
+  localStorage.removeItem('qtrack_session');
+  localStorage.removeItem('qtrack_active_unit');
+  navigate('login');
+}
+
+// ── Login ──
+document.getElementById('login-submit-btn').addEventListener('click', doLogin);
+document.getElementById('login-password').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+document.getElementById('login-profile').addEventListener('change', ()=>{
+  document.getElementById('login-error').classList.remove('show');
+  document.getElementById('login-password').value='';
+  document.getElementById('login-password').focus();
+});
+
+function doLogin(){
+  const profile = document.getElementById('login-profile').value;
+  const pass = document.getElementById('login-password').value;
+  if(!profile){ showLoginError('Selecione a unidade ou perfil.'); return; }
+  if(!pass){ showLoginError('Digite a senha.'); return; }
+  const cfg = AUTH_CONFIG[profile];
+  if(!cfg||pass!==cfg.pass){ showLoginError('Senha incorreta.'); loginShake(); return; }
+  const session = { role:cfg.role, unit:cfg.unit, profile, expires:Date.now()+(SESSION_HOURS*3600*1000) };
+  localStorage.setItem('qtrack_session', JSON.stringify(session));
+  localStorage.setItem('qtrack_active_unit', cfg.unit);
+  const btn = document.getElementById('login-submit-btn');
+  btn.textContent = 'Entrando...'; btn.disabled = true;
+  const dest = cfg.role==='admin' ? 'indicadores' : 'home';
+  setTimeout(()=>{ btn.textContent='Entrar'; btn.disabled=false; navigate(dest); }, 300);
+}
+function showLoginError(msg){ document.getElementById('login-error-text').textContent=msg; document.getElementById('login-error').classList.add('show'); }
+function loginShake(){ const c=document.querySelector('.login-card'); c.style.animation='shake .35s ease'; setTimeout(()=>c.style.animation='',400); }
+
+// ══════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════
+let currentPage = 'login';
+const PAGE_IDS = ['login','home','registros','map','posl','esp','pad','fin','moega','indicadores'];
+
+function navigate(page){
+  // close any open dropdown
+  document.querySelectorAll('.user-dropdown.open').forEach(d=>d.classList.remove('open'));
+
+  // auth guard
+  if(page !== 'login'){
+    const s = getSession();
+    if(!s){ navigate('login'); return; }
+  }
+  PAGE_IDS.forEach(id=>{ document.getElementById('page-'+id).classList.toggle('active', id===page); });
+  currentPage = page;
+
+  if(page==='home'){ initHomePage(); }
+  else if(page==='registros'){ regLoad(); updateDropdowns(); }
+  else if(page==='map'){ mapInit(); updateDropdowns(); }
+  else if(page==='posl'){ poslInit(); updateDropdowns(); }
+  else if(page==='esp'){ espInit(); updateDropdowns(); }
+  else if(page==='pad'){ padInit(); updateDropdowns(); }
+  else if(page==='fin'){ finInit(); updateDropdowns(); }
+  else if(page==='moega'){ moegaInit(); updateDropdowns(); }
+  else if(page==='indicadores'){ indInit(); updateDropdowns(); }
+  window.scrollTo(0,0);
+}
+
+// ══════════════════════════════════════════════
+// DROPDOWN
+// ══════════════════════════════════════════════
+function toggleDropdown(id){
+  const dd = document.getElementById(id);
+  const isOpen = dd.classList.contains('open');
+  document.querySelectorAll('.user-dropdown').forEach(d=>d.classList.remove('open'));
+  if(!isOpen) dd.classList.add('open');
+}
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.user-btn-icon')&&!e.target.closest('.user-dropdown'))
+    document.querySelectorAll('.user-dropdown').forEach(d=>d.classList.remove('open'));
+});
+
+function updateDropdowns(){
+  const s = getSession();
+  const unit = s?.unit||'—';
+  const initials = unit.replace(/\D/g,'').slice(0,2)||unit.slice(0,2).toUpperCase();
+  const mins = s? Math.max(0,Math.round((s.expires-Date.now())/60000)) : 0;
+  const h = Math.floor(mins/60), m = mins%60;
+  const expiry = h>0 ? `Expira em ${h}h ${m}min` : `Expira em ${m}min`;
+
+  ['home','reg','map','posl','esp','pad','fin','moega','ind'].forEach(prefix=>{
+    const btn = document.getElementById(prefix+'-user-btn');
+    if(btn){ btn.textContent=initials; }
+    const uEl = document.getElementById(prefix+'-dd-unit');
+    if(uEl) uEl.textContent = unit;
+    const sEl = document.getElementById(prefix+'-dd-session');
+    if(sEl) sEl.textContent = expiry;
+  });
+}
+
+// ══════════════════════════════════════════════
+// HOME PAGE
+// ══════════════════════════════════════════════
+function initHomePage(){
+  updateDropdowns();
+}
+
+// ── Saída líquida: pega o último registro da máquina anterior e calcula a saída ──
+// Para MAP: saidaTH direto
+// Para posl/fin (mesas): entTH - totalDescTH
+// Para esp: saidaTH direto
+function getLastSaida(fromType){ return dbGetLastSaida(fromType); }
+
+function prefillEntrada(prefix, value){
+  if(value===null) return;
+  const el = document.getElementById(prefix+'-entrada-th');
+  if(!el) return;
+  // always overwrite with latest saida on page open
+  el.value = value;
+  const fn = {posl:poslCalcAll, esp:espCalcAll, pad:padCalcAll, fin:finCalcAll}[prefix];
+  if(fn) fn();
+  toast('Entrada: '+value+' t/h (ultimo registro da etapa anterior)');
+}
+
+// ══════════════════════════════════════════════
+// SHEETS API LAYER
+// ══════════════════════════════════════════════
+const API_URL = 'https://script.google.com/macros/s/AKfycbxwPwZznVHuTxk819KYWXwSby7gq1rQURE8fXlCmNBp20DFPcAOmYeZ9xJ4vkSOCHETKA/exec';
+
+// In-memory cache: { MAP:[], POSL:[], ... }
+const DB = { MAP:[], POSL:[], ESP:[], PAD:[], FIN:[], MOEGA:[] };
+let dbLoaded = {}; // tracks which sheets are loaded this session
+
+async function apiPost(action, sheetName, payload){
+  const body = { action, sheet: sheetName, ...payload };
+  const r = await fetch(API_URL, {
+    method:'POST',
+    body: JSON.stringify(body),
+  });
+  const json = await r.json();
+  if(!json.ok) throw new Error(json.error || 'API error');
+  return json;
+}
+
+async function apiGet(params){
+  const url = new URL(API_URL);
+  Object.entries(params).forEach(([k,v])=>{ if(v!=null) url.searchParams.set(k,v); });
+  const r = await fetch(url.toString());
+  const json = await r.json();
+  if(!json.ok) throw new Error(json.error || 'API error');
+  return json;
+}
+
+// Save one record to Sheets + in-memory cache
+async function dbInsert(sheetName, record){
+  DB[sheetName] = DB[sheetName] || [];
+  DB[sheetName].unshift(record);
+  await apiPost('insert', sheetName, { record });
+}
+
+// Load records for a sheet (filtered by unit). Uses cache if already loaded.
+async function dbLoad(sheetName, forceReload){
+  if(dbLoaded[sheetName] && !forceReload) return DB[sheetName]||[];
+  const unit = isAdmin() ? '' : getUnit();
+  const res = await apiGet({ action:'fetch', sheet:sheetName, unidade:unit||undefined });
+  const rows = (res.rows||[]).map(r=>{
+    // parse JSON fields
+    ['mesas','machines'].forEach(f=>{ if(typeof r[f]==='string'){ try{ r[f]=JSON.parse(r[f]); }catch(_){} } });
+    // numeric fields
+    ['id','entTH','supTH','supPct','infTH','infPct','saidaTH','descTH','pctDesc',
+     'graobomSem','graobomPct','graoruin200','graoruinPct','freqHz',
+     'totalDescTH','totalSem','hiloQtd','hiloPct'].forEach(f=>{
+      if(r[f]!==null&&r[f]!=='') r[f]=parseFloat(r[f])||r[f];
+    });
+    return r;
+  });
+  DB[sheetName] = rows.sort((a,b)=>b.id-a.id); // newest first
+  dbLoaded[sheetName] = true;
+  return DB[sheetName];
+}
+
+// Load all sheets at once (used by registros + indicadores)
+async function dbLoadAll(forceReload){
+  const unit = isAdmin() ? '' : getUnit();
+  const res = await apiGet({ action:'fetchAll', unidade:unit||undefined });
+  const data = res.data || {};
+  Object.keys(data).forEach(sheetName=>{
+    const rows = (data[sheetName]||[]).map(r=>{
+      ['mesas','machines'].forEach(f=>{ if(typeof r[f]==='string'){ try{ r[f]=JSON.parse(r[f]); }catch(_){} } });
+      ['id','entTH','supTH','supPct','infTH','infPct','saidaTH','descTH','pctDesc',
+       'graobomSem','graobomPct','graoruin200','graoruinPct','freqHz',
+       'totalDescTH','totalSem','hiloQtd','hiloPct'].forEach(f=>{
+        if(r[f]!==null&&r[f]!=='') r[f]=parseFloat(r[f])||r[f];
+      });
+      return r;
+    });
+    DB[sheetName] = rows.sort((a,b)=>b.id-a.id);
+    dbLoaded[sheetName] = true;
+  });
+}
+
+// Get last saida from cache (replaces getLastSaida localStorage version)
+function dbGetLastSaida(type){
+  const sheetName = type.toUpperCase();
+  const unit = getUnit();
+  const recs = (DB[sheetName]||[]).filter(r=>!unit||r.unidade===unit);
+  const getSaida = {
+    MAP:  r=>r.saidaTH??null,
+    POSL: r=>(r.entTH!=null&&r.totalDescTH!=null)?Math.max(0,r.entTH-r.totalDescTH):null,
+    ESP:  r=>r.saidaTH??null,
+    PAD:  r=>r.saidaTH??null,
+  }[sheetName];
+  if(!getSaida) return null;
+  for(const r of recs){ const s=getSaida(r); if(s!==null&&s>0) return s; }
+  return null;
+}
+
+// Operators stored in localStorage only (not in Sheets)
+const OPS_KEY = 'qtrack_operators_v1';
+function loadOperators(){ try{ return JSON.parse(localStorage.getItem(OPS_KEY)||'{}'); }catch(e){ return {}; } }
+function saveOperators(ops){ localStorage.setItem(OPS_KEY, JSON.stringify(ops)); }
+function getOperators(type){ const all=loadOperators(); return all[type]||['Operador 1','Operador 2','Operador 3']; }
+function setOperators(type, list){ const all=loadOperators(); all[type]=list; saveOperators(all); }
+
+// ── Shared async helpers ──────────────────────────────────
+async function saveRecordToSheets(sheetName, record){
+  // Optimistic: add to cache immediately, then persist to Sheets
+  DB[sheetName] = DB[sheetName] || [];
+  DB[sheetName].unshift(record);
+  toast('Salvando...', false);
+  try{
+    await dbInsert(sheetName, record);
+    toast('Salvo com sucesso!');
+  }catch(e){
+    toast('Erro ao salvar: '+e.message, true);
+    // remove from cache on failure
+    DB[sheetName] = DB[sheetName].filter(r=>r.id!==record.id);
+    return;
+  }
+  // reset form after confirmed save
+  const resetFns={MAP:mapResetForm,POSL:poslResetForm,ESP:espResetForm,PAD:padResetForm,FIN:finResetForm,MOEGA:moegaResetForm};
+  if(resetFns[sheetName]) resetFns[sheetName]();
+}
+
+async function loadAndRenderRecords(containerId, sheetName, type){
+  showLoading(containerId);
+  try{
+    const recs = await dbLoad(sheetName, true);
+    const unit = getUnit();
+    const filtered = recs.filter(r=>!unit||r.unidade===unit);
+    renderLocalRecords(containerId, filtered, type);
+  }catch(e){
+    const c=document.getElementById(containerId);
+    if(c) c.innerHTML='<div style="text-align:center;padding:32px;color:var(--red-400);font-size:13px">Erro ao carregar: '+e.message+'</div>';
+  }
+}
+
+function showLoading(containerId){
+  const c=document.getElementById(containerId);
+  if(c) c.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-hint);font-size:13px"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"animation:spin 1s linear infinite;display:inline-block;margin-bottom:8px\"><circle cx=\"12\" cy=\"12\" r=\"10\" stroke=\"currentColor\" stroke-width=\"2\" stroke-dasharray=\"40 20\"/></svg><br>Carregando...</div>';
+}
+function hideLoading(containerId){
+  // content will be replaced by render functions
+}
+
+// ══════════════════════════════════════════════
+// SHARED UTILS
+// ══════════════════════════════════════════════
+function kgToTH(kg){ const k=parseFloat(kg); return(!k||k<=0)?null:(k*600)/1000; }
+const fmt2 = v=>v!==null?v.toFixed(2):'—';
+function toast(msg,error=false){ const el=document.getElementById('toast'); el.textContent=msg; el.className='toast show'+(error?' error':''); setTimeout(()=>el.className='toast',3500); }
+function nowStr(){ const now=new Date(); return now.toLocaleDateString('pt-BR')+' '+now.toLocaleTimeString('pt-BR'); }
+
+function renderLocalRecords(containerId, records, type){
+  const c = document.getElementById(containerId);
+  if(!records.length){ c.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--text-hint);font-size:13px">Nenhum registro ainda.</div>'; return; }
+  const rows = records.map(r=>{
+    if(type==='map'||type==='pad'){
+      return `<tr><td>${r.dt||''}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.supTH??'—'}</td><td class="td-val">${r.supPct!=null?r.supPct+'%':'—'}</td><td class="td-val">${r.infTH??'—'}</td><td class="td-val">${r.infPct!=null?r.infPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td></tr>`;
+    }else if(type==='esp'){
+      return `<tr><td>${r.dt||''}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.descTH??'—'}</td><td class="td-val">${r.graobomPct!=null?r.graobomPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td></tr>`;
+    }else{
+      const mesas = (r.mesas||[]).map((m,i)=>`M${i+1}: ${m.descTH??'—'} t/h${m.boaPct!=null?' ('+m.boaPct+'%)':''}`).join(' | ');
+      const saida = r.entTH!=null&&r.totalDescTH!=null ? Math.max(0,r.entTH-r.totalDescTH).toFixed(2) : '—';
+      return `<tr><td>${r.dt||''}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td colspan="3" style="font-size:10px;color:var(--text-muted)">${mesas}</td><td class="td-val">${r.totalDescTH??'—'}</td><td class="td-saida">${saida}</td></tr>`;
+    }
+  }).join('');
+
+  let headers;
+  if(type==='map'||type==='pad') headers='<th>Data/Hora</th><th>Operador</th><th>Entrada t/h</th><th>Sup t/h</th><th>% Boa Sup</th><th>Inf t/h</th><th>% Boa Inf</th><th>Saída t/h</th><th>Efic.</th>';
+  else if(type==='esp') headers='<th>Data/Hora</th><th>Operador</th><th>Entrada t/h</th><th>Desc. t/h</th><th>% Bom Desc.</th><th>Saída t/h</th><th>Efic.</th>';
+  else headers='<th>Data/Hora</th><th>Operador</th><th>Entrada t/h</th><th colspan="3">Mesas</th><th>Desc. total</th><th>Saída est.</th>';
+
+  c.innerHTML=`<table class="reg-table"><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+
+
+// ══════════════════════════════════════════════
+// REGISTROS PAGE
+// ══════════════════════════════════════════════
+const REG_SOURCES=[
+  {sheet:'MOEGA', type:'moega',label:'Moega',         color:'#378ADD'},
+  {sheet:'MAP',   type:'map',  label:'MAP',           color:'#1D9E75'},
+  {sheet:'POSL',  type:'posl', label:'Pós-limpeza',   color:'#BA7517'},
+  {sheet:'ESP',   type:'esp',  label:'Espirais',      color:'#00ACC1'},
+  {sheet:'PAD',   type:'pad',  label:'Padronizadores',color:'#FB8C00'},
+  {sheet:'FIN',   type:'fin',  label:'Dens. Finais',  color:'#7C3AED'},
+];
+let regAllRecs=[], regFilter='all';
+
+async function regLoad(){
+  regAllRecs=[];
+  showLoading('reg-loading');
+  try{
+    await dbLoadAll(true);
+    REG_SOURCES.forEach(s=>{ (DB[s.sheet]||[]).forEach(r=>regAllRecs.push({...r,_type:s.type,_label:s.label,_color:s.color})); });
+    regAllRecs.sort((a,b)=>b.id-a.id);
+    regRender();
+  }catch(e){ toast('Erro ao carregar registros: '+e.message, true); }
+  finally{ hideLoading('reg-loading'); }
+}
+function regSetFilter(f){
+  regFilter=f;
+  document.querySelectorAll('.filter-chip').forEach(el=>el.classList.toggle('active',el.dataset.f===f));
+  regRender();
+}
+function regRender(){
+  const dateVal=document.getElementById('reg-date-filter').value;
+  let dateStr='';
+  if(dateVal){ const [y,m,d]=dateVal.split('-'); dateStr=`${d}/${m}/${y}`; }
+  const unit = getUnit();
+  let filtered = regAllRecs.filter(r=>{
+    if(unit&&r.unidade&&r.unidade!==unit) return false;
+    if(regFilter!=='all'&&r._type!==regFilter) return false;
+    if(dateStr&&r.dt&&!r.dt.startsWith(dateStr)) return false;
+    return true;
+  });
+  REG_SOURCES.forEach(s=>{ const el=document.getElementById('cnt-'+s.type); if(el) el.textContent=regAllRecs.filter(r=>r._type===s.type).length; });
+  document.getElementById('reg-header-count').textContent=filtered.length+' registro'+(filtered.length!==1?'s':'');
+  const list=document.getElementById('reg-list');
+  if(!filtered.length){ list.innerHTML='<div class="reg-empty">Nenhum registro encontrado.</div>'; return; }
+
+  // group by type for table headers
+  const grouped = {};
+  filtered.forEach(r=>{ if(!grouped[r._type]) grouped[r._type]=[]; grouped[r._type].push(r); });
+  const typeOrder=['moega','map','posl','esp','pad','fin'];
+  const types = regFilter==='all' ? typeOrder.filter(t=>grouped[t]) : [regFilter];
+
+  let html='';
+  types.forEach(t=>{
+    const recs = grouped[t]||[];
+    if(!recs.length) return;
+    const src = REG_SOURCES.find(s=>s.type===t);
+    let headers, rows;
+    if(t==='moega'){
+      headers='<th>Data/Hora</th><th>Unidade</th><th>Operador</th><th>Lote</th><th>Total Sem.</th><th>Hilo</th><th>% Hilo</th><th>Obs</th>';
+      rows=recs.map(r=>`<tr><td>${r.dt||''}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td><td>${r.lote||'—'}</td><td class="td-val">${r.totalSem??200}</td><td>${r.hiloSim?'⚠ Sim':'✓ Não'}</td><td class="td-val">${r.hiloPct!=null?r.hiloPct+'%':'—'}</td><td style="font-size:10px;color:var(--text-muted)">${r.obs||''}</td></tr>`).join('');
+    }else if(t==='map'||t==='pad'){
+      headers='<th>Data/Hora</th><th>Unidade</th><th>Operador</th><th>Entrada t/h</th><th>Sup t/h</th><th>%Boa Sup</th><th>Inf t/h</th><th>%Boa Inf</th><th>Saída t/h</th><th>Efic.</th><th>Obs</th>';
+      rows=recs.map(r=>`<tr><td>${r.dt||''}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.supTH??'—'}</td><td class="td-val">${r.supPct!=null?r.supPct+'%':'—'}</td><td class="td-val">${r.infTH??'—'}</td><td class="td-val">${r.infPct!=null?r.infPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td><td style="font-size:10px;color:var(--text-muted)">${r.obs||''}</td></tr>`).join('');
+    }else if(t==='esp'){
+      headers='<th>Data/Hora</th><th>Unidade</th><th>Operador</th><th>Entrada t/h</th><th>Desc. t/h</th><th>%Bom Desc.</th><th>%Ruim Saída</th><th>Saída t/h</th><th>Efic.</th><th>Obs</th>';
+      rows=recs.map(r=>`<tr><td>${r.dt||''}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.descTH??'—'}</td><td class="td-val">${r.graobomPct!=null?r.graobomPct+'%':'—'}</td><td class="td-val">${r.graoruinPct!=null?r.graoruinPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td><td style="font-size:10px;color:var(--text-muted)">${r.obs||''}</td></tr>`).join('');
+    }else{
+      {
+        const maxMesas=Math.max(...recs.map(r=>(r.mesas||[]).length),1);
+        const mHeaders=Array.from({length:maxMesas},(_,i)=>`<th>M${i+1} Desc</th>`).join('');
+        headers=`<th>Data/Hora</th><th>Unidade</th><th>Operador</th><th>Entrada t/h</th>${mHeaders}<th>Desc.Total</th><th>Saída est.</th><th>Obs</th>`;
+        rows=recs.map(r=>{
+          const ms=(r.mesas||[]);
+          const saida=r.entTH!=null&&r.totalDescTH!=null?Math.max(0,r.entTH-r.totalDescTH).toFixed(2):'—';
+          const mCols=Array.from({length:maxMesas},(_,i)=>ms[i]?`${ms[i].descTH??'—'}${ms[i].boaPct!=null?' ('+ms[i].boaPct+'%)':''}`:'—').map(v=>`<td class="td-val" style="font-size:10px">${v}</td>`).join('');
+          return `<tr><td>${r.dt||''}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td>${mCols}<td class="td-val">${r.totalDescTH??'—'}</td><td class="td-saida">${saida}</td><td style="font-size:10px;color:var(--text-muted)">${r.obs||''}</td></tr>`;
+        }).join('');
+      }
+    }
+    html+=`<div style="margin-bottom:20px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span class="type-badge" style="background:${src.color}22;color:${src.color}">${src.label}</span>
+        <span style="font-size:11px;color:var(--text-hint)">${recs.length} registro${recs.length!==1?'s':''}</span>
+      </div>
+      <div style="overflow-x:auto"><table class="reg-table"><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table></div>
+    </div>`;
+  });
+  list.innerHTML=html||'<div class="reg-empty">Nenhum registro encontrado.</div>';
+}
+
+// ══════════════════════════════════════════════
+// MAP MODULE
+// ══════════════════════════════════════════════
+let mapOperators=getOperators('MAP');
+let mapDtTimer=null;
+
+function mapInit(){
+  mapOperators=getOperators('MAP');
+  mapBuildMachines(); mapRenderSelect(); mapUpdateDt();
+  clearInterval(mapDtTimer); mapDtTimer=setInterval(mapUpdateDt,1000);
+  mapSwitchTab('form');
+}
+function mapUpdateDt(){ const s=nowStr(); const e=document.getElementById('map-header-dt'); if(e) e.textContent=s; const f=document.getElementById('map-dt-field'); if(f) f.value=s; }
+function mapSwitchTab(tab){ ['form','records'].forEach(t=>{ document.getElementById('map-tab-'+t).style.display=t===tab?'block':'none'; }); document.querySelectorAll('#page-map .ntab').forEach((el,i)=>el.classList.toggle('active',['form','records'][i]===tab)); if(tab==='records') loadAndRenderRecords('map-rec-list','MAP','map'); }
+function mapBuildMachines(){
+  const cfg=getUnitCfg(); const count=cfg.map.count; const serial=cfg.map.serial||false;
+  const c=document.getElementById('map-machines-container'); c.innerHTML='';
+  for(let n=1;n<=count;n++){
+    const isSerial2 = serial && n===2; // MAP2 recebe líquido da MAP1
+    const showTitle=count>1?`<div class="mesa-title" style="color:var(--green-600)">MAP ${n}${isSerial2?' <span style=\"font-size:10px;font-weight:400;color:var(--text-hint)\">← saída líquida da MAP 1</span>':''}</div>`:'';
+    const entradaField = isSerial2
+      ? `<div class="calc-box" style="margin-bottom:4px"><span class="calc-box-label">Entrada (saída liq. MAP 1)</span><span><span class="calc-box-value" id="map-m${n}-entth" style="color:var(--green-600)">—</span><span class="calc-box-unit">t/h</span></span></div>
+      <input type="hidden" id="map-m${n}-entkg" value="0">`
+      : `<div class="field"><label>Peso da amostra coletada</label><div class="input-unit-wrap"><input type="number" id="map-m${n}-entkg" placeholder="0.000" min="0" step="0.001" oninput="mapCalcAll()"><span class="input-unit">kg</span></div></div>
+      <div class="calc-box" style="margin-bottom:14px"><span class="calc-box-label">Vazão de entrada</span><span><span class="calc-box-value" id="map-m${n}-entth">—</span><span class="calc-box-unit">t/h</span></span></div>`;
+    c.innerHTML+=`<div class="card mesa-card">${showTitle}
+      <div class="card-header" style="margin-bottom:12px"><div class="card-heading">Entrada — ${isSerial2?'automática (saída MAP 1)':'amostra 6 segundos'}</div></div>
+      ${entradaField}
+      <div class="descarte-grid">
+        <div class="descarte-box">
+          <div class="descarte-title title-sup">Descarte superior</div>
+          <div class="field"><label>Peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="map-m${n}-supkg" placeholder="0.000" min="0" step="0.001" oninput="mapCalcAll()"><span class="input-unit">kg</span></div></div>
+          <div class="mini-result"><span class="mini-label">t/h</span><span class="mini-val val-sup" id="map-m${n}-supth">—</span></div>
+          <div class="field"><label>Semente boa 500g</label><div class="input-unit-wrap"><input type="number" id="map-m${n}-supgb" placeholder="0.0" min="0" max="500" step="0.1" oninput="mapCalcAll()"><span class="input-unit">g</span></div></div>
+          <div class="mini-result" style="margin-bottom:0"><span class="mini-label">% boa</span><span class="mini-val val-pct" id="map-m${n}-suppct">—</span></div>
+        </div>
+        <div class="descarte-box">
+          <div class="descarte-title title-inf">Descarte inferior</div>
+          <div class="field"><label>Peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="map-m${n}-infkg" placeholder="0.000" min="0" step="0.001" oninput="mapCalcAll()"><span class="input-unit">kg</span></div></div>
+          <div class="mini-result"><span class="mini-label">t/h</span><span class="mini-val val-inf" id="map-m${n}-infth">—</span></div>
+          <div class="field"><label>Semente boa 500g</label><div class="input-unit-wrap"><input type="number" id="map-m${n}-infgb" placeholder="0.0" min="0" max="500" step="0.1" oninput="mapCalcAll()"><span class="input-unit">g</span></div></div>
+          <div class="mini-result" style="margin-bottom:0"><span class="mini-label">% boa</span><span class="mini-val val-pct" id="map-m${n}-infpct">—</span></div>
+        </div>
+      </div>
+    </div>`;
+  }
+}
+function mapCalcAll(){
+  const cfg=getUnitCfg(); const count=cfg.map.count; const serial=cfg.map.serial||false;
+  let totalEntTH=0, totalSupTH=0, totalInfTH=0;
+  const rows=[]; let prevSaida=0;
+  for(let n=1;n<=count;n++){
+    const isSerial2=serial&&n===2;
+    // Se MAP em série, entrada da MAP2 = saída líquida da MAP1
+    let entTH;
+    if(isSerial2){
+      entTH=prevSaida; // calculado na iteração anterior
+      document.getElementById(`map-m${n}-entth`).textContent=entTH>0?entTH.toFixed(2):'—';
+    } else {
+      const entKg=parseFloat(document.getElementById(`map-m${n}-entkg`).value)||0;
+      entTH=kgToTH(entKg)||0;
+      document.getElementById(`map-m${n}-entth`).textContent=fmt2(entTH||null);
+    }
+    const supKg=parseFloat(document.getElementById(`map-m${n}-supkg`).value)||0;
+    const infKg=parseFloat(document.getElementById(`map-m${n}-infkg`).value)||0;
+    const supGB=parseFloat(document.getElementById(`map-m${n}-supgb`).value);
+    const infGB=parseFloat(document.getElementById(`map-m${n}-infgb`).value);
+    const supTH=kgToTH(supKg)||0, infTH=kgToTH(infKg)||0;
+    document.getElementById(`map-m${n}-supth`).textContent=fmt2(supTH||null);
+    document.getElementById(`map-m${n}-infth`).textContent=fmt2(infTH||null);
+    const supPct=(!isNaN(supGB)&&supGB>=0)?supGB/500*100:null;
+    const infPct=(!isNaN(infGB)&&infGB>=0)?infGB/500*100:null;
+    document.getElementById(`map-m${n}-suppct`).textContent=supPct!==null?supPct.toFixed(1)+' %':'—';
+    document.getElementById(`map-m${n}-infpct`).textContent=infPct!==null?infPct.toFixed(1)+' %':'—';
+    const saidaN=Math.max(0,entTH-supTH-infTH);
+    prevSaida=saidaN; // passa para próxima MAP em série
+    // Para o total, só soma a entrada da MAP1 (MAP2 é reprocessamento do líquido)
+    if(!isSerial2) totalEntTH+=entTH;
+    totalSupTH+=supTH; totalInfTH+=infTH;
+    rows.push({n, entTH, supTH, infTH, supPct, infPct, saidaN});
+  }
+  const totalSaida=Math.max(0,totalEntTH-totalSupTH-totalInfTH);
+  document.getElementById('map-sum-entrada').textContent=totalEntTH>0?totalEntTH.toFixed(2):'—';
+  document.getElementById('map-sum-sup').textContent=totalSupTH>0?totalSupTH.toFixed(2):'—';
+  document.getElementById('map-sum-inf').textContent=totalInfTH>0?totalInfTH.toFixed(2):'—';
+  document.getElementById('map-sum-saida').textContent=totalEntTH>0?totalSaida.toFixed(2):'—';
+  const sl=document.getElementById('map-machine-status-list');
+  if(count>1) sl.innerHTML=rows.map(r=>{
+    const serial2note=serial&&r.n===2?' <span style="font-size:10px;color:var(--text-hint)">(liq. MAP1)</span>':'';
+    return `<div class="mesa-status"><span class="mesa-status-name">MAP ${r.n}${serial2note}</span><span class="mesa-status-vals">Ent ${fmt2(r.entTH)} · Saída ${fmt2(r.saidaN)} t/h</span></div>`;
+  }).join('');
+  else sl.innerHTML='';
+}
+function mapSalvar(){
+  const op=document.getElementById('map-operator').value;
+  if(!op){toast('Selecione o operador.',true);return;}
+  const cfg=getUnitCfg(); const count=cfg.map.count;
+  const machines=[]; let totalEntTH=0, totalSupTH=0, totalInfTH=0;
+  const serial=cfg.map.serial||false; let prevSaidaSv=0;
+  for(let n=1;n<=count;n++){
+    const isSerial2=serial&&n===2;
+    let entTH;
+    if(isSerial2){ entTH=prevSaidaSv; }
+    else { const entKg=parseFloat(document.getElementById(`map-m${n}-entkg`).value)||0; entTH=kgToTH(entKg)||0; }
+    const supKg=parseFloat(document.getElementById(`map-m${n}-supkg`).value)||0;
+    const infKg=parseFloat(document.getElementById(`map-m${n}-infkg`).value)||0;
+    const supGB=parseFloat(document.getElementById(`map-m${n}-supgb`).value);
+    const infGB=parseFloat(document.getElementById(`map-m${n}-infgb`).value);
+    const supTH=kgToTH(supKg)||0, infTH=kgToTH(infKg)||0;
+    if(!isSerial2) totalEntTH+=entTH;
+    totalSupTH+=supTH; totalInfTH+=infTH;
+    const supPct=(!isNaN(supGB)&&supGB>=0)?parseFloat((supGB/500*100).toFixed(1)):null;
+    const infPct=(!isNaN(infGB)&&infGB>=0)?parseFloat((infGB/500*100).toFixed(1)):null;
+    const saidaM=Math.max(0,entTH-supTH-infTH);
+    prevSaidaSv=saidaM;
+    machines.push({entTH:parseFloat(entTH.toFixed(2)),supTH:parseFloat(supTH.toFixed(2)),infTH:parseFloat(infTH.toFixed(2)),supPct,infPct,saidaTH:parseFloat(saidaM.toFixed(2)),isSerial:isSerial2});
+  }
+  if(count===1&&machines[0].entTH===0){toast('Informe o peso de entrada.',true);return;}
+  const totalSaida=parseFloat(Math.max(0,totalEntTH-totalSupTH-totalInfTH).toFixed(2));
+  // For backward compat, keep top-level fields from machine 1 + totals
+  const m1=machines[0];
+  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,
+    entTH:parseFloat(totalEntTH.toFixed(2)),supTH:parseFloat(totalSupTH.toFixed(2)),infTH:parseFloat(totalInfTH.toFixed(2)),
+    supPct:m1.supPct,infPct:m1.infPct,saidaTH:totalSaida,efic:'',machines,
+    obs:document.getElementById('map-obs').value.trim()};
+  saveRecordToSheets('MAP', record);
+}
+function mapResetForm(){
+  document.getElementById('map-operator').value='';
+  document.getElementById('map-obs').value='';
+  const cfg=getUnitCfg(); const count=cfg.map.count;
+  for(let n=1;n<=count;n++){
+    [`map-m${n}-entkg`,`map-m${n}-supkg`,`map-m${n}-supgb`,`map-m${n}-infkg`,`map-m${n}-infgb`].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+    [`map-m${n}-entth`,`map-m${n}-supth`,`map-m${n}-suppct`,`map-m${n}-infth`,`map-m${n}-infpct`].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='—';});
+  }
+  ['map-sum-entrada','map-sum-sup','map-sum-inf','map-sum-saida'].forEach(id=>document.getElementById(id).textContent='—');
+}
+function mapRenderSelect(){ const sel=document.getElementById('map-operator'); sel.innerHTML='<option value="">Selecionar...</option>'+mapOperators.map(o=>`<option value="${o}">${o}</option>`).join(''); }
+function mapRenderOps(){ const c=document.getElementById('map-operators-list'); c.innerHTML=mapOperators.map((o,i)=>`<div class="op-row"><span class="op-name">${o}</span><button class="op-remove" onclick="mapRemoveOperator(${i})">×</button></div>`).join(''); }
+function mapAddOperator(){ const inp=document.getElementById('map-new-op'); const name=inp.value.trim(); if(!name||mapOperators.includes(name))return; mapOperators.push(name); inp.value=''; setOperators('MAP',mapOperators); mapRenderSelect(); mapRenderOps(); }
+function mapRemoveOperator(i){ mapOperators.splice(i,1); setOperators('MAP',mapOperators); mapRenderSelect(); mapRenderOps(); }
+
+// ══════════════════════════════════════════════
+// PÓS-LIMPEZA MODULE
+// ══════════════════════════════════════════════
+let poslOperators=getOperators('POSL');
+let poslDtTimer=null;
+
+function poslInit(){
+  poslOperators=getOperators('POSL');
+  poslBuildMesas(); poslRenderSelect(); poslUpdateDt();
+  clearInterval(poslDtTimer); poslDtTimer=setInterval(poslUpdateDt,1000);
+  poslSwitchTab('form');
+  prefillEntrada('posl', getLastSaida('map'));
+}
+function poslUpdateDt(){ const s=nowStr(); const e=document.getElementById('posl-header-dt'); if(e) e.textContent=s; const f=document.getElementById('posl-dt-field'); if(f) f.value=s; }
+function poslSwitchTab(tab){ ['form','records'].forEach(t=>{ document.getElementById('posl-tab-'+t).style.display=t===tab?'block':'none'; }); document.querySelectorAll('#page-posl .ntab').forEach((el,i)=>el.classList.toggle('active',['form','records'][i]===tab)); if(tab==='records') loadAndRenderRecords('posl-rec-list','POSL','posl'); }
+function poslBuildMesas(){
+  const cfg=getUnitCfg(); const count=cfg.posl.count;
+  const c=document.getElementById('posl-mesas-container'); c.innerHTML='';
+  const sl=document.getElementById('posl-sum-title'); if(sl) sl.textContent=`Balanço das ${count} mesas`;
+  for(let n=1;n<=count;n++){
+    c.innerHTML+=`<div class="card mesa-card"><div class="mesa-title" style="color:var(--amber-400)">Mesa ${n}</div>
+      <div class="field"><label>Descarte — peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="posl-m${n}-kg" placeholder="0.000" min="0" step="0.001" oninput="poslCalcAll()"><span class="input-unit">kg</span></div></div>
+      <div class="mini-result"><span class="mini-label">t/h</span><span class="mini-val" id="posl-m${n}-th" style="color:var(--amber-400)">—</span></div>
+      <div class="field" style="margin-bottom:0"><label>Semente boa — amostra 500g</label><div class="input-unit-wrap"><input type="number" id="posl-m${n}-graobom" placeholder="0.0" min="0" max="500" step="0.1" oninput="poslCalcAll()"><span class="input-unit">g</span></div></div>
+      <div class="mini-result" style="margin-bottom:0"><span class="mini-label">% semente boa</span><span class="mini-val val-pct" id="posl-m${n}-pct">—</span></div>
+    </div>`;
+  }
+}
+function poslCalcAll(){
+  const cfg=getUnitCfg(); const count=cfg.posl.count;
+  const entTH=parseFloat(document.getElementById('posl-entrada-th').value)||0;
+  document.getElementById('posl-sum-entrada').textContent=entTH>0?entTH.toFixed(2):'—';
+  let totalDescTH=0; const rows=[];
+  for(let n=1;n<=count;n++){
+    const kg=parseFloat(document.getElementById(`posl-m${n}-kg`).value)||0;
+    const gb=parseFloat(document.getElementById(`posl-m${n}-graobom`).value);
+    const th=kgToTH(kg);
+    document.getElementById(`posl-m${n}-th`).textContent=fmt2(th);
+    const pct=(!isNaN(gb)&&gb>=0)?parseFloat((gb/500*100).toFixed(1)):null;
+    document.getElementById(`posl-m${n}-pct`).textContent=pct!==null?pct.toFixed(1)+' %':'—';
+    if(th) totalDescTH+=th;
+    rows.push({th,pct});
+  }
+  const pct=entTH>0&&totalDescTH?parseFloat((totalDescTH/entTH*100).toFixed(1)):null;
+  const saida=entTH>0?Math.max(0,entTH-totalDescTH):null;
+  document.getElementById('posl-sum-desc').textContent=totalDescTH>0?totalDescTH.toFixed(2):'—';
+  document.getElementById('posl-sum-pct').textContent=pct!==null?pct:'—';
+  document.getElementById('posl-sum-saida').textContent=saida!==null?saida.toFixed(2):'—';
+  const sl=document.getElementById('posl-mesa-status-list');
+  sl.innerHTML=rows.map((r,i)=>`<div class="mesa-status"><span class="mesa-status-name">Mesa ${i+1}</span><span class="mesa-status-vals">${fmt2(r.th)} t/h${r.pct!==null?' · '+r.pct+'% boa':''}</span></div>`).join('');
+}
+function poslSalvar(){
+  const op=document.getElementById('posl-operator').value;
+  const entTH=document.getElementById('posl-entrada-th').value;
+  if(!op){toast('Selecione o operador.',true);return;} if(!entTH){toast('Informe a entrada em t/h.',true);return;}
+  const cfg=getUnitCfg(); const count=cfg.posl.count;
+  const eVal=parseFloat(entTH)||0; const mesas=[]; let totalDescTH=0;
+  for(let n=1;n<=count;n++){
+    const kg=parseFloat(document.getElementById(`posl-m${n}-kg`).value)||0;
+    const gb=parseFloat(document.getElementById(`posl-m${n}-graobom`).value);
+    const th=kgToTH(kg); if(th) totalDescTH+=th;
+    const boaPct=(!isNaN(gb)&&gb>=0)?parseFloat((gb/500*100).toFixed(1)):null;
+    mesas.push({descTH:th?parseFloat(th.toFixed(2)):null,boaPct});
+  }
+  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,entTH:eVal,mesas,totalDescTH:parseFloat(totalDescTH.toFixed(2)),obs:document.getElementById('posl-obs').value.trim()};
+  saveRecordToSheets('POSL', record);
+}
+function poslResetForm(){
+  const cfg=getUnitCfg(); const count=cfg.posl.count;
+  document.getElementById('posl-operator').value=''; document.getElementById('posl-entrada-th').value=''; document.getElementById('posl-obs').value='';
+  for(let n=1;n<=count;n++){ const k=document.getElementById(`posl-m${n}-kg`); if(k)k.value=''; const g=document.getElementById(`posl-m${n}-graobom`); if(g)g.value=''; const t=document.getElementById(`posl-m${n}-th`); if(t)t.textContent='—'; const p=document.getElementById(`posl-m${n}-pct`); if(p)p.textContent='—'; }
+  ['posl-sum-entrada','posl-sum-desc','posl-sum-pct','posl-sum-saida'].forEach(id=>document.getElementById(id).textContent='—'); }
+function poslRenderSelect(){ const sel=document.getElementById('posl-operator'); sel.innerHTML='<option value="">Selecionar...</option>'+poslOperators.map(o=>`<option value="${o}">${o}</option>`).join(''); }
+function poslRenderOps(){ const c=document.getElementById('posl-operators-list'); c.innerHTML=poslOperators.map((o,i)=>`<div class="op-row"><span class="op-name">${o}</span><button class="op-remove" onclick="poslRemoveOperator(${i})">×</button></div>`).join(''); }
+function poslAddOperator(){ const inp=document.getElementById('posl-new-op'); const name=inp.value.trim(); if(!name||poslOperators.includes(name))return; poslOperators.push(name); inp.value=''; setOperators('POSL',poslOperators); poslRenderSelect(); poslRenderOps(); }
+function poslRemoveOperator(i){ poslOperators.splice(i,1); setOperators('POSL',poslOperators); poslRenderSelect(); poslRenderOps(); }
+
+// ══════════════════════════════════════════════
+// ESPIRAIS MODULE
+// ══════════════════════════════════════════════
+let espOperators=getOperators('ESP');
+let espDtTimer=null;
+
+function espInit(){
+  espOperators=getOperators('ESP');
+  espRenderSelect(); espUpdateDt();
+  clearInterval(espDtTimer); espDtTimer=setInterval(espUpdateDt,1000);
+  espSwitchTab('form');
+  prefillEntrada('esp', getLastSaida('posl'));
+}
+function espUpdateDt(){ const s=nowStr(); const e=document.getElementById('esp-header-dt'); if(e) e.textContent=s; const f=document.getElementById('esp-dt-field'); if(f) f.value=s; }
+function espSwitchTab(tab){ ['form','records'].forEach(t=>{ document.getElementById('esp-tab-'+t).style.display=t===tab?'block':'none'; }); document.querySelectorAll('#page-esp .ntab').forEach((el,i)=>el.classList.toggle('active',['form','records'][i]===tab)); if(tab==='records') loadAndRenderRecords('esp-rec-list','ESP','esp'); }
+function espCalcAll(){
+  const entTH=parseFloat(document.getElementById('esp-entrada-th').value)||0;
+  const descKg=parseFloat(document.getElementById('esp-desc-kg').value)||0;
+  const graobomSem=parseFloat(document.getElementById('esp-graobom-200').value);
+  const descTH=kgToTH(descKg);
+  document.getElementById('esp-desc-th').textContent=fmt2(descTH);
+  document.getElementById('esp-sum-entrada').textContent=entTH>0?entTH.toFixed(2):'—';
+  document.getElementById('esp-sum-desc').textContent=fmt2(descTH);
+  const saidaTH=entTH>0?Math.max(0,entTH-(descTH||0)):null;
+  document.getElementById('esp-sum-saida').textContent=fmt2(saidaTH);
+  const pctDesc=entTH>0&&descTH?parseFloat((descTH/entTH*100).toFixed(1)):null;
+  document.getElementById('esp-sum-pct-desc').textContent=pctDesc!==null?pctDesc:'—';
+  // % grão bom: sementes boas / 200 * 100
+  const graobomPct=(!isNaN(graobomSem)&&graobomSem>=0)?parseFloat((graobomSem/200*100).toFixed(1)):null;
+  document.getElementById('esp-graobom-pct').textContent=graobomPct!==null?graobomPct.toFixed(1)+' %':'—';
+  document.getElementById('esp-sum-graobom-pct').textContent=graobomPct!==null?graobomPct.toFixed(1):'—';
+  const graoruin200=parseFloat(document.getElementById('esp-graoruin-200').value);
+  const graoruinPct=(!isNaN(graoruin200)&&graoruin200>=0)?parseFloat((graoruin200/200*100).toFixed(1)):null;
+  document.getElementById('esp-graoruin-pct').textContent=graoruinPct!==null?graoruinPct.toFixed(1)+' %':'—';
+  if(entTH>0&&descTH){ const perdaTH=descTH*(1-(graobomPct!==null?graobomPct/100:0)); const efic=Math.max(0,Math.min(100,(entTH-perdaTH)/entTH*100)); const eficEl=document.getElementById('esp-sum-efic'); eficEl.textContent=efic.toFixed(1)+' %'; eficEl.style.color=efic>=95?'var(--green-600)':efic>=85?'var(--amber-400)':'var(--red-400)'; const bar=document.getElementById('esp-efic-bar'); bar.style.width=efic.toFixed(1)+'%'; bar.style.background=efic>=95?'#1D9E75':efic>=85?'#BA7517':'#E24B4A'; }else{ document.getElementById('esp-sum-efic').textContent='—'; document.getElementById('esp-efic-bar').style.width='0%'; }
+}
+function espSalvar(){
+  const op=document.getElementById('esp-operator').value;
+  const entTH=document.getElementById('esp-entrada-th').value;
+  if(!op){toast('Selecione o operador.',true);return;} if(!entTH){toast('Informe a entrada em t/h.',true);return;}
+  const eVal=parseFloat(entTH)||0;
+  const descKg=parseFloat(document.getElementById('esp-desc-kg').value)||0;
+  const graobomSem=parseFloat(document.getElementById('esp-graobom-200').value);
+  const graoruin200=parseFloat(document.getElementById('esp-graoruin-200').value);
+  const freqHz=parseFloat(document.getElementById('esp-freq-hz').value)||null;
+  const descTH=kgToTH(descKg);
+  const saidaTH=eVal>0?Math.max(0,eVal-(descTH||0)):null;
+  const pctDesc=eVal>0&&descTH?parseFloat((descTH/eVal*100).toFixed(1)):null;
+  const graobomPct=(!isNaN(graobomSem)&&graobomSem>=0)?parseFloat((graobomSem/200*100).toFixed(1)):null;
+  const graoruinPct=(!isNaN(graoruin200)&&graoruin200>=0)?parseFloat((graoruin200/200*100).toFixed(1)):null;
+  const eficTxt=document.getElementById('esp-sum-efic').textContent;
+  const efic=eficTxt==='—'?'':eficTxt.replace(' %','');
+  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,freqHz,entTH:eVal,descTH:descTH?parseFloat(descTH.toFixed(2)):null,graobomSem:(!isNaN(graobomSem)&&graobomSem>=0)?graobomSem:null,graobomPct,graoruin200:(!isNaN(graoruin200)&&graoruin200>=0)?graoruin200:null,graoruinPct,saidaTH:saidaTH!==null?parseFloat(saidaTH.toFixed(2)):null,pctDesc,efic,obs:document.getElementById('esp-obs').value.trim()};
+  saveRecordToSheets('ESP', record);
+}
+function espResetForm(){ document.getElementById('esp-operator').value=''; ['esp-entrada-th','esp-freq-hz','esp-desc-kg','esp-graobom-200','esp-graoruin-200','esp-obs'].forEach(id=>document.getElementById(id).value=''); ['esp-desc-th','esp-graobom-pct','esp-graoruin-pct','esp-sum-entrada','esp-sum-desc','esp-sum-saida','esp-sum-pct-desc','esp-sum-graobom-pct','esp-sum-efic'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent='—'; }); const b=document.getElementById('esp-efic-bar'); if(b) b.style.width='0%'; }
+function espRenderSelect(){ const sel=document.getElementById('esp-operator'); sel.innerHTML='<option value="">Selecionar...</option>'+espOperators.map(o=>`<option value="${o}">${o}</option>`).join(''); }
+function espRenderOps(){ const c=document.getElementById('esp-operators-list'); c.innerHTML=espOperators.map((o,i)=>`<div class="op-row"><span class="op-name">${o}</span><button class="op-remove" onclick="espRemoveOperator(${i})">×</button></div>`).join(''); }
+function espAddOperator(){ const inp=document.getElementById('esp-new-op'); const name=inp.value.trim(); if(!name||espOperators.includes(name))return; espOperators.push(name); inp.value=''; setOperators('ESP',espOperators); espRenderSelect(); espRenderOps(); }
+function espRemoveOperator(i){ espOperators.splice(i,1); setOperators('ESP',espOperators); espRenderSelect(); espRenderOps(); }
+
+// ══════════════════════════════════════════════
+// PADRONIZADORES MODULE
+// ══════════════════════════════════════════════
+let padOperators=getOperators('PAD');
+let padDtTimer=null;
+
+function padInit(){
+  padOperators=getOperators('PAD');
+  padBuildMachines(); padRenderSelect(); padUpdateDt();
+  clearInterval(padDtTimer); padDtTimer=setInterval(padUpdateDt,1000);
+  padSwitchTab('form');
+  prefillEntrada('pad', getLastSaida('esp'));
+}
+function padUpdateDt(){ const s=nowStr(); const e=document.getElementById('pad-header-dt'); if(e) e.textContent=s; const f=document.getElementById('pad-dt-field'); if(f) f.value=s; }
+function padSwitchTab(tab){ ['form','records'].forEach(t=>{ document.getElementById('pad-tab-'+t).style.display=t===tab?'block':'none'; }); document.querySelectorAll('#page-pad .ntab').forEach((el,i)=>el.classList.toggle('active',['form','records'][i]===tab)); if(tab==='records') loadAndRenderRecords('pad-rec-list','PAD','pad'); }
+function padBuildMachines(){
+  const cfg=getUnitCfg(); const count=cfg.pad.count;
+  const c=document.getElementById('pad-machines-container'); c.innerHTML='';
+  const st=document.getElementById('pad-sum-title'); if(st) st.textContent=count>1?`Balanço dos ${count} padronizadores`:'Balanço de processamento';
+  for(let n=1;n<=count;n++){
+    const showTitle=count>1?`<div class="mesa-title" style="color:var(--orange-400)">Padronizador ${n}</div>`:'';
+    c.innerHTML+=`<div class="card mesa-card">${showTitle}
+      <div class="descarte-grid">
+        <div class="descarte-box">
+          <div class="descarte-title title-sup">Descarte superior</div>
+          <div class="field"><label>Peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="pad-m${n}-supkg" placeholder="0.000" min="0" step="0.001" oninput="padCalcAll()"><span class="input-unit">kg</span></div></div>
+          <div class="mini-result"><span class="mini-label">t/h</span><span class="mini-val val-sup" id="pad-m${n}-supth">—</span></div>
+          <div class="field"><label>Semente boa 500g</label><div class="input-unit-wrap"><input type="number" id="pad-m${n}-supgb" placeholder="0.0" min="0" max="500" step="0.1" oninput="padCalcAll()"><span class="input-unit">g</span></div></div>
+          <div class="mini-result" style="margin-bottom:0"><span class="mini-label">% boa</span><span class="mini-val val-pct" id="pad-m${n}-suppct">—</span></div>
+        </div>
+        <div class="descarte-box">
+          <div class="descarte-title title-inf">Descarte inferior</div>
+          <div class="field"><label>Peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="pad-m${n}-infkg" placeholder="0.000" min="0" step="0.001" oninput="padCalcAll()"><span class="input-unit">kg</span></div></div>
+          <div class="mini-result"><span class="mini-label">t/h</span><span class="mini-val val-inf" id="pad-m${n}-infth">—</span></div>
+          <div class="field"><label>Semente boa 500g</label><div class="input-unit-wrap"><input type="number" id="pad-m${n}-infgb" placeholder="0.0" min="0" max="500" step="0.1" oninput="padCalcAll()"><span class="input-unit">g</span></div></div>
+          <div class="mini-result" style="margin-bottom:0"><span class="mini-label">% boa</span><span class="mini-val val-pct" id="pad-m${n}-infpct">—</span></div>
+        </div>
+      </div>
+    </div>`;
+  }
+}
+function padCalcAll(){
+  const cfg=getUnitCfg(); const count=cfg.pad.count;
+  const entTH=parseFloat(document.getElementById('pad-entrada-th').value)||0;
+  document.getElementById('pad-sum-entrada').textContent=entTH>0?entTH.toFixed(2):'—';
+  let totalSupTH=0, totalInfTH=0;
+  const rows=[];
+  for(let n=1;n<=count;n++){
+    const supKg=parseFloat(document.getElementById(`pad-m${n}-supkg`).value)||0;
+    const infKg=parseFloat(document.getElementById(`pad-m${n}-infkg`).value)||0;
+    const supGB=parseFloat(document.getElementById(`pad-m${n}-supgb`).value);
+    const infGB=parseFloat(document.getElementById(`pad-m${n}-infgb`).value);
+    const supTH=kgToTH(supKg)||0, infTH=kgToTH(infKg)||0;
+    document.getElementById(`pad-m${n}-supth`).textContent=fmt2(supTH||null);
+    document.getElementById(`pad-m${n}-infth`).textContent=fmt2(infTH||null);
+    const supPct=(!isNaN(supGB)&&supGB>=0)?supGB/500*100:null;
+    const infPct=(!isNaN(infGB)&&infGB>=0)?infGB/500*100:null;
+    document.getElementById(`pad-m${n}-suppct`).textContent=supPct!==null?supPct.toFixed(1)+' %':'—';
+    document.getElementById(`pad-m${n}-infpct`).textContent=infPct!==null?infPct.toFixed(1)+' %':'—';
+    totalSupTH+=supTH; totalInfTH+=infTH;
+    rows.push({n,supTH,infTH,supPct,infPct});
+  }
+  document.getElementById('pad-sum-sup').textContent=totalSupTH>0?totalSupTH.toFixed(2):'—';
+  document.getElementById('pad-sum-inf').textContent=totalInfTH>0?totalInfTH.toFixed(2):'—';
+  const saidaTH=entTH>0?Math.max(0,entTH-totalSupTH-totalInfTH):null;
+  document.getElementById('pad-sum-saida').textContent=fmt2(saidaTH);
+  const sl=document.getElementById('pad-machine-status-list');
+  if(count>1) sl.innerHTML=rows.map(r=>`<div class="mesa-status"><span class="mesa-status-name">Pad ${r.n}</span><span class="mesa-status-vals">Sup ${fmt2(r.supTH)} · Inf ${fmt2(r.infTH)} t/h</span></div>`).join('');
+  else sl.innerHTML='';
+  if(entTH>0&&(totalSupTH>0||totalInfTH>0)){
+    const avgSupPct=rows.filter(r=>r.supPct!==null).reduce((a,r)=>a+r.supPct,0)/(rows.filter(r=>r.supPct!==null).length||1);
+    const avgInfPct=rows.filter(r=>r.infPct!==null).reduce((a,r)=>a+r.infPct,0)/(rows.filter(r=>r.infPct!==null).length||1);
+    const perdaSup=totalSupTH*(1-avgSupPct/100); const perdaInf=totalInfTH*(1-avgInfPct/100);
+    const efic=Math.max(0,Math.min(100,(entTH-perdaSup-perdaInf)/entTH*100));
+  }
+}
+function padSalvar(){
+  const op=document.getElementById('pad-operator').value;
+  const entTH=document.getElementById('pad-entrada-th').value;
+  if(!op){toast('Selecione o operador.',true);return;} if(!entTH){toast('Informe a entrada em t/h.',true);return;}
+  const cfg=getUnitCfg(); const count=cfg.pad.count;
+  const eVal=parseFloat(entTH)||0; let totalSupTH=0, totalInfTH=0;
+  const machines=[];
+  for(let n=1;n<=count;n++){
+    const supKg=parseFloat(document.getElementById(`pad-m${n}-supkg`).value)||0;
+    const infKg=parseFloat(document.getElementById(`pad-m${n}-infkg`).value)||0;
+    const supGB=parseFloat(document.getElementById(`pad-m${n}-supgb`).value);
+    const infGB=parseFloat(document.getElementById(`pad-m${n}-infgb`).value);
+    const supTH=kgToTH(supKg)||0, infTH=kgToTH(infKg)||0;
+    totalSupTH+=supTH; totalInfTH+=infTH;
+    const supPct=(!isNaN(supGB)&&supGB>=0)?parseFloat((supGB/500*100).toFixed(1)):null;
+    const infPct=(!isNaN(infGB)&&infGB>=0)?parseFloat((infGB/500*100).toFixed(1)):null;
+    machines.push({supTH:parseFloat(supTH.toFixed(2)),infTH:parseFloat(infTH.toFixed(2)),supPct,infPct});
+  }
+  const saidaTH=eVal>0?parseFloat(Math.max(0,eVal-totalSupTH-totalInfTH).toFixed(2)):null;
+  const m1=machines[0];
+  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,entTH:eVal,
+    supTH:parseFloat(totalSupTH.toFixed(2)),infTH:parseFloat(totalInfTH.toFixed(2)),
+    supPct:m1.supPct,infPct:m1.infPct,saidaTH,efic:'',machines,
+    obs:document.getElementById('pad-obs').value.trim()};
+  saveRecordToSheets('PAD', record);
+}
+function padResetForm(){
+  const cfg=getUnitCfg(); const count=cfg.pad.count;
+  document.getElementById('pad-operator').value=''; document.getElementById('pad-entrada-th').value=''; document.getElementById('pad-obs').value='';
+  for(let n=1;n<=count;n++){[`pad-m${n}-supkg`,`pad-m${n}-supgb`,`pad-m${n}-infkg`,`pad-m${n}-infgb`].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});[`pad-m${n}-supth`,`pad-m${n}-suppct`,`pad-m${n}-infth`,`pad-m${n}-infpct`].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='—';});}
+  ['pad-sum-entrada','pad-sum-sup','pad-sum-inf','pad-sum-saida'].forEach(id=>document.getElementById(id).textContent='—');
+}
+function padRenderSelect(){ const sel=document.getElementById('pad-operator'); sel.innerHTML='<option value="">Selecionar...</option>'+padOperators.map(o=>`<option value="${o}">${o}</option>`).join(''); }
+function padRenderOps(){ const c=document.getElementById('pad-operators-list'); c.innerHTML=padOperators.map((o,i)=>`<div class="op-row"><span class="op-name">${o}</span><button class="op-remove" onclick="padRemoveOperator(${i})">×</button></div>`).join(''); }
+function padAddOperator(){ const inp=document.getElementById('pad-new-op'); const name=inp.value.trim(); if(!name||padOperators.includes(name))return; padOperators.push(name); inp.value=''; setOperators('PAD',padOperators); padRenderSelect(); padRenderOps(); }
+function padRemoveOperator(i){ padOperators.splice(i,1); setOperators('PAD',padOperators); padRenderSelect(); padRenderOps(); }
+
+// ══════════════════════════════════════════════
+// DENSIMÉTRICA FINAIS MODULE
+// ══════════════════════════════════════════════
+let finOperators=getOperators('FIN');
+let finDtTimer=null;
+// flat list of all mesa IDs rendered: e.g. ['p1-m1','p1-m2','p2-m1']
+let finMesaIds=[];
+
+function finInit(){
+  finOperators=getOperators('FIN');
+  finBuildMesas(); finRenderSelect(); finUpdateDt();
+  clearInterval(finDtTimer); finDtTimer=setInterval(finUpdateDt,1000);
+  finSwitchTab('form');
+  prefillEntrada('fin', getLastSaida('pad'));
+}
+function finUpdateDt(){ const s=nowStr(); const e=document.getElementById('fin-header-dt'); if(e) e.textContent=s; const f=document.getElementById('fin-dt-field'); if(f) f.value=s; }
+function finSwitchTab(tab){ ['form','records'].forEach(t=>{ document.getElementById('fin-tab-'+t).style.display=t===tab?'block':'none'; }); document.querySelectorAll('#page-fin .ntab').forEach((el,i)=>el.classList.toggle('active',['form','records'][i]===tab)); if(tab==='records') loadAndRenderRecords('fin-rec-list','FIN','fin'); }
+function finMesaCard(mid){
+  return `<div class="card mesa-card">
+      <div class="field"><label>Descarte — peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="fin-${mid}-kg" placeholder="0.000" min="0" step="0.001" oninput="finCalcAll()"><span class="input-unit">kg</span></div></div>
+      <div class="mini-result"><span class="mini-label">t/h</span><span class="mini-val" id="fin-${mid}-th" style="color:var(--purple-400)">—</span></div>
+      <div class="field"><label>Semente boa — 200 sementes</label><div class="input-unit-wrap"><input type="number" id="fin-${mid}-graobom" placeholder="0" min="0" max="200" step="1" oninput="finCalcAll()"><span class="input-unit">sem.</span></div></div>
+      <div class="mini-result" style="margin-bottom:12px"><span class="mini-label">% semente boa</span><span class="mini-val val-pct" id="fin-${mid}-pct">—</span></div>
+      <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--purple-400);margin-bottom:10px;padding-top:10px;border-top:0.5px solid var(--border)">Copinho — estratificação</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px">
+        <div class="field" style="margin-bottom:0"><label>Parte alta</label><div class="input-unit-wrap"><input type="number" id="fin-${mid}-cop-alto" placeholder="0.0" min="0" step="0.1" oninput="finCalcCopinho('${mid}')"><span class="input-unit">g</span></div></div>
+        <div class="field" style="margin-bottom:0"><label>Parte média</label><div class="input-unit-wrap"><input type="number" id="fin-${mid}-cop-meio" placeholder="0.0" min="0" step="0.1" oninput="finCalcCopinho('${mid}')"><span class="input-unit">g</span></div></div>
+        <div class="field" style="margin-bottom:0"><label>Parte baixa</label><div class="input-unit-wrap"><input type="number" id="fin-${mid}-cop-baixo" placeholder="0.0" min="0" step="0.1" oninput="finCalcCopinho('${mid}')"><span class="input-unit">g</span></div></div>
+      </div>
+      <div id="fin-${mid}-cop-result" style="display:none;border-radius:var(--radius-sm);padding:8px 10px;font-size:12px;margin-top:2px"></div>
+    </div>`;
+}
+function finBuildMesas(){
+  const cfg=getUnitCfg(); finMesaIds=[];
+  const totalMesas=cfg.fin.peneiras.reduce((a,p)=>a+p.mesas,0);
+  const c=document.getElementById('fin-mesas-container'); c.innerHTML='';
+  const badge=document.getElementById('fin-header-badge'); if(badge) badge.textContent=`${totalMesas} mesas`;
+  const st=document.getElementById('fin-sum-title'); if(st) st.textContent=`Balanço das ${totalMesas} mesas`;
+  for(const pen of cfg.fin.peneiras){
+    let penHtml=`<div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--purple-600);margin:14px 0 6px;padding:0 2px">${pen.label} — ${pen.mesas} mesa${pen.mesas>1?'s':''}</div>`;
+    for(let m=1;m<=pen.mesas;m++){
+      const mid=`${pen.id}-m${m}`;
+      finMesaIds.push(mid);
+      penHtml+=`<div style="font-size:11px;color:var(--purple-400);font-weight:500;padding:0 2px;margin-bottom:4px">Mesa ${m}</div>`;
+      penHtml+=finMesaCard(mid);
+    }
+    c.innerHTML+=penHtml;
+  }
+}
+function finCalcCopinho(mid){
+  const alto=parseFloat(document.getElementById(`fin-${mid}-cop-alto`).value);
+  const meio=parseFloat(document.getElementById(`fin-${mid}-cop-meio`).value);
+  const baixo=parseFloat(document.getElementById(`fin-${mid}-cop-baixo`).value);
+  const res=document.getElementById(`fin-${mid}-cop-result`);
+  if(isNaN(alto)||isNaN(baixo)||alto<=0||baixo<=0){ res.style.display='none'; return; }
+  const total=alto+(isNaN(meio)?0:meio)+baixo;
+  const pctAlto=parseFloat((alto/total*100).toFixed(1));
+  const pctBaixo=parseFloat((baixo/total*100).toFixed(1));
+  const pctMeio=isNaN(meio)?null:parseFloat((meio/total*100).toFixed(1));
+  const ok=pctAlto >= pctBaixo + 3;
+  res.style.display='block';
+  res.style.background=ok?'var(--green-50)':'var(--amber-50)';
+  res.style.border=`0.5px solid ${ok?'var(--green-100)':'var(--amber-100)'}`;
+  res.style.color=ok?'var(--green-800)':'var(--amber-600)';
+  res.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+    <span>Alto <b>${pctAlto}%</b>${pctMeio!==null?' · Meio <b>'+pctMeio+'%</b>':''} · Baixo <b>${pctBaixo}%</b></span>
+    <span style="font-family:var(--mono);font-weight:500">Alto − Baixo = ${(pctAlto-pctBaixo).toFixed(1)}% ${ok?'✓ OK':'⚠ ideal alto ≥ baixo+3%'}</span>
+  </div>`;
+}
+function finCalcAll(){
+  const entTH=parseFloat(document.getElementById('fin-entrada-th').value)||0;
+  document.getElementById('fin-sum-entrada').textContent=entTH>0?entTH.toFixed(2):'—';
+  let totalDescTH=0; const rows=[];
+  finMesaIds.forEach(mid=>{
+    const kg=parseFloat(document.getElementById(`fin-${mid}-kg`).value)||0;
+    const gb=parseFloat(document.getElementById(`fin-${mid}-graobom`).value);
+    const th=kgToTH(kg);
+    document.getElementById(`fin-${mid}-th`).textContent=fmt2(th);
+    const pct=(!isNaN(gb)&&gb>=0)?parseFloat((gb/200*100).toFixed(1)):null;
+    document.getElementById(`fin-${mid}-pct`).textContent=pct!==null?pct.toFixed(1)+' %':'—';
+    if(th) totalDescTH+=th;
+    rows.push({mid,th,pct});
+  });
+  const pct=entTH>0&&totalDescTH?parseFloat((totalDescTH/entTH*100).toFixed(1)):null;
+  const saida=entTH>0?Math.max(0,entTH-totalDescTH):null;
+  document.getElementById('fin-sum-desc').textContent=totalDescTH>0?totalDescTH.toFixed(2):'—';
+  document.getElementById('fin-sum-pct').textContent=pct!==null?pct:'—';
+  document.getElementById('fin-sum-saida').textContent=saida!==null?saida.toFixed(2):'—';
+  const sl=document.getElementById('fin-mesa-status-list');
+  sl.innerHTML=rows.map((r,i)=>`<div class="mesa-status"><span class="mesa-status-name">${r.mid.replace('p','Pen ').replace('-m',' M')}</span><span class="mesa-status-vals">${fmt2(r.th)} t/h${r.pct!==null?' · '+r.pct+'% boa':''}</span></div>`).join('');
+}
+function finSalvar(){
+  const op=document.getElementById('fin-operator').value;
+  const entTH=document.getElementById('fin-entrada-th').value;
+  if(!op){toast('Selecione o operador.',true);return;} if(!entTH){toast('Informe a entrada em t/h.',true);return;}
+  const eVal=parseFloat(entTH)||0; const mesas=[]; let totalDescTH=0;
+  finMesaIds.forEach(mid=>{
+    const kg=parseFloat(document.getElementById(`fin-${mid}-kg`).value)||0;
+    const gb=parseFloat(document.getElementById(`fin-${mid}-graobom`).value);
+    const th=kgToTH(kg); if(th) totalDescTH+=th;
+    const boaPct=(!isNaN(gb)&&gb>=0)?parseFloat((gb/200*100).toFixed(1)):null;
+    const copAlto=parseFloat(document.getElementById(`fin-${mid}-cop-alto`).value);
+    const copMeio=parseFloat(document.getElementById(`fin-${mid}-cop-meio`).value);
+    const copBaixo=parseFloat(document.getElementById(`fin-${mid}-cop-baixo`).value);
+    const copinho=(!isNaN(copAlto)&&!isNaN(copBaixo)&&copAlto>0&&copBaixo>0)?{alto:copAlto,meio:isNaN(copMeio)?null:copMeio,baixo:copBaixo}:null;
+    mesas.push({mesaId:mid,descTH:th?parseFloat(th.toFixed(2)):null,boaPct,copinho});
+  });
+  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,entTH:eVal,mesas,totalDescTH:parseFloat(totalDescTH.toFixed(2)),obs:document.getElementById('fin-obs').value.trim()};
+  saveRecordToSheets('FIN', record);
+}
+function finResetForm(){
+  document.getElementById('fin-operator').value=''; document.getElementById('fin-entrada-th').value=''; document.getElementById('fin-obs').value='';
+  finMesaIds.forEach(mid=>{
+    [`fin-${mid}-kg`,`fin-${mid}-graobom`,`fin-${mid}-cop-alto`,`fin-${mid}-cop-meio`,`fin-${mid}-cop-baixo`].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+    [`fin-${mid}-th`,`fin-${mid}-pct`].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='—';});
+    const cr=document.getElementById(`fin-${mid}-cop-result`); if(cr)cr.style.display='none';
+  });
+  ['fin-sum-entrada','fin-sum-desc','fin-sum-pct','fin-sum-saida'].forEach(id=>document.getElementById(id).textContent='—'); document.getElementById('fin-mesa-status-list').innerHTML='';
+}
+function finRenderSelect(){ const sel=document.getElementById('fin-operator'); sel.innerHTML='<option value="">Selecionar...</option>'+finOperators.map(o=>`<option value="${o}">${o}</option>`).join(''); }
+function finRenderOps(){ const c=document.getElementById('fin-operators-list'); c.innerHTML=finOperators.map((o,i)=>`<div class="op-row"><span class="op-name">${o}</span><button class="op-remove" onclick="finRemoveOperator(${i})">×</button></div>`).join(''); }
+function finAddOperator(){ const inp=document.getElementById('fin-new-op'); const name=inp.value.trim(); if(!name||finOperators.includes(name))return; finOperators.push(name); inp.value=''; setOperators('FIN',finOperators); finRenderSelect(); finRenderOps(); }
+function finRemoveOperator(i){ finOperators.splice(i,1); setOperators('FIN',finOperators); finRenderSelect(); finRenderOps(); }
+
+// ══════════════════════════════════════════════
+// MOEGA MODULE
+// ══════════════════════════════════════════════
+let moegaOperators=getOperators('MOEGA');
+let moegaDtTimer=null;
+let moegaHiloSim=false;
+let moegaPhotoData=null;
+
+function moegaInit(){
+  moegaOperators=getOperators('MOEGA');
+  moegaRenderSelect(); moegaUpdateDt();
+  clearInterval(moegaDtTimer); moegaDtTimer=setInterval(moegaUpdateDt,1000);
+  moegaSwitchTab('form');
+  moegaSetHilo(false);
+}
+function moegaUpdateDt(){ const s=nowStr(); const e=document.getElementById('moega-header-dt'); if(e)e.textContent=s; const f=document.getElementById('moega-dt-field'); if(f)f.value=s; }
+function moegaSwitchTab(tab){
+  ['form','records'].forEach(t=>{ document.getElementById('moega-tab-'+t).style.display=t===tab?'block':'none'; });
+  document.querySelectorAll('#page-moega .ntab').forEach((el,i)=>el.classList.toggle('active',['form','records'][i]===tab));
+  if(tab==='records') moegaLoadAndRender();
+}
+function moegaSetHilo(sim){
+  moegaHiloSim=sim;
+  document.getElementById('moega-hilo-sim').className='hilo-btn'+(sim?' sim':'');
+  document.getElementById('moega-hilo-nao').className='hilo-btn'+(!sim?' nao':'');
+  document.getElementById('moega-hilo-detalhe').style.display=sim?'block':'none';
+  if(!sim){ document.getElementById('moega-hilo-qtd').value=''; document.getElementById('moega-hilo-pct').textContent='—'; }
+}
+function moegaCalc(){
+  const total=parseFloat(document.getElementById('moega-total-sem').value)||200;
+  const qtd=parseFloat(document.getElementById('moega-hilo-qtd').value);
+  const pct=(!isNaN(qtd)&&qtd>=0)?parseFloat((qtd/total*100).toFixed(1)):null;
+  document.getElementById('moega-hilo-pct').textContent=pct!==null?pct.toFixed(1)+' %':'—';
+}
+function moegaPhotoSelected(input){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    moegaPhotoData=e.target.result;
+    const prev=document.getElementById('moega-photo-preview');
+    prev.src=moegaPhotoData; prev.style.display='block';
+    document.getElementById('moega-photo-remove').style.display='block';
+    document.getElementById('moega-photo-area').style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+function moegaRemovePhoto(){
+  moegaPhotoData=null;
+  document.getElementById('moega-photo-preview').style.display='none';
+  document.getElementById('moega-photo-remove').style.display='none';
+  document.getElementById('moega-photo-area').style.display='block';
+  document.getElementById('moega-photo-input').value='';
+}
+function moegaSalvar(){
+  const op=document.getElementById('moega-operator').value;
+  if(!op){toast('Selecione o operador.',true);return;}
+  const total=parseFloat(document.getElementById('moega-total-sem').value)||200;
+  const hiloQtd=moegaHiloSim?parseFloat(document.getElementById('moega-hilo-qtd').value)||0:0;
+  const hiloDesc=moegaHiloSim?document.getElementById('moega-hilo-desc').value.trim():'';
+  const hiloPct=moegaHiloSim?parseFloat((hiloQtd/total*100).toFixed(1)):null;
+  // store photo as base64 but limit size (resize if >200kb)
+  let photoData=null;
+  if(moegaPhotoData){
+    // if larger than 150kb try compressing via canvas
+    if(moegaPhotoData.length>150000){
+      try{
+        const img=new Image(); img.src=moegaPhotoData;
+        const cv=document.createElement('canvas');
+        const scale=Math.min(1,800/Math.max(img.naturalWidth||800,img.naturalHeight||600));
+        cv.width=(img.naturalWidth||800)*scale; cv.height=(img.naturalHeight||600)*scale;
+        cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+        photoData=cv.toDataURL('image/jpeg',0.7);
+      }catch(e){ photoData=moegaPhotoData; }
+    }else{ photoData=moegaPhotoData; }
+  }
+  const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,
+    totalSem:total, hiloSim:moegaHiloSim, hiloQtd:moegaHiloSim?hiloQtd:null,
+    hiloPct, hiloDesc, photo:photoData,
+    obs:document.getElementById('moega-obs').value.trim()};
+  saveRecordToSheets('MOEGA', record);
+}
+function moegaResetForm(){
+  document.getElementById('moega-operator').value='';
+  document.getElementById('moega-total-sem').value='200';
+  document.getElementById('moega-obs').value='';
+  moegaSetHilo(false);
+  moegaRemovePhoto();
+}
+function moegaRenderSelect(){ const sel=document.getElementById('moega-operator'); sel.innerHTML='<option value="">Selecionar...</option>'+moegaOperators.map(o=>`<option value="${o}">${o}</option>`).join(''); }
+async function moegaLoadAndRender(){
+  showLoading('moega-rec-list');
+  try{ await dbLoad('MOEGA',true); }catch(e){ toast('Erro: '+e.message,true); }
+  finally{ moegaRenderRecords(); }
+}
+function moegaRenderRecords(){
+  const c=document.getElementById('moega-rec-list');
+  const unit=getUnit();
+  const recs=(DB['MOEGA']||[]).filter(r=>!unit||r.unidade===unit);
+  if(!recs.length){ c.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-hint);font-size:13px">Nenhum registro ainda.</div>'; return; }
+  c.innerHTML=recs.map(r=>{
+    const hiloBadge=r.hiloSim
+      ? `<span style="background:var(--amber-50);color:var(--amber-600);font-size:10px;padding:2px 7px;border-radius:99px;font-weight:500">⚠ Hilo ${r.hiloPct!=null?r.hiloPct+'%':''}</span>`
+      : `<span style="background:var(--green-50);color:var(--green-800);font-size:10px;padding:2px 7px;border-radius:99px;font-weight:500">✓ Sem variação</span>`;
+    const thumbId='thumb-'+r.id; const photoThumb=r.photo?`<button class="photo-thumb-btn" onclick="openLightbox(document.getElementById('${thumbId}').dataset.src)" title="Ver foto"><img id="${thumbId}" src="${r.photo}" data-src="${r.photo}" alt="foto"></button>`:'';
+    return `<div class="card" style="margin-bottom:10px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+        <div style="flex:1">
+          <div style="font-size:12px;color:var(--text-hint);margin-bottom:3px">${r.dt||''} · ${r.operator||''}</div>
+
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span style="font-size:11px;color:var(--text-muted)">${r.totalSem} sem.</span>
+            ${hiloBadge}
+            ${r.hiloSim&&r.hiloDesc?`<span style="font-size:10px;color:var(--text-muted)">${r.hiloDesc}</span>`:''}
+          </div>
+          ${r.obs?`<div style="font-size:11px;color:var(--text-muted);margin-top:6px">${r.obs}</div>`:''}
+        </div>
+        ${photoThumb}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+// INDICADORES MODULE
+// ══════════════════════════════════════════════
+let indCurrentTab = 'fluxo';
+let indSelectedUbs = ''; // '' = todas (admin only)
+
+const IND_SERIES = [
+  { label:'Entrada bruta (MAP)',        color:'#1D9E75', getVals: recs => recs.filter(r=>r._type==='map').map(r=>({dt:r.id,v:r.entTH??null,label:r.dt})) },
+  { label:'Saída MAP',                  color:'#0F6E56', getVals: recs => recs.filter(r=>r._type==='map').map(r=>({dt:r.id,v:r.saidaTH??null,label:r.dt})) },
+  { label:'Saída Pós-limpeza',          color:'#BA7517', getVals: recs => recs.filter(r=>r._type==='posl').map(r=>({dt:r.id,v:r.entTH!=null&&r.totalDescTH!=null?parseFloat(Math.max(0,r.entTH-r.totalDescTH).toFixed(2)):null,label:r.dt})) },
+  { label:'Saída Espirais',             color:'#00ACC1', getVals: recs => recs.filter(r=>r._type==='esp').map(r=>({dt:r.id,v:r.saidaTH??null,label:r.dt})) },
+  { label:'Saída Padronizadores',       color:'#FB8C00', getVals: recs => recs.filter(r=>r._type==='pad').map(r=>({dt:r.id,v:r.saidaTH??null,label:r.dt})) },
+  { label:'Saída Mesas Finais',         color:'#7C3AED', getVals: recs => recs.filter(r=>r._type==='fin').map(r=>({dt:r.id,v:r.entTH!=null&&r.totalDescTH!=null?parseFloat(Math.max(0,r.entTH-r.totalDescTH).toFixed(2)):null,label:r.dt})) },
+];
+
+// Loss: % of good grain lost in waste relative to gross entry volume (entTH)
+// Formula per machine:
+//   lossVolume = sum of (descTH * boaPct/100) over all discard streams
+//   lossPercent = lossVolume / entTH * 100
+// Returns percentage (0-100) or null if data insufficient.
+function calcLossThAndPct(r){
+  // returns {lossTH, lossPct} or null
+  const entTH = r.entTH||0;
+  let lossTH = 0;
+  if(r._type==='map'){
+    lossTH = (r.supTH||0)*((r.supPct||0)/100) + (r.infTH||0)*((r.infPct||0)/100);
+  } else if(r._type==='posl'||r._type==='fin'){
+    (r.mesas||[]).forEach(m=>{ if(m.descTH&&m.boaPct!=null) lossTH+=m.descTH*(m.boaPct/100); });
+  } else if(r._type==='esp'){
+    lossTH = (r.descTH||0)*((r.graobomPct||0)/100);
+  } else if(r._type==='pad'){
+    if(r.machines&&r.machines.length){
+      r.machines.forEach(m=>{ lossTH+=(m.supTH||0)*((m.supPct||0)/100)+(m.infTH||0)*((m.infPct||0)/100); });
+    } else {
+      lossTH = (r.supTH||0)*((r.supPct||0)/100)+(r.infTH||0)*((r.infPct||0)/100);
+    }
+  } else { return null; }
+  const lossPct = entTH>0 ? parseFloat((lossTH/entTH*100).toFixed(2)) : null;
+  return { lossTH:parseFloat(lossTH.toFixed(3)), lossPct };
+}
+// Convenience wrapper — returns lossPct only (for backward compat in machine cards)
+function calcLoss(r){ const v=calcLossThAndPct(r); return v?v.lossPct:null; }
+
+const LOSS_SOURCES = [
+  { type:'map',  label:'MAP',           color:'#1D9E75' },
+  { type:'posl', label:'Pós-limpeza',   color:'#BA7517' },
+  { type:'esp',  label:'Espirais',      color:'#00ACC1' },
+  { type:'pad',  label:'Padronizadores',color:'#FB8C00' },
+  { type:'fin',  label:'Mesas Finais',  color:'#7C3AED' },
+];
+
+async function indInit(){
+  updateDropdowns();
+  const now = new Date(); const start = new Date(now); start.setDate(now.getDate()-7);
+  const fmt = d => d.toISOString().slice(0,10);
+  const ds = document.getElementById('ind-date-start'); if(ds&&!ds.value) ds.value=fmt(start);
+  const de = document.getElementById('ind-date-end');   if(de&&!de.value) de.value=fmt(now);
+  const ubsFilter=document.getElementById('ind-ubs-filter');
+  if(ubsFilter) ubsFilter.style.display=isAdmin()?'block':'none';
+  if(!isAdmin()) indSelectedUbs=getUnit();
+  const backBtn=document.getElementById('ind-back-btn');
+  if(backBtn) backBtn.title=isAdmin()?'Sair':'Voltar';
+  const badge=document.getElementById('ind-header-badge');
+  if(badge) badge.textContent=isAdmin()?(indSelectedUbs||'Todas as UBSs'):getUnit();
+  // Load data
+  showLoading('ind-loading');
+  try{ await dbLoadAll(true); }catch(e){ toast('Erro ao carregar dados: '+e.message,true); }
+  finally{ hideLoading('ind-loading'); }
+  indSwitchTab(indCurrentTab);
+}
+
+function indSwitchTab(tab){
+  indCurrentTab=tab;
+  indRender();
+}
+function indSetUbs(ubs){
+  indSelectedUbs=ubs;
+  // update button styles
+  ['','UBS 01','UBS 03','UBS 04'].forEach(u=>{
+    const id='ind-ubs-'+(u===''?'all':u.toLowerCase().replace(' ',''));
+    const el=document.getElementById(id); if(!el) return;
+    el.classList.toggle('active', u===ubs);
+  });
+  // update header badge
+  const badge=document.getElementById('ind-header-badge');
+  if(badge) badge.textContent=ubs||'Todas as UBSs';
+  indRender();
+}
+
+function indGetFilteredRecs(){
+  const startEl=document.getElementById('ind-date-start');
+  const endEl=document.getElementById('ind-date-end');
+  const startTs=startEl?.value?new Date(startEl.value+'T00:00:00').getTime():0;
+  const endTs=endEl?.value?new Date(endEl.value+'T23:59:59').getTime():Infinity;
+  const unit=isAdmin()?indSelectedUbs:getUnit();
+  let all=[];
+  REG_SOURCES.forEach(s=>{
+    (DB[s.sheet]||[]).filter(r=>(!unit||r.unidade===unit)&&r.id>=startTs&&r.id<=endTs)
+      .forEach(r=>all.push({...r,_type:s.type,_label:s.label,_color:s.color}));
+  });
+  return all.sort((a,b)=>a.id-b.id);
+}
+
+function indRender(){
+  const allRecs = indGetFilteredRecs();
+  indRenderFluxo(allRecs);
+}
+
+// ── FLUXO + tabela de % perda ──
+function indRenderFluxo(allRecs){
+  // Gráfico de linhas
+  const datasets = IND_SERIES.map(s=>({ label:s.label, color:s.color, pts:s.getVals(allRecs).filter(p=>p.v!==null) }));
+  const allTs = [...new Set(datasets.flatMap(d=>d.pts.map(p=>p.dt)))].sort((a,b)=>a-b);
+  document.getElementById('ind-legend').innerHTML = IND_SERIES.map(s=>`<span style="display:inline-flex;align-items:center;gap:5px"><span style="width:20px;height:3px;background:${s.color};display:inline-block;border-radius:2px"></span><span style="font-size:11px">${s.label}</span></span>`).join('');
+  document.getElementById('ind-summary-grid').innerHTML = IND_SERIES.map(s=>{
+    const pts=s.getVals(allRecs).filter(p=>p.v!==null); const last=pts.length?pts[pts.length-1]:null;
+    return `<div class="metric" style="border-left:3px solid ${s.color}"><div class="metric-label" style="font-size:10px">${s.label}</div><div class="metric-value" style="font-size:15px;color:${s.color}">${last?last.v.toFixed(2):'—'}</div><div class="metric-unit">t/h</div></div>`;
+  }).join('');
+  indDrawLineChart('ind-chart', datasets, allTs, 320, 't/h');
+
+  // Tabela % grão bom no descarte por equipamento
+  const tabela = document.getElementById('ind-perda-tabela');
+  if(!tabela) return;
+  const rows = LOSS_SOURCES.map(src=>{
+    const recs = allRecs.filter(r=>r._type===src.type);
+    if(!recs.length) return null;
+    const pts = recs.map(r=>{ const v=calcLossThAndPct(r); return v?.lossPct??null; }).filter(v=>v!==null);
+    if(!pts.length) return null;
+    const last = pts[pts.length-1];
+    const avg  = pts.reduce((a,v)=>a+v,0)/pts.length;
+    const min  = Math.min(...pts);
+    const max  = Math.max(...pts);
+    return { src, last, avg, min, max, n:pts.length };
+  }).filter(Boolean);
+
+  if(!rows.length){
+    tabela.innerHTML='<div style="padding:16px;text-align:center;color:var(--text-hint);font-size:13px">Nenhum dado com análise de qualidade no período.</div>';
+    return;
+  }
+
+  // cabeçalho
+  let t = `<div style="overflow-x:auto">
+  <table style="width:100%;border-collapse:collapse;font-size:12px">
+    <thead>
+      <tr style="border-bottom:1.5px solid var(--border-md)">
+        <th style="text-align:left;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Equipamento</th>
+        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Último</th>
+        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Média</th>
+        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Mín</th>
+        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Máx</th>
+        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Regs</th>
+      </tr>
+    </thead>
+    <tbody>`;
+
+  rows.forEach(({src,last,avg,min,max,n})=>{
+    const col = last>2?'var(--red-400)':last>1?'var(--amber-400)':'var(--green-600)';
+    const bg  = last>2?'var(--red-50)':last>1?'var(--amber-50)':'var(--green-50)';
+    const dot = `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${src.color};margin-right:6px;vertical-align:middle"></span>`;
+    t+=`<tr style="border-bottom:0.5px solid var(--border)">
+      <td style="padding:10px 6px;font-weight:500">${dot}${src.label}</td>
+      <td style="padding:10px 6px;text-align:center">
+        <span style="background:${bg};color:${col};font-family:var(--mono);font-size:12px;font-weight:500;padding:3px 8px;border-radius:99px">${last.toFixed(2)}%</span>
+      </td>
+      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);color:var(--text-muted)">${avg.toFixed(2)}%</td>
+      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);color:var(--green-600)">${min.toFixed(2)}%</td>
+      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);color:var(--red-400)">${max.toFixed(2)}%</td>
+      <td style="padding:10px 6px;text-align:center;color:var(--text-hint)">${n}</td>
+    </tr>`;
+  });
+
+  t+=`</tbody></table></div>
+  <div style="margin-top:10px;display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--text-hint)">
+    <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green-600);margin-right:4px;vertical-align:middle"></span>≤ 1% — ideal</span>
+    <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber-400);margin-right:4px;vertical-align:middle"></span>1–2% — atenção</span>
+    <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red-400);margin-right:4px;vertical-align:middle"></span>&gt; 2% — crítico</span>
+  </div>`;
+  tabela.innerHTML=t;
+}
+
+// ── Shared canvas line chart ──
+function indDrawLineChart(canvasId, datasets, allTs, H, yLabel){
+  const canvas=document.getElementById(canvasId); if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+  const W=canvas.parentElement.offsetWidth||600;
+  canvas.width=W*dpr; canvas.height=H*dpr;
+  canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  ctx.scale(dpr,dpr); ctx.clearRect(0,0,W,H);
+  const PAD={top:16,right:16,bottom:52,left:52};
+  const cw=W-PAD.left-PAD.right; const ch=H-PAD.top-PAD.bottom;
+  const allVals=datasets.flatMap(d=>d.pts.map(p=>p.v)).filter(v=>v!=null);
+  const yMax=allVals.length?Math.max(...allVals)*1.15:10;
+  const yRange=yMax||1;
+  ctx.strokeStyle='rgba(0,0,0,0.07)'; ctx.lineWidth=1;
+  ctx.font='10px DM Mono,monospace'; ctx.fillStyle='#9A9893'; ctx.textAlign='right';
+  for(let i=0;i<=5;i++){
+    const y=PAD.top+ch-(i/5)*ch; const val=(i/5)*yRange;
+    ctx.beginPath(); ctx.moveTo(PAD.left,y); ctx.lineTo(PAD.left+cw,y); ctx.stroke();
+    ctx.fillText(val.toFixed(2),PAD.left-5,y+4);
+  }
+  ctx.save(); ctx.translate(12,PAD.top+ch/2); ctx.rotate(-Math.PI/2);
+  ctx.textAlign='center'; ctx.font='9px DM Sans,sans-serif'; ctx.fillStyle='#9A9893';
+  ctx.fillText(yLabel,0,0); ctx.restore();
+  if(!allTs.length){
+    ctx.font='13px DM Sans,sans-serif'; ctx.fillStyle='#9A9893'; ctx.textAlign='center';
+    ctx.fillText('Nenhum dado no período',PAD.left+cw/2,PAD.top+ch/2); return;
+  }
+  const step=Math.max(1,Math.ceil(allTs.length/8));
+  ctx.textAlign='center'; ctx.font='9px DM Mono,monospace'; ctx.fillStyle='#9A9893';
+  allTs.forEach((ts,i)=>{ if(i%step===0){ const x=PAD.left+(i/(allTs.length-1||1))*cw; const d=new Date(ts); ctx.fillText(`${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`,x,PAD.top+ch+18); } });
+  datasets.forEach(ds=>{
+    if(!ds.pts.length) return;
+    ctx.strokeStyle=ds.color; ctx.lineWidth=2; ctx.lineJoin='round'; ctx.lineCap='round';
+    ctx.beginPath(); let first=true;
+    ds.pts.forEach(p=>{ const xi=allTs.indexOf(p.dt); const x=PAD.left+(xi/(allTs.length-1||1))*cw; const y=PAD.top+ch-(p.v/yRange)*ch; if(first){ctx.moveTo(x,y);first=false;}else ctx.lineTo(x,y); });
+    ctx.stroke();
+    ds.pts.forEach(p=>{ const xi=allTs.indexOf(p.dt); const x=PAD.left+(xi/(allTs.length-1||1))*cw; const y=PAD.top+ch-(p.v/yRange)*ch; ctx.beginPath(); ctx.arc(x,y,3,0,2*Math.PI); ctx.fillStyle=ds.color; ctx.fill(); });
+  });
+}
+
+function openLightbox(src){ document.getElementById('lightbox-img').src=src; document.getElementById('lightbox').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); document.getElementById('lightbox-img').src=''; document.body.style.overflow=''; }
+// ══════════════════════════════════════════════
+// BOOT
+// ══════════════════════════════════════════════
+(function(){
+  const s = getSession();
+  if(s){ navigate('home'); }
+  // else stays on login page (already active)
+})();
+</script>
+</body>
+</html>
