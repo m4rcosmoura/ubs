@@ -930,7 +930,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
       <button class="back-btn" id="ind-back-btn" onclick="isAdmin()?doLogout():navigate('home')">&#8592;</button>
       <div class="header-logo"><svg viewBox="0 0 16 16" fill="none"><path d="M1 13L5 8L8 10L14 4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <span class="header-title">Indicadores</span>
-      <span class="header-badge" id="ind-header-badge">Volume por etapa · v12</span>
+      <span class="header-badge" id="ind-header-badge">Volume por etapa · v13</span>
     </div>
     <div style="display:flex;align-items:center;gap:8px">
       <button class="user-btn-icon" id="ind-user-btn" onclick="toggleDropdown('ind-dd')"></button>
@@ -1352,6 +1352,24 @@ function hideLoading(containerId){
 // SHARED UTILS
 // ══════════════════════════════════════════════
 function kgToTH(kg){ const k=parseFloat(kg); return(!k||k<=0)?null:(k*600)/1000; } // usado no lançamento: kg coletado em 6s × 0,6 = t/h
+
+function validateSaidaNaoMaiorEntrada(etapa, entradaTH, descarteTH, detalhe=''){
+  const ent = Number(entradaTH)||0;
+  const desc = Number(descarteTH)||0;
+  if(ent<=0) return {ok:false,msg:`${etapa}: informe uma entrada válida em t/h.`};
+  if(desc < 0) return {ok:false,msg:`${etapa}: descarte não pode ser negativo.`};
+  // tolerância pequena para arredondamento decimal; acima disso é erro operacional/digitação
+  if(desc - ent > 0.0001){
+    const saidaNeg = ent - desc;
+    return {ok:false,msg:`${etapa}: saída inválida. Descarte (${desc.toFixed(2)} t/h) é maior que a entrada (${ent.toFixed(2)} t/h)${detalhe?` — ${detalhe}`:''}. Confira o peso lançado no teste de 6s.`};
+  }
+  return {ok:true};
+}
+function bloquearSeSaidaInvalida(etapa, entradaTH, descarteTH, detalhe=''){
+  const v = validateSaidaNaoMaiorEntrada(etapa, entradaTH, descarteTH, detalhe);
+  if(!v.ok){ toast(v.msg, true); return true; }
+  return false;
+}
 const fmt2 = v=>v!==null?v.toFixed(2):'—';
 function toast(msg,error=false){ const el=document.getElementById('toast'); el.textContent=msg; el.className='toast show'+(error?' error':''); setTimeout(()=>el.className='toast',3500); }
 function nowStr(){
@@ -1614,6 +1632,7 @@ function mapSalvar(){
     const supGB=parseFloat(document.getElementById(`map-m${n}-supgb`).value);
     const infGB=parseFloat(document.getElementById(`map-m${n}-infgb`).value);
     const supTH=kgToTH(supKg)||0, infTH=kgToTH(infKg)||0;
+    if(bloquearSeSaidaInvalida(`MAP ${n}`, entTH, supTH+infTH, `sup + inf = ${(supTH+infTH).toFixed(2)} t/h`)) return;
     if(!isSerial2) totalEntTH+=entTH;
     totalSupTH+=supTH; totalInfTH+=infTH;
     const supPct=(!isNaN(supGB)&&supGB>=0)?parseFloat((supGB/500*100).toFixed(1)):null;
@@ -1728,6 +1747,7 @@ function poslSalvar(){
     const boaPct=(!isNaN(gb)&&gb>=0)?parseFloat((gb/500*100).toFixed(1)):null;
     mesas.push({descTH:th?parseFloat(th.toFixed(2)):null,boaPct});
   }
+  if(bloquearSeSaidaInvalida('Pós-limpeza', eVal, totalDescTH, 'soma dos descartes das mesas')) return;
   const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,cultivar:getCultivar('posl'),entTH:eVal,mesas,totalDescTH:parseFloat(totalDescTH.toFixed(2)),obs:document.getElementById('posl-obs').value.trim()};
   saveRecordToSheets('POSL', record);
 }
@@ -1793,6 +1813,7 @@ function espSalvar(){
   const graoruin200=parseFloat(document.getElementById('esp-graoruin-200').value);
   const freqHz=parseFloat(document.getElementById('esp-freq-hz').value)||null;
   const descTH=kgToTH(descKg);
+  if(bloquearSeSaidaInvalida('Espirais', eVal, descTH||0, 'descarte do espiral')) return;
   const saidaTH=eVal>0?Math.max(0,eVal-(descTH||0)):null;
   const pctDesc=eVal>0&&descTH?parseFloat((descTH/eVal*100).toFixed(1)):null;
   const graobomPct=(!isNaN(graobomSem)&&graobomSem>=0)?parseFloat((graobomSem/200*100).toFixed(1)):null;
@@ -1914,6 +1935,7 @@ function padSalvar(){
     const infPct=(!isNaN(infGB)&&infGB>=0)?parseFloat((infGB/500*100).toFixed(1)):null;
     machines.push({supTH:parseFloat(supTH.toFixed(2)),infTH:parseFloat(infTH.toFixed(2)),supPct,infPct});
   }
+  if(bloquearSeSaidaInvalida('Padronizadores', eVal, totalSupTH+totalInfTH, 'sup + inf dos padronizadores')) return;
   const saidaTH=eVal>0?parseFloat(Math.max(0,eVal-totalSupTH-totalInfTH).toFixed(2)):null;
   const m1=machines[0];
   const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,entTH:eVal,
@@ -2053,6 +2075,7 @@ function finSalvar(){
     const copinho=(!isNaN(copAlto)&&!isNaN(copBaixo)&&copAlto>0&&copBaixo>0)?{alto:copAlto,meio:isNaN(copMeio)?null:copMeio,baixo:copBaixo}:null;
     mesas.push({mesaId:mid,descTH:th?parseFloat(th.toFixed(2)):null,boaPct,copinho});
   });
+  if(bloquearSeSaidaInvalida('Mesas Finais', eVal, totalDescTH, 'soma dos descartes das mesas finais')) return;
   const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,cultivar:getCultivar('fin'),entTH:eVal,mesas,totalDescTH:parseFloat(totalDescTH.toFixed(2)),obs:document.getElementById('fin-obs').value.trim()};
   saveRecordToSheets('FIN', record);
 }
@@ -2593,7 +2616,7 @@ function indRenderFluxo(allRecs){
       </span>`
     );
     statusEl.innerHTML = parts.length
-      ? `<div style="padding:8px 0 4px;font-size:11px;color:var(--text-hint)">Registros no período / total carregado: ${parts.join('')}<span style="margin-left:8px;color:var(--text-hint);font-family:var(--mono)">v12 registros plotados</span></div>`
+      ? `<div style="padding:8px 0 4px;font-size:11px;color:var(--text-hint)">Registros no período / total carregado: ${parts.join('')}<span style="margin-left:8px;color:var(--text-hint);font-family:var(--mono)">v13 registros plotados</span></div>`
       : `<div style="padding:8px 0 4px;font-size:11px;color:var(--red-400)">⚠ Nenhum dado carregado. Verifique a conexão com a API.</div>`;
   }
   // Gráfico de linhas em cascata — tudo em t/h
