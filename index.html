@@ -381,15 +381,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         </div>
         <div class="arr">›</div>
       </button>
-      <button class="tc" onclick="navigate('moega')">
-        <div class="tc-accent" style="background:#378ADD"></div>
-        <div class="tc-icon" style="background:var(--blue-50)"><svg viewBox="0 0 20 20" fill="none"><path d="M4 4h12l-1.5 8H5.5L4 4z" stroke="#378ADD" stroke-width="1.4" stroke-linejoin="round"/><path d="M2 4h16" stroke="#378ADD" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="16" r="1.2" fill="#378ADD"/><circle cx="13" cy="16" r="1.2" fill="#378ADD"/></svg></div>
-        <div class="tc-info">
-          <div class="tc-name">Moega <span class="tc-badge" style="background:var(--blue-50);color:#0C447C">Recebimento</span></div>
-          <div class="tc-desc">200 sementes · Variação de hilo · Foto opcional</div>
-        </div>
-        <div class="arr">›</div>
-      </button>
+
     </div>
   </main>
 </div>
@@ -481,13 +473,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         <div class="card-header"><div class="card-pill pill-green">Identificação</div></div>
         <div class="field-row">
           <div class="field"><label>Operador</label><select id="map-operator"><option value="">Selecionar...</option></select></div>
-          <div class="field"><label>Data / hora</label><input type="text" id="map-dt-field" readonly></div>
+          <div class="field"><label>Cultivar</label><select id="map-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select></div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Data / hora</label>
+          <input type="text" id="map-dt-field" readonly>
         </div>
 
-      <div class="field" style="margin-bottom:0">
-        <label>Cultivar</label>
-        <select id="map-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select>
-      </div>
       </div>
       <div class="info-note">Colete a amostra por 6 segundos e pese em kg. O sistema converte para t/h automaticamente.</div>
       <div id="map-machines-container"></div>
@@ -498,6 +490,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
           <div class="metric"><div class="metric-label">Desc. sup total</div><div class="metric-value" id="map-sum-sup">—</div><div class="metric-unit">t/h</div></div>
           <div class="metric"><div class="metric-label">Desc. inf total</div><div class="metric-value" id="map-sum-inf">—</div><div class="metric-unit">t/h</div></div>
           <div class="metric highlight"><div class="metric-label">Saída total</div><div class="metric-value" id="map-sum-saida">—</div><div class="metric-unit">t/h</div></div>
+        </div>
+        <div class="metric" style="background:var(--red-50);border:0.5px solid var(--red-100);border-radius:var(--radius-md);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div><div class="metric-label" style="color:var(--red-800)">Sem. boa perdida no descarte</div><div style="font-size:10px;color:var(--red-400);margin-top:2px">sup + inf combinados</div></div>
+          <div style="text-align:right"><span class="metric-value" id="map-sum-boath" style="color:var(--red-400);font-size:18px">—</span> <span class="metric-unit">t/h</span></div>
         </div>
         <div class="mesa-status-list" id="map-machine-status-list"></div>
       </div>
@@ -545,17 +541,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         <div class="card-header"><div class="card-pill pill-amber">Identificação</div></div>
         <div class="field-row">
           <div class="field"><label>Operador</label><select id="posl-operator"><option value="">Selecionar...</option></select></div>
-          <div class="field"><label>Data / hora</label><input type="text" id="posl-dt-field" readonly></div>
+          <div class="field"><label>Cultivar</label><select id="posl-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select></div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Data / hora</label>
+          <input type="text" id="posl-dt-field" readonly>
         </div>
         <div class="field" style="margin-bottom:0">
           <label>Entrada — vazão total</label>
           <div class="input-unit-wrap"><input type="number" id="posl-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="poslCalcAll()"><span class="input-unit">t/h</span></div>
         </div>
 
-      <div class="field" style="margin-bottom:0">
-        <label>Cultivar</label>
-        <select id="posl-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select>
-      </div>
       </div>
       <div class="info-note">Descarte: amostra de 6 segundos em kg → t/h. Semente boa: amostra fixa de 500g.</div>
       <div id="posl-mesas-container"></div>
@@ -566,6 +562,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
           <div class="metric"><div class="metric-label">Desc. total</div><div class="metric-value" id="posl-sum-desc">—</div><div class="metric-unit">t/h</div></div>
           <div class="metric"><div class="metric-label">% descarte</div><div class="metric-value" id="posl-sum-pct">—</div><div class="metric-unit">%</div></div>
           <div class="metric highlight"><div class="metric-label">Saída est.</div><div class="metric-value" id="posl-sum-saida">—</div><div class="metric-unit">t/h</div></div>
+        </div>
+        <div class="metric" style="background:var(--red-50);border:0.5px solid var(--red-100);border-radius:var(--radius-md);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div><div class="metric-label" style="color:var(--red-800)">Sem. boa perdida no descarte</div><div style="font-size:10px;color:var(--red-400);margin-top:2px">soma de todas as mesas</div></div>
+          <div style="text-align:right"><span class="metric-value" id="posl-sum-boath" style="color:var(--red-400);font-size:18px">—</span> <span class="metric-unit">t/h</span></div>
         </div>
         <div class="mesa-status-list" id="posl-mesa-status-list"></div>
       </div>
@@ -613,7 +613,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         <div class="card-header"><div class="card-pill pill-teal">Identificação</div></div>
         <div class="field-row">
           <div class="field"><label>Operador</label><select id="esp-operator"><option value="">Selecionar...</option></select></div>
-          <div class="field"><label>Data / hora</label><input type="text" id="esp-dt-field" readonly></div>
+          <div class="field"><label>Cultivar</label><select id="esp-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select></div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Data / hora</label>
+          <input type="text" id="esp-dt-field" readonly>
         </div>
         <div class="field-row">
           <div class="field">
@@ -626,18 +630,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
           </div>
         </div>
 
-      <div class="field" style="margin-bottom:0">
-        <label>Cultivar</label>
-        <select id="esp-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select>
-      </div>
       </div>
       <div class="card">
         <div class="card-header"><div class="card-pill pill-teal">Descarte</div><div class="card-heading">Amostra de 6 segundos</div></div>
-        <div class="field">
-          <label>Peso amostra descarte 6s</label>
-          <div class="input-unit-wrap"><input type="number" id="esp-desc-kg" placeholder="0.000" min="0" step="0.001" oninput="espCalcAll()"><span class="input-unit">kg</span></div>
+        <div class="card" style="background:var(--teal-50);border-color:var(--teal-100);margin-bottom:12px">
+          <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--teal-600);margin-bottom:10px">Amostra para calculo do fluxo - 6s</div>
+          <div class="field">
+            <label>Peso amostra descarte 6s</label>
+            <div class="input-unit-wrap"><input type="number" id="esp-desc-kg" placeholder="0.000" min="0" step="0.001" oninput="espCalcAll()"><span class="input-unit">kg</span></div>
+          </div>
+          <div class="mini-result" style="margin-bottom:0"><span class="mini-label">Descarte t/h</span><span class="mini-val" id="esp-desc-th" style="color:var(--teal-400)">—</span></div>
         </div>
-        <div class="mini-result"><span class="mini-label">Descarte t/h</span><span class="mini-val" id="esp-desc-th" style="color:var(--teal-400)">—</span></div>
         <div class="field" style="margin-bottom:0">
           <label>Grão bom na amostra de 200 sementes</label>
           <div class="input-unit-wrap"><input type="number" id="esp-graobom-200" placeholder="0" min="0" max="200" step="1" oninput="espCalcAll()"><span class="input-unit">sem.</span></div>
@@ -663,6 +666,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         <div class="summary-grid-2">
           <div class="metric"><div class="metric-label">% descarte</div><div class="metric-value" id="esp-sum-pct-desc">—</div><div class="metric-unit">%</div></div>
           <div class="metric"><div class="metric-label">% grão bom no descarte</div><div class="metric-value" id="esp-sum-graobom-pct">—</div><div class="metric-unit">%</div></div>
+        </div>
+        <div class="metric" style="background:var(--red-50);border:0.5px solid var(--red-100);border-radius:var(--radius-md);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div><div class="metric-label" style="color:var(--red-800)">Sem. boa perdida no descarte</div><div style="font-size:10px;color:var(--red-400);margin-top:2px">grão bom × vazão descarte</div></div>
+          <div style="text-align:right"><span class="metric-value" id="esp-sum-boath" style="color:var(--red-400);font-size:18px">—</span> <span class="metric-unit">t/h</span></div>
         </div>
         <div class="efic-wrap">
           <div class="efic-top"><span class="efic-label">Eficiência estimada</span><span class="efic-value" id="esp-sum-efic" style="color:var(--green-600)">—</span></div>
@@ -713,17 +720,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         <div class="card-header"><div class="card-pill pill-orange">Identificação</div></div>
         <div class="field-row">
           <div class="field"><label>Operador</label><select id="pad-operator"><option value="">Selecionar...</option></select></div>
-          <div class="field"><label>Data / hora</label><input type="text" id="pad-dt-field" readonly></div>
+          <div class="field"><label>Cultivar</label><select id="pad-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select></div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Data / hora</label>
+          <input type="text" id="pad-dt-field" readonly>
         </div>
         <div class="field" style="margin-bottom:0">
           <label>Entrada — vazão total</label>
           <div class="input-unit-wrap"><input type="number" id="pad-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="padCalcAll()"><span class="input-unit">t/h</span></div>
         </div>
 
-      <div class="field" style="margin-bottom:0">
-        <label>Cultivar</label>
-        <select id="pad-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select>
-      </div>
       </div>
       <div class="info-note">Colete a amostra por 6 segundos e pese em kg. O sistema converte para t/h automaticamente.</div>
       <div id="pad-machines-container"></div>
@@ -734,6 +741,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
           <div class="metric"><div class="metric-label">Desc. sup total</div><div class="metric-value" id="pad-sum-sup">—</div><div class="metric-unit">t/h</div></div>
           <div class="metric"><div class="metric-label">Desc. inf total</div><div class="metric-value" id="pad-sum-inf">—</div><div class="metric-unit">t/h</div></div>
           <div class="metric highlight"><div class="metric-label">Saída</div><div class="metric-value" id="pad-sum-saida">—</div><div class="metric-unit">t/h</div></div>
+        </div>
+        <div class="metric" style="background:var(--red-50);border:0.5px solid var(--red-100);border-radius:var(--radius-md);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div><div class="metric-label" style="color:var(--red-800)">Sem. boa perdida no descarte</div><div style="font-size:10px;color:var(--red-400);margin-top:2px">sup + inf combinados</div></div>
+          <div style="text-align:right"><span class="metric-value" id="pad-sum-boath" style="color:var(--red-400);font-size:18px">—</span> <span class="metric-unit">t/h</span></div>
         </div>
         <div class="mesa-status-list" id="pad-machine-status-list"></div>
       </div>
@@ -781,17 +792,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         <div class="card-header"><div class="card-pill pill-purple">Identificação</div></div>
         <div class="field-row">
           <div class="field"><label>Operador</label><select id="fin-operator"><option value="">Selecionar...</option></select></div>
-          <div class="field"><label>Data / hora</label><input type="text" id="fin-dt-field" readonly></div>
+          <div class="field"><label>Cultivar</label><select id="fin-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select></div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Data / hora</label>
+          <input type="text" id="fin-dt-field" readonly>
         </div>
         <div class="field" style="margin-bottom:0">
           <label>Entrada — vazão total</label>
           <div class="input-unit-wrap"><input type="number" id="fin-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="finCalcAll()"><span class="input-unit">t/h</span></div>
         </div>
 
-      <div class="field" style="margin-bottom:0">
-        <label>Cultivar</label>
-        <select id="fin-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select>
-      </div>
       </div>
       <div class="info-note">Descarte: amostra de 6 segundos em kg → t/h. Semente boa: 200 sementes. Copinho: pese as três frações (alto, meio, baixo) — ideal é parte alta ≥ parte baixa + 3%.</div>
       <div id="fin-mesas-container"></div>
@@ -802,6 +813,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
           <div class="metric"><div class="metric-label">Desc. total</div><div class="metric-value" id="fin-sum-desc">—</div><div class="metric-unit">t/h</div></div>
           <div class="metric"><div class="metric-label">% descarte</div><div class="metric-value" id="fin-sum-pct">—</div><div class="metric-unit">%</div></div>
           <div class="metric highlight"><div class="metric-label">Saída est.</div><div class="metric-value" id="fin-sum-saida">—</div><div class="metric-unit">t/h</div></div>
+        </div>
+        <div class="metric" style="background:var(--red-50);border:0.5px solid var(--red-100);border-radius:var(--radius-md);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div><div class="metric-label" style="color:var(--red-800)">Sem. boa perdida no descarte</div><div style="font-size:10px;color:var(--red-400);margin-top:2px">soma de todas as mesas</div></div>
+          <div style="text-align:right"><span class="metric-value" id="fin-sum-boath" style="color:var(--red-400);font-size:18px">—</span> <span class="metric-unit">t/h</span></div>
         </div>
         <div class="mesa-status-list" id="fin-mesa-status-list"></div>
       </div>
@@ -849,14 +864,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         <div class="card-header"><div class="card-pill pill-blue">Identificação</div></div>
         <div class="field-row">
           <div class="field"><label>Operador</label><select id="moega-operator"><option value="">Selecionar...</option></select></div>
-          <div class="field"><label>Data / hora</label><input type="text" id="moega-dt-field" readonly></div>
+          <div class="field"><label>Cultivar</label><select id="moega-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select></div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Data / hora</label>
+          <input type="text" id="moega-dt-field" readonly>
         </div>
 
 
-      <div class="field" style="margin-bottom:0">
-        <label>Cultivar</label>
-        <select id="moega-cultivar" style="font-size:12px"><option value="">Selecionar cultivar...</option><option value="CZ37B66I2X">CZ37B66I2X</option><option value="7535I2X (M 7535 I2X)">7535I2X (M 7535 I2X)</option><option value="CZ37B43IPRO">CZ37B43IPRO</option><option value="O800 I2X">O800 I2X</option><option value="NEO771 I2X">NEO771 I2X</option><option value="CZ37B07I2X">CZ37B07I2X</option><option value="NEO801 CE">NEO801 CE</option><option value="76SC114 I2X (HO GARÇAS I2X)">76SC114 I2X (HO GARÇAS I2X)</option><option value="CZ48B18IPRO">CZ48B18IPRO</option><option value="CZ37B39I2X">CZ37B39I2X</option><option value="CZ58B28IPRO">CZ58B28IPRO</option><option value="761 I2X (NEO761 I2X)">761 I2X (NEO761 I2X)</option><option value="VA8108IPRO">VA8108IPRO</option><option value="77HO111 I2X (Guapo)">77HO111 I2X (Guapo)</option><option value="CZ48B08I2X">CZ48B08I2X</option><option value="81SC120 I2X (Coari)">81SC120 I2X (Coari)</option><option value="SOJA COMERCIAL">SOJA COMERCIAL</option><option value="22210I2X (TMG MURICI I2X)">22210I2X (TMG MURICI I2X)</option><option value="752 I2X">752 I2X</option><option value="O790 IPRO">O790 IPRO</option><option value="CZ47B91I2X">CZ47B91I2X</option><option value="NEO802 I2X">NEO802 I2X</option><option value="C2810CE">C2810CE</option><option value="NEO821 I2X">NEO821 I2X</option><option value="BSA74483I2X (745I2X)">BSA74483I2X (745I2X)</option><option value="O720 I2X">O720 I2X</option><option value="NEO700 I2X">NEO700 I2X</option><option value="67SC115 I2X (HO PRATA I2X)">67SC115 I2X (HO PRATA I2X)</option><option value="BSA64014I2X (CZ26B41I2X)">BSA64014I2X (CZ26B41I2X)</option><option value="810 I2X">810 I2X</option><option value="711I2X">711I2X</option><option value="77SC118 I2X (HO NOBRES I2X)">77SC118 I2X (HO NOBRES I2X)</option><option value="NEO780 CE">NEO780 CE</option><option value="NEO791 CE">NEO791 CE</option><option value="SSW802443I2X (GH 2581I2X)">SSW802443I2X (GH 2581I2X)</option><option value="VA6207I2X">VA6207I2X</option><option value="VA5701IPRO">VA5701IPRO</option><option value="VA6308I2X">VA6308I2X</option><option value="VA6414IPRO">VA6414IPRO</option><option value="VA7501I2X">VA7501I2X</option><option value="VA7703I2X">VA7703I2X</option><option value="VA7804I2X">VA7804I2X</option><option value="VA7905I2X">VA7905I2X</option><option value="VA8002I2X">VA8002I2X</option><option value="VA8006I2X">VA8006I2X</option><option value="81SC118 I2X (HO Mutum)">81SC118 I2X (HO Mutum)</option><option value="CZ58B44I2X">CZ58B44I2X</option><option value="24428I2X (TMG ITAUBA I2X)">24428I2X (TMG ITAUBA I2X)</option><option value="NEO811 I2X">NEO811 I2X</option></select>
-      </div>
       </div>
       <div class="card">
         <div class="card-header"><div class="card-pill pill-blue">Amostra</div><div class="card-heading">200 sementes</div></div>
@@ -915,7 +930,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
       <button class="back-btn" id="ind-back-btn" onclick="isAdmin()?doLogout():navigate('home')">&#8592;</button>
       <div class="header-logo"><svg viewBox="0 0 16 16" fill="none"><path d="M1 13L5 8L8 10L14 4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <span class="header-title">Indicadores</span>
-      <span class="header-badge" id="ind-header-badge">Volume por etapa</span>
+      <span class="header-badge" id="ind-header-badge">Volume por etapa · v12</span>
     </div>
     <div style="display:flex;align-items:center;gap:8px">
       <button class="user-btn-icon" id="ind-user-btn" onclick="toggleDropdown('ind-dd')"></button>
@@ -950,6 +965,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
       </div>
       <!-- Fluxo de volume -->
       <div id="ind-tab-fluxo">
+        <div id="ind-status-bar"></div>
         <div class="card" style="margin-bottom:12px">
           <div style="font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text-hint);margin-bottom:14px">Volume de processamento — t/h por etapa</div>
           <div style="position:relative;width:100%;height:320px"><canvas id="ind-chart" style="width:100%;height:100%"></canvas></div>
@@ -965,7 +981,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             <div class="card-pill" style="background:var(--red-50);color:var(--red-800)">Qualidade</div>
             <div class="card-heading">% grão bom no descarte</div>
           </div>
-          <div class="info-note">Percentual do volume bruto de entrada que sai como grão bom junto ao descarte. Calculado por equipamento com base no último registro do período. Ideal: &lt; 1%.</div>
+          <div class="info-note">Percentual do volume bruto de entrada que sai como grão bom junto ao descarte. Calculado por etapa com base no último registro válido do período. Ideal: &lt; 1%.</div>
           <div id="ind-perda-tabela"></div>
         </div>
       </div>
@@ -1335,7 +1351,7 @@ function hideLoading(containerId){
 // ══════════════════════════════════════════════
 // SHARED UTILS
 // ══════════════════════════════════════════════
-function kgToTH(kg){ const k=parseFloat(kg); return(!k||k<=0)?null:(k*600)/1000; }
+function kgToTH(kg){ const k=parseFloat(kg); return(!k||k<=0)?null:(k*600)/1000; } // usado no lançamento: kg coletado em 6s × 0,6 = t/h
 const fmt2 = v=>v!==null?v.toFixed(2):'—';
 function toast(msg,error=false){ const el=document.getElementById('toast'); el.textContent=msg; el.className='toast show'+(error?' error':''); setTimeout(()=>el.className='toast',3500); }
 function nowStr(){
@@ -1361,7 +1377,7 @@ function renderLocalRecords(containerId, records, type){
   if(!records.length){ c.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--text-hint);font-size:13px">Nenhum registro ainda.</div>'; return; }
   const rows = records.map(r=>{
     if(type==='map'||type==='pad'){
-      return `<tr><td>${dtFormat(r.dt)}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.supTH??'—'}</td><td class="td-val">${r.supPct!=null?r.supPct+'%':'—'}</td><td class="td-val">${r.infTH??'—'}</td><td class="td-val">${r.infPct!=null?r.infPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td></tr>`;
+      return `<tr><td>${dtFormat(r.dt)}</td><td>${r.operator||'—'}</td><td>${r.cultivar||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.supTH??'—'}</td><td class="td-val">${r.supPct!=null?r.supPct+'%':'—'}</td><td class="td-val">${r.infTH??'—'}</td><td class="td-val">${r.infPct!=null?r.infPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td></tr>`;
     }else if(type==='esp'){
       return `<tr><td>${dtFormat(r.dt)}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.descTH??'—'}</td><td class="td-val">${r.graobomPct!=null?r.graobomPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td></tr>`;
     }else{
@@ -1372,7 +1388,7 @@ function renderLocalRecords(containerId, records, type){
   }).join('');
 
   let headers;
-  if(type==='map'||type==='pad') headers='<th>Data/Hora</th><th>Operador</th><th>Entrada t/h</th><th>Sup t/h</th><th>% Boa Sup</th><th>Inf t/h</th><th>% Boa Inf</th><th>Saída t/h</th><th>Efic.</th>';
+  if(type==='map'||type==='pad') headers='<th>Data/Hora</th><th>Operador</th><th>Cultivar</th><th>Entrada t/h</th><th>Sup t/h</th><th>% Boa Sup</th><th>Inf t/h</th><th>% Boa Inf</th><th>Saída t/h</th><th>Efic.</th>';
   else if(type==='esp') headers='<th>Data/Hora</th><th>Operador</th><th>Entrada t/h</th><th>Desc. t/h</th><th>% Bom Desc.</th><th>Saída t/h</th><th>Efic.</th>';
   else headers='<th>Data/Hora</th><th>Operador</th><th>Entrada t/h</th><th colspan="3">Mesas</th><th>Desc. total</th><th>Saída est.</th>';
 
@@ -1446,8 +1462,8 @@ function regRender(){
       headers='<th>Data/Hora</th><th>Unidade</th><th>Operador</th><th>Lote</th><th>Total Sem.</th><th>Hilo</th><th>% Hilo</th><th>Obs</th>';
       rows=recs.map(r=>`<tr><td>${dtFormat(r.dt)}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td><td>${r.lote||'—'}</td><td class="td-val">${r.totalSem??200}</td><td>${r.hiloSim?'⚠ Sim':'✓ Não'}</td><td class="td-val">${r.hiloPct!=null?r.hiloPct+'%':'—'}</td><td style="font-size:10px;color:var(--text-muted)">${r.obs||''}</td></tr>`).join('');
     }else if(t==='map'||t==='pad'){
-      headers='<th>Data/Hora</th><th>Unidade</th><th>Operador</th><th>Entrada t/h</th><th>Sup t/h</th><th>%Boa Sup</th><th>Inf t/h</th><th>%Boa Inf</th><th>Saída t/h</th><th>Efic.</th><th>Obs</th>';
-      rows=recs.map(r=>`<tr><td>${dtFormat(r.dt)}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.supTH??'—'}</td><td class="td-val">${r.supPct!=null?r.supPct+'%':'—'}</td><td class="td-val">${r.infTH??'—'}</td><td class="td-val">${r.infPct!=null?r.infPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td><td style="font-size:10px;color:var(--text-muted)">${r.obs||''}</td></tr>`).join('');
+      headers='<th>Data/Hora</th><th>Unidade</th><th>Operador</th><th>Cultivar</th><th>Entrada t/h</th><th>Sup t/h</th><th>%Boa Sup</th><th>Inf t/h</th><th>%Boa Inf</th><th>Saída t/h</th><th>Efic.</th><th>Obs</th>';
+      rows=recs.map(r=>`<tr><td>${dtFormat(r.dt)}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td><td>${r.cultivar||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.supTH??'—'}</td><td class="td-val">${r.supPct!=null?r.supPct+'%':'—'}</td><td class="td-val">${r.infTH??'—'}</td><td class="td-val">${r.infPct!=null?r.infPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td><td style="font-size:10px;color:var(--text-muted)">${r.obs||''}</td></tr>`).join('');
     }else if(t==='esp'){
       headers='<th>Data/Hora</th><th>Unidade</th><th>Operador</th><th>Entrada t/h</th><th>Desc. t/h</th><th>%Bom Desc.</th><th>%Ruim Saída</th><th>Saída t/h</th><th>Efic.</th><th>Obs</th>';
       rows=recs.map(r=>`<tr><td>${dtFormat(r.dt)}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.descTH??'—'}</td><td class="td-val">${r.graobomPct!=null?r.graobomPct+'%':'—'}</td><td class="td-val">${r.graoruinPct!=null?r.graoruinPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td><td style="font-size:10px;color:var(--text-muted)">${r.obs||''}</td></tr>`).join('');
@@ -1505,10 +1521,12 @@ function mapBuildMachines(){
       <div class="calc-box" style="margin-bottom:14px"><span class="calc-box-label">Vazão de entrada</span><span><span class="calc-box-value" id="map-m${n}-entth">—</span><span class="calc-box-unit">t/h</span></span></div>`;
     c.innerHTML+=`<div class="card mesa-card">${showTitle}
       <div class="card-header" style="margin-bottom:12px"><div class="card-heading">Entrada — ${isSerial2?'automática (saída MAP 1)':'amostra 6 segundos'}</div></div>
+      ${!isSerial2?`<div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--green-600);background:var(--green-50);border:0.5px solid var(--green-100);border-radius:var(--radius-md);padding:8px 12px;margin-bottom:10px">Amostra para calculo do fluxo - 6s</div>`:''}
       ${entradaField}
       <div class="descarte-grid">
         <div class="descarte-box">
           <div class="descarte-title title-sup">Descarte superior</div>
+          <div style="font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--amber-600);background:var(--amber-50);border:0.5px solid var(--amber-100);border-radius:var(--radius-sm);padding:4px 8px;margin-bottom:8px">Amostra para calculo do fluxo - 6s</div>
           <div class="field"><label>Peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="map-m${n}-supkg" placeholder="0.000" min="0" step="0.001" oninput="mapCalcAll()"><span class="input-unit">kg</span></div></div>
           <div class="mini-result"><span class="mini-label">t/h</span><span class="mini-val val-sup" id="map-m${n}-supth">—</span></div>
           <div class="field"><label>Semente boa 500g</label><div class="input-unit-wrap"><input type="number" id="map-m${n}-supgb" placeholder="0.0" min="0" max="500" step="0.1" oninput="mapCalcAll()"><span class="input-unit">g</span></div></div>
@@ -1516,6 +1534,7 @@ function mapBuildMachines(){
         </div>
         <div class="descarte-box">
           <div class="descarte-title title-inf">Descarte inferior</div>
+          <div style="font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--blue-800);background:var(--blue-50);border:0.5px solid var(--blue-100);border-radius:var(--radius-sm);padding:4px 8px;margin-bottom:8px">Amostra para calculo do fluxo - 6s</div>
           <div class="field"><label>Peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="map-m${n}-infkg" placeholder="0.000" min="0" step="0.001" oninput="mapCalcAll()"><span class="input-unit">kg</span></div></div>
           <div class="mini-result"><span class="mini-label">t/h</span><span class="mini-val val-inf" id="map-m${n}-infth">—</span></div>
           <div class="field"><label>Semente boa 500g</label><div class="input-unit-wrap"><input type="number" id="map-m${n}-infgb" placeholder="0.0" min="0" max="500" step="0.1" oninput="mapCalcAll()"><span class="input-unit">g</span></div></div>
@@ -1564,10 +1583,18 @@ function mapCalcAll(){
   document.getElementById('map-sum-sup').textContent=totalSupTH>0?totalSupTH.toFixed(2):'—';
   document.getElementById('map-sum-inf').textContent=totalInfTH>0?totalInfTH.toFixed(2):'—';
   document.getElementById('map-sum-saida').textContent=totalEntTH>0?totalSaida.toFixed(2):'—';
+  const totalBoaTH = rows.reduce((a,r)=>{
+    const bSup = r.supTH*(r.supPct!=null?r.supPct/100:0);
+    const bInf = r.infTH*(r.infPct!=null?r.infPct/100:0);
+    return a + bSup + bInf;
+  }, 0);
+  const boaEl=document.getElementById('map-sum-boath');
+  if(boaEl) boaEl.textContent=totalBoaTH>0?totalBoaTH.toFixed(3):'—';
   const sl=document.getElementById('map-machine-status-list');
   if(count>1) sl.innerHTML=rows.map(r=>{
     const serial2note=serial&&r.n===2?' <span style="font-size:10px;color:var(--text-hint)">(liq. MAP1)</span>':'';
-    return `<div class="mesa-status"><span class="mesa-status-name">MAP ${r.n}${serial2note}</span><span class="mesa-status-vals">Ent ${fmt2(r.entTH)} · Saída ${fmt2(r.saidaN)} t/h</span></div>`;
+    const boaN = r.supTH*(r.supPct!=null?r.supPct/100:0) + r.infTH*(r.infPct!=null?r.infPct/100:0);
+    return `<div class="mesa-status"><span class="mesa-status-name">MAP ${r.n}${serial2note}</span><span class="mesa-status-vals">Ent ${fmt2(r.entTH)} · Saída ${fmt2(r.saidaN)} t/h${boaN>0?' · <span style="color:var(--red-400)">'+boaN.toFixed(3)+' t/h boa desc.</span>':''}</span></div>`;
   }).join('');
   else sl.innerHTML='';
 }
@@ -1593,13 +1620,17 @@ function mapSalvar(){
     const infPct=(!isNaN(infGB)&&infGB>=0)?parseFloat((infGB/500*100).toFixed(1)):null;
     const saidaM=Math.max(0,entTH-supTH-infTH);
     prevSaidaSv=saidaM;
-    machines.push({entTH:parseFloat(entTH.toFixed(2)),supTH:parseFloat(supTH.toFixed(2)),infTH:parseFloat(infTH.toFixed(2)),supPct,infPct,saidaTH:parseFloat(saidaM.toFixed(2)),isSerial:isSerial2});
+    machines.push({entKg:isSerial2?null:parseFloat((parseFloat(document.getElementById(`map-m${n}-entkg`).value)||0).toFixed(3)),supKg:parseFloat(supKg.toFixed(3)),infKg:parseFloat(infKg.toFixed(3)),entTH:parseFloat(entTH.toFixed(2)),supTH:parseFloat(supTH.toFixed(2)),infTH:parseFloat(infTH.toFixed(2)),supPct,infPct,saidaTH:parseFloat(saidaM.toFixed(2)),isSerial:isSerial2});
   }
   if(count===1&&machines[0].entTH===0){toast('Informe o peso de entrada.',true);return;}
   const totalSaida=parseFloat(Math.max(0,totalEntTH-totalSupTH-totalInfTH).toFixed(2));
   // For backward compat, keep top-level fields from machine 1 + totals
   const m1=machines[0];
+  const rawEntKg = machines.reduce((a,m)=>a+(!m.isSerial && Number.isFinite(m.entKg)?m.entKg:0),0);
+  const rawSupKg = machines.reduce((a,m)=>a+(Number.isFinite(m.supKg)?m.supKg:0),0);
+  const rawInfKg = machines.reduce((a,m)=>a+(Number.isFinite(m.infKg)?m.infKg:0),0);
   const record={unidade:getUnit(),id:Date.now(),dt:nowStr(),operator:op,cultivar:getCultivar('map'),
+    entKg:parseFloat(rawEntKg.toFixed(3)),supKg:parseFloat(rawSupKg.toFixed(3)),infKg:parseFloat(rawInfKg.toFixed(3)),
     entTH:parseFloat(totalEntTH.toFixed(2)),supTH:parseFloat(totalSupTH.toFixed(2)),infTH:parseFloat(totalInfTH.toFixed(2)),
     supPct:m1.supPct,infPct:m1.infPct,saidaTH:totalSaida,efic:'',machines,
     obs:document.getElementById('map-obs').value.trim()};
@@ -1644,8 +1675,11 @@ function poslBuildMesas(){
   const sl=document.getElementById('posl-sum-title'); if(sl) sl.textContent=`Balanço das ${count} mesas`;
   for(let n=1;n<=count;n++){
     c.innerHTML+=`<div class="card mesa-card"><div class="mesa-title" style="color:var(--amber-400)">Mesa ${n}</div>
-      <div class="field"><label>Descarte — peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="posl-m${n}-kg" placeholder="0.000" min="0" step="0.001" oninput="poslCalcAll()"><span class="input-unit">kg</span></div></div>
-      <div class="mini-result"><span class="mini-label">t/h</span><span class="mini-val" id="posl-m${n}-th" style="color:var(--amber-400)">—</span></div>
+      <div class="card" style="background:var(--amber-50);border-color:var(--amber-100);margin-bottom:10px">
+        <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--amber-600);margin-bottom:10px">Amostra para calculo do fluxo - 6s</div>
+        <div class="field"><label>Descarte — peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="posl-m${n}-kg" placeholder="0.000" min="0" step="0.001" oninput="poslCalcAll()"><span class="input-unit">kg</span></div></div>
+        <div class="mini-result" style="margin-bottom:0"><span class="mini-label">t/h</span><span class="mini-val" id="posl-m${n}-th" style="color:var(--amber-400)">—</span></div>
+      </div>
       <div class="field" style="margin-bottom:0"><label>Semente boa — amostra 500g</label><div class="input-unit-wrap"><input type="number" id="posl-m${n}-graobom" placeholder="0.0" min="0" max="500" step="0.1" oninput="poslCalcAll()"><span class="input-unit">g</span></div></div>
       <div class="mini-result" style="margin-bottom:0"><span class="mini-label">% semente boa</span><span class="mini-val val-pct" id="posl-m${n}-pct">—</span></div>
     </div>`;
@@ -1672,7 +1706,14 @@ function poslCalcAll(){
   document.getElementById('posl-sum-pct').textContent=pct!==null?pct:'—';
   document.getElementById('posl-sum-saida').textContent=saida!==null?saida.toFixed(2):'—';
   const sl=document.getElementById('posl-mesa-status-list');
-  sl.innerHTML=rows.map((r,i)=>`<div class="mesa-status"><span class="mesa-status-name">Mesa ${i+1}</span><span class="mesa-status-vals">${fmt2(r.th)} t/h${r.pct!==null?' · '+r.pct+'% boa':''}</span></div>`).join('');
+  let totalBoaTH=0;
+  sl.innerHTML=rows.map((r,i)=>{
+    const boaN = r.th&&r.pct!=null ? r.th*(r.pct/100) : 0;
+    totalBoaTH+=boaN;
+    return `<div class="mesa-status"><span class="mesa-status-name">Mesa ${i+1}</span><span class="mesa-status-vals">${fmt2(r.th)} t/h${r.pct!==null?' · '+r.pct+'% boa':''}${boaN>0?' · <span style="color:var(--red-400)">'+boaN.toFixed(3)+' t/h boa</span>':''}</span></div>`;
+  }).join('');
+  const boaEl=document.getElementById('posl-sum-boath');
+  if(boaEl) boaEl.textContent=totalBoaTH>0?totalBoaTH.toFixed(3):'—';
 }
 function poslSalvar(){
   const op=document.getElementById('posl-operator').value;
@@ -1734,6 +1775,9 @@ function espCalcAll(){
   const graobomPct=(!isNaN(graobomSem)&&graobomSem>=0)?parseFloat((graobomSem/200*100).toFixed(1)):null;
   document.getElementById('esp-graobom-pct').textContent=graobomPct!==null?graobomPct.toFixed(1)+' %':'—';
   document.getElementById('esp-sum-graobom-pct').textContent=graobomPct!==null?graobomPct.toFixed(1):'—';
+  const boaTH = descTH&&graobomPct!=null ? descTH*(graobomPct/100) : null;
+  const boaEl=document.getElementById('esp-sum-boath');
+  if(boaEl) boaEl.textContent=boaTH!=null?boaTH.toFixed(3):'—';
   const graoruin200=parseFloat(document.getElementById('esp-graoruin-200').value);
   const graoruinPct=(!isNaN(graoruin200)&&graoruin200>=0)?parseFloat((graoruin200/200*100).toFixed(1)):null;
   document.getElementById('esp-graoruin-pct').textContent=graoruinPct!==null?graoruinPct.toFixed(1)+' %':'—';
@@ -1792,6 +1836,7 @@ function padBuildMachines(){
       <div class="descarte-grid">
         <div class="descarte-box">
           <div class="descarte-title title-sup">Descarte superior</div>
+          <div style="font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--amber-600);background:var(--amber-50);border:0.5px solid var(--amber-100);border-radius:var(--radius-sm);padding:4px 8px;margin-bottom:8px">Amostra para calculo do fluxo - 6s</div>
           <div class="field"><label>Peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="pad-m${n}-supkg" placeholder="0.000" min="0" step="0.001" oninput="padCalcAll()"><span class="input-unit">kg</span></div></div>
           <div class="mini-result"><span class="mini-label">t/h</span><span class="mini-val val-sup" id="pad-m${n}-supth">—</span></div>
           <div class="field"><label>Semente boa 500g</label><div class="input-unit-wrap"><input type="number" id="pad-m${n}-supgb" placeholder="0.0" min="0" max="500" step="0.1" oninput="padCalcAll()"><span class="input-unit">g</span></div></div>
@@ -1799,6 +1844,7 @@ function padBuildMachines(){
         </div>
         <div class="descarte-box">
           <div class="descarte-title title-inf">Descarte inferior</div>
+          <div style="font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--blue-800);background:var(--blue-50);border:0.5px solid var(--blue-100);border-radius:var(--radius-sm);padding:4px 8px;margin-bottom:8px">Amostra para calculo do fluxo - 6s</div>
           <div class="field"><label>Peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="pad-m${n}-infkg" placeholder="0.000" min="0" step="0.001" oninput="padCalcAll()"><span class="input-unit">kg</span></div></div>
           <div class="mini-result"><span class="mini-label">t/h</span><span class="mini-val val-inf" id="pad-m${n}-infth">—</span></div>
           <div class="field"><label>Semente boa 500g</label><div class="input-unit-wrap"><input type="number" id="pad-m${n}-infgb" placeholder="0.0" min="0" max="500" step="0.1" oninput="padCalcAll()"><span class="input-unit">g</span></div></div>
@@ -1834,7 +1880,14 @@ function padCalcAll(){
   const saidaTH=entTH>0?Math.max(0,entTH-totalSupTH-totalInfTH):null;
   document.getElementById('pad-sum-saida').textContent=fmt2(saidaTH);
   const sl=document.getElementById('pad-machine-status-list');
-  if(count>1) sl.innerHTML=rows.map(r=>`<div class="mesa-status"><span class="mesa-status-name">Pad ${r.n}</span><span class="mesa-status-vals">Sup ${fmt2(r.supTH)} · Inf ${fmt2(r.infTH)} t/h</span></div>`).join('');
+  let totalBoaTH=0;
+  rows.forEach(r=>{ totalBoaTH+=(r.supTH*(r.supPct!=null?r.supPct/100:0))+(r.infTH*(r.infPct!=null?r.infPct/100:0)); });
+  const boaEl=document.getElementById('pad-sum-boath');
+  if(boaEl) boaEl.textContent=totalBoaTH>0?totalBoaTH.toFixed(3):'—';
+  if(count>1) sl.innerHTML=rows.map(r=>{
+    const boaN=(r.supTH*(r.supPct!=null?r.supPct/100:0))+(r.infTH*(r.infPct!=null?r.infPct/100:0));
+    return `<div class="mesa-status"><span class="mesa-status-name">Pad ${r.n}</span><span class="mesa-status-vals">Sup ${fmt2(r.supTH)} · Inf ${fmt2(r.infTH)} t/h${boaN>0?' · <span style="color:var(--red-400)">'+boaN.toFixed(3)+' t/h boa</span>':''}</span></div>`;
+  }).join('');
   else sl.innerHTML='';
   if(entTH>0&&(totalSupTH>0||totalInfTH>0)){
     const avgSupPct=rows.filter(r=>r.supPct!==null).reduce((a,r)=>a+r.supPct,0)/(rows.filter(r=>r.supPct!==null).length||1);
@@ -1902,8 +1955,11 @@ function finUpdateDt(){ const s=nowStr(); const disp=dtFormat(s); const e=docume
 function finSwitchTab(tab){ ['form','records'].forEach(t=>{ document.getElementById('fin-tab-'+t).style.display=t===tab?'block':'none'; }); document.querySelectorAll('#page-fin .ntab').forEach((el,i)=>el.classList.toggle('active',['form','records'][i]===tab)); if(tab==='records') loadAndRenderRecords('fin-rec-list','FIN','fin'); }
 function finMesaCard(mid){
   return `<div class="card mesa-card">
-      <div class="field"><label>Descarte — peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="fin-${mid}-kg" placeholder="0.000" min="0" step="0.001" oninput="finCalcAll()"><span class="input-unit">kg</span></div></div>
-      <div class="mini-result"><span class="mini-label">t/h</span><span class="mini-val" id="fin-${mid}-th" style="color:var(--purple-400)">—</span></div>
+      <div class="card" style="background:var(--purple-50);border-color:var(--purple-100);margin-bottom:10px">
+        <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--purple-600);margin-bottom:10px">Amostra para calculo do fluxo - 6s</div>
+        <div class="field"><label>Descarte — peso amostra 6s</label><div class="input-unit-wrap"><input type="number" id="fin-${mid}-kg" placeholder="0.000" min="0" step="0.001" oninput="finCalcAll()"><span class="input-unit">kg</span></div></div>
+        <div class="mini-result" style="margin-bottom:0"><span class="mini-label">t/h</span><span class="mini-val" id="fin-${mid}-th" style="color:var(--purple-400)">—</span></div>
+      </div>
       <div class="field"><label>Semente boa — 200 sementes</label><div class="input-unit-wrap"><input type="number" id="fin-${mid}-graobom" placeholder="0" min="0" max="200" step="1" oninput="finCalcAll()"><span class="input-unit">sem.</span></div></div>
       <div class="mini-result" style="margin-bottom:12px"><span class="mini-label">% semente boa</span><span class="mini-val val-pct" id="fin-${mid}-pct">—</span></div>
       <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--purple-400);margin-bottom:10px;padding-top:10px;border-top:0.5px solid var(--border)">Copinho — estratificação</div>
@@ -1972,7 +2028,14 @@ function finCalcAll(){
   document.getElementById('fin-sum-pct').textContent=pct!==null?pct:'—';
   document.getElementById('fin-sum-saida').textContent=saida!==null?saida.toFixed(2):'—';
   const sl=document.getElementById('fin-mesa-status-list');
-  sl.innerHTML=rows.map((r,i)=>`<div class="mesa-status"><span class="mesa-status-name">${r.mid.replace('p','Pen ').replace('-m',' M')}</span><span class="mesa-status-vals">${fmt2(r.th)} t/h${r.pct!==null?' · '+r.pct+'% boa':''}</span></div>`).join('');
+  let totalBoaTHFin=0;
+  sl.innerHTML=rows.map((r,i)=>{
+    const boaN = r.th&&r.pct!=null ? r.th*(r.pct/100) : 0;
+    totalBoaTHFin+=boaN;
+    return `<div class="mesa-status"><span class="mesa-status-name">${r.mid.replace('p','Pen ').replace('-m',' M')}</span><span class="mesa-status-vals">${fmt2(r.th)} t/h${r.pct!==null?' · '+r.pct+'% boa':''}${boaN>0?' · <span style="color:var(--red-400)">'+boaN.toFixed(3)+' t/h boa</span>':''}</span></div>`;
+  }).join('');
+  const boaElFin=document.getElementById('fin-sum-boath');
+  if(boaElFin) boaElFin.textContent=totalBoaTHFin>0?totalBoaTHFin.toFixed(3):'—';
 }
 function finSalvar(){
   const op=document.getElementById('fin-operator').value;
@@ -2137,57 +2200,319 @@ function moegaRenderRecords(){
 let indCurrentTab = 'fluxo';
 let indSelectedUbs = ''; // '' = todas (admin only)
 
+// Parse a date value that could be: ISO string, Date object, BR format "DD/MM/YYYY HH:MM", or millis number
+function parseRecDt(v){
+  if(v==null) return null;
+  if(typeof v==='number') return v>1e10?v:v*1000; // seconds → ms
+  if(v instanceof Date) return v.getTime();
+  if(typeof v==='string'){
+    const raw=v.trim();
+    if(!raw) return null;
+    const t = new Date(raw).getTime();
+    if(!isNaN(t)) return t;
+    const m = raw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:[,\s]+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?/);
+    if(m){
+      const [,d,mo,y,h,mi,se]=m;
+      return new Date(+y,+mo-1,+d,+(h||0),+(mi||0),+(se||0)).getTime();
+    }
+  }
+  return null;
+}
+
+
+function recNum(v){
+  if(v==null||v==='') return null;
+  if(typeof v==='number') return Number.isFinite(v)?v:null;
+  const raw=String(v).trim();
+  if(!raw) return null;
+  const cleaned = raw.replace(/[^0-9,.-]/g,'');
+  if(!cleaned || cleaned==='-' || cleaned===',' || cleaned==='.') return null;
+  let normalized;
+  if(cleaned.includes(',')){
+    // pt-BR: 5.361,76 -> 5361.76
+    normalized = cleaned.replace(/\./g,'').replace(',','.');
+  }else{
+    // O próprio sistema grava t/h com ponto decimal. 5.760 deve continuar 5.760, não 5760.
+    normalized = cleaned;
+  }
+  const n = parseFloat(normalized);
+  return Number.isFinite(n)?n:null;
+}
+function normKey(k){
+  return String(k||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+}
+function recVal(obj, names){
+  if(!obj) return undefined;
+  for(const name of names){ if(Object.prototype.hasOwnProperty.call(obj,name)) return obj[name]; }
+  const want = new Set(names.map(normKey));
+  for(const [k,v] of Object.entries(obj)){ if(want.has(normKey(k))) return v; }
+  return undefined;
+}
+function recFieldNum(obj, names){ return recNum(recVal(obj,names)); }
+function recPair(obj, names){
+  if(!obj) return null;
+  for(const name of names){ if(Object.prototype.hasOwnProperty.call(obj,name)) return {key:name, val:obj[name]}; }
+  const want = new Set(names.map(normKey));
+  for(const [k,v] of Object.entries(obj)){ if(want.has(normKey(k))) return {key:k, val:v}; }
+  return null;
+}
+
+// ─────────────────────────────────────────────────────────────
+// INDICADORES v11 — Entrada bruta MAP = exatamente r.entTH da tabela Registros
+// Registros MAP/PAD: entTH, supTH, infTH, saidaTH.
+// Registros ESP: entTH, descTH, saidaTH.
+// Registros POSL/FIN: entTH, totalDescTH, saida calculada igual à tabela.
+// Nada de tentar adivinhar kg/h, nada de dividir por 1000 em campo TH.
+// ─────────────────────────────────────────────────────────────
+function tableTH(obj, names){
+  const n = recFieldNum(obj,names);
+  return (n!=null && Number.isFinite(n)) ? n : null;
+}
+function kg6sToTH(v){
+  const n=recNum(v);
+  return (n!=null && Number.isFinite(n)) ? parseFloat((n*0.6).toFixed(3)) : null;
+}
+function sample6sTH(obj,names){
+  const v=recVal(obj,names);
+  return kg6sToTH(v);
+}
+function recFieldTH(obj,names){ return tableTH(obj,names); }
+function recFieldExactTH(obj,names){ return tableTH(obj,names); }
+function recFieldSample6sTH(obj,names){ return sample6sTH(obj,names); }
+function asArray(v){
+  if(Array.isArray(v)) return v;
+  if(typeof v==='string' && v.trim()){
+    try{ const parsed=JSON.parse(v); return Array.isArray(parsed)?parsed:[]; }catch(e){ return []; }
+  }
+  return [];
+}
+function sumArray(arr, getter){
+  return asArray(arr).reduce((a,item)=>{
+    const v=getter(item);
+    return a + (Number.isFinite(v)?v:0);
+  },0);
+}
+function recTime(r){
+  const ts = parseRecDt(r.dt) ?? parseRecDt(r.data) ?? parseRecDt(r.dataHora) ?? recNum(r.id);
+  return Number.isFinite(ts) ? ts : null;
+}
+function firstFinite(...vals){
+  for(const v of vals){ if(v!=null && Number.isFinite(v)) return v; }
+  return null;
+}
+function saneTH(v){
+  const n=recNum(v);
+  // Proteção contra cultivar/lote virando número no gráfico. Ex.: CZ58B28IPRO => 5828.
+  // Volume em t/h de UBS não deve ficar na casa de centenas/milhares.
+  return (n!=null && Number.isFinite(n) && n>=0 && n<=200) ? n : null;
+}
+function firstSaneTH(...vals){
+  for(const v of vals){
+    const n=saneTH(v);
+    if(n!=null) return n;
+  }
+  return null;
+}
+function mapEntradaRegistro(r){
+  // Fonte: valores já apresentados nos Registros.
+  // Registro normal: entTH = Entrada t/h.
+  // Registro antigo/deslocado por falta da coluna Cultivar: entTH recebeu Cultivar e a Entrada t/h ficou em supTH.
+  return firstSaneTH(r?.entTH, r?.entradaTH, r?.entradaTh, r?.['Entrada t/h'], r?.supTH);
+}
+function entryCalc(r){
+  if(!r) return null;
+  if(r._type==='map') return mapEntradaRegistro(r);
+  // Demais etapas: usar o mesmo valor que a aba Registros mostra como Entrada t/h.
+  return firstSaneTH(r?.entTH, r?.entradaTH, r?.entradaTh, r?.['Entrada t/h']);
+}
+function totalDescCalc(r){
+  if(!r) return null;
+  if(r._type==='map' || r._type==='pad'){
+    let supTop = tableTH(r,['supTH','supTh','Sup t/h','SUP T/H','superiorTH','descarteSupTH']);
+    let infTop = tableTH(r,['infTH','infTh','Inf t/h','INF T/H','inferiorTH','descarteInfTH']);
+    // Em registros antigos com coluna deslocada, r.entTH pode ser Cultivar e r.supTH pode ser Entrada t/h.
+    // Nesse caso, supTH NÃO é descarte superior.
+    if(r._type==='map' && saneTH(r?.entTH)==null && saneTH(r?.supTH)!=null){ supTop = 0; }
+    if(supTop!=null || infTop!=null) return parseFloat(((supTop||0)+(infTop||0)).toFixed(3));
+    const machines=asArray(r.machines);
+    if(machines.length) return parseFloat(sumArray(machines,m=>{
+      const sup = firstFinite(tableTH(m,['supTH','supTh','superiorTH','descarteSupTH']), sample6sTH(m,['supKg','superiorKg','descarteSupKg','amostraSupKg']), 0);
+      const inf = firstFinite(tableTH(m,['infTH','infTh','inferiorTH','descarteInfTH']), sample6sTH(m,['infKg','inferiorKg','descarteInfKg','amostraInfKg']), 0);
+      return sup+inf;
+    }).toFixed(3));
+    return null;
+  }
+  if(r._type==='posl' || r._type==='fin'){
+    const direct = tableTH(r,['totalDescTH','descTotalTH','descarteTotalTH','totalDescarteTH','Desc. total','Desc total','total_desc_th']);
+    if(direct!=null) return direct;
+    const mesas=asArray(r.mesas);
+    if(mesas.length) return parseFloat(sumArray(mesas,m=>firstFinite(tableTH(m,['descTH','descarteTH','Desc. t/h','desc']), sample6sTH(m,['descKg','descarteKg']), 0)).toFixed(3));
+    return null;
+  }
+  if(r._type==='esp'){
+    return firstFinite(tableTH(r,['descTH','descarteTH','Desc. t/h','desc']), sample6sTH(r,['descKg','descarteKg']));
+  }
+  return null;
+}
+function saidaCalc(r){
+  if(!r) return null;
+  // Mesmo campo que a aba Registros mostra quando existe Saída t/h salva.
+  const direct = firstSaneTH(r?.saidaTH, r?.saidaTh, r?.saida_t_h, r?.['Saída t/h'], r?.['Saida t/h'], r?.saidaLiquidaTH, r?.volumeSaidaTH);
+  if(direct!=null) return direct;
+  const e=entryCalc(r), d=totalDescCalc(r);
+  return (e!=null && d!=null) ? parseFloat(Math.max(0,e-d).toFixed(3)) : null;
+}
+function ptFrom(r,v){
+  const dt=recTime(r);
+  return (dt!=null && v!=null && Number.isFinite(v)) ? {dt, v:parseFloat(Number(v).toFixed(2)), label:r.dt||r.id||''} : null;
+}
+function lastBeforeOrLast(points, ts){
+  const pts=[...(points||[])].filter(p=>p && p.dt!=null).sort((a,b)=>a.dt-b.dt);
+  if(!pts.length) return null;
+  let before=null;
+  for(const p of pts){ if(p.dt<=ts) before=p; else break; }
+  return before || pts[pts.length-1];
+}
+
+// Monta o fluxo industrial usando os dados de Registros, não campos reconstruídos.
+function buildFluxoState(allRecs){
+  const byType = type => allRecs.filter(r=>r._type===type && recTime(r)!=null).sort((a,b)=>recTime(a)-recTime(b));
+  const out={ entrada:[], map:[], posl:[], esp:[], pad:[], fin:[] };
+
+  byType('map').forEach(r=>{
+    const ent=entryCalc(r);                // r.entTH: coluna Entrada t/h dos Registros
+    const saida=saidaCalc(r);              // r.saidaTH: coluna Saída t/h dos Registros
+    if(ent!=null) out.entrada.push(ptFrom(r,ent));
+    if(saida!=null) out.map.push(ptFrom(r,saida));
+    else if(ent!=null){
+      const desc=totalDescCalc(r)||0;
+      out.map.push(ptFrom(r,Math.max(0,ent-desc)));
+    }
+  });
+  out.entrada=out.entrada.filter(Boolean).sort((a,b)=>a.dt-b.dt);
+  out.map=out.map.filter(Boolean).sort((a,b)=>a.dt-b.dt);
+
+  [
+    {type:'posl', from:'map',  to:'posl'},
+    {type:'esp',  from:'posl', to:'esp'},
+    {type:'pad',  from:'esp',  to:'pad'},
+    {type:'fin',  from:'pad',  to:'fin'},
+  ].forEach(step=>{
+    byType(step.type).forEach(r=>{
+      const dt=recTime(r);
+      const upstream=lastBeforeOrLast(out[step.from],dt);
+      const desc=totalDescCalc(r);
+      const directSaida=saidaCalc(r);
+      if(upstream && desc!=null){
+        out[step.to].push(ptFrom(r,Math.max(0,upstream.v-desc)));
+      }else if(directSaida!=null){
+        out[step.to].push(ptFrom(r,directSaida));
+      }else{
+        const e=entryCalc(r);
+        if(e!=null && desc!=null) out[step.to].push(ptFrom(r,Math.max(0,e-desc)));
+      }
+    });
+    out[step.to]=out[step.to].filter(Boolean).sort((a,b)=>a.dt-b.dt);
+  });
+
+  return out;
+}
+
 const IND_SERIES = [
-  { label:'Entrada bruta (MAP)',        color:'#1D9E75', getVals: recs => recs.filter(r=>r._type==='map').map(r=>({dt:r.id,v:r.entTH??null,label:r.dt})) },
-  { label:'Saída MAP',                  color:'#0F6E56', getVals: recs => recs.filter(r=>r._type==='map').map(r=>({dt:r.id,v:r.saidaTH??null,label:r.dt})) },
-  { label:'Saída Pós-limpeza',          color:'#BA7517', getVals: recs => recs.filter(r=>r._type==='posl').map(r=>({dt:r.id,v:r.entTH!=null&&r.totalDescTH!=null?parseFloat(Math.max(0,r.entTH-r.totalDescTH).toFixed(2)):null,label:r.dt})) },
-  { label:'Saída Espirais',             color:'#00ACC1', getVals: recs => recs.filter(r=>r._type==='esp').map(r=>({dt:r.id,v:r.saidaTH??null,label:r.dt})) },
-  { label:'Saída Padronizadores',       color:'#FB8C00', getVals: recs => recs.filter(r=>r._type==='pad').map(r=>({dt:r.id,v:r.saidaTH??null,label:r.dt})) },
-  { label:'Saída Mesas Finais',         color:'#7C3AED', getVals: recs => recs.filter(r=>r._type==='fin').map(r=>({dt:r.id,v:r.entTH!=null&&r.totalDescTH!=null?parseFloat(Math.max(0,r.entTH-r.totalDescTH).toFixed(2)):null,label:r.dt})) },
+  { key:'entrada', label:'Entrada bruta',          color:'#378ADD' },
+  { key:'map',     label:'Saída MAP',              color:'#1D9E75' },
+  { key:'posl',    label:'Saída Pós-limpeza',      color:'#BA7517' },
+  { key:'esp',     label:'Saída Espirais',         color:'#00ACC1' },
+  { key:'pad',     label:'Saída Padronizadores',   color:'#FB8C00' },
+  { key:'fin',     label:'Saída Mesas Finais',     color:'#7C3AED' },
 ];
 
-// Loss: % of good grain lost in waste relative to gross entry volume (entTH)
-// Formula per machine:
-//   lossVolume = sum of (descTH * boaPct/100) over all discard streams
-//   lossPercent = lossVolume / entTH * 100
-// Returns percentage (0-100) or null if data insufficient.
-function calcLossThAndPct(r){
-  // returns {lossTH, lossPct} or null
-  const entTH = r.entTH||0;
+function indLastPoint(series, allRecs){
+  const fluxo=buildFluxoState(allRecs);
+  const pts=(fluxo[series.key]||[]).filter(p=>p && p.v!=null && Number.isFinite(p.v)).sort((a,b)=>a.dt-b.dt);
+  return pts.length?pts[pts.length-1]:null;
+}
+function indFinalYield(allRecs){
+  const fluxo=buildFluxoState(allRecs);
+  const entrada=(fluxo.entrada||[]).slice().sort((a,b)=>a.dt-b.dt).pop()||null;
+  const ordered=['fin','pad','esp','posl','map'];
+  let final=null, finalSeries=null;
+  for(const key of ordered){
+    const pts=(fluxo[key]||[]).slice().sort((a,b)=>a.dt-b.dt);
+    if(pts.length){ final=pts[pts.length-1]; finalSeries=IND_SERIES.find(s=>s.key===key); break; }
+  }
+  const pct=(entrada&&final&&entrada.v>0)?(final.v/entrada.v*100):null;
+  return { entrada, final, finalSeries, pct };
+}
+
+// Loss: t/h de grão bom perdido no descarte e % sobre a entrada bruta mais próxima.
+function entradaBrutaForRec(r, allRecs){
+  const fluxo=buildFluxoState(allRecs);
+  const dt=recTime(r);
+  const p=lastBeforeOrLast(fluxo.entrada||[], dt);
+  return p ? p.v : entryCalc(r);
+}
+function calcLossThAndPct(r, allRecs){
+  const entTH = entradaBrutaForRec(r, allRecs||[]);
   let lossTH = 0;
+  let hasQuality=false;
   if(r._type==='map'){
-    lossTH = (r.supTH||0)*((r.supPct||0)/100) + (r.infTH||0)*((r.infPct||0)/100);
+    const machines=asArray(r.machines);
+    if(machines.length){
+      machines.forEach(m=>{
+        const supTH=recFieldTH(m,['supTH','supTh','superiorTH','sup','supKg','superiorKg'])||0, infTH=recFieldTH(m,['infTH','infTh','inferiorTH','inf','infKg','inferiorKg'])||0;
+        const supPct=recFieldNum(m,['supPct','supPercent','pctSup','boaSupPct','% Boa Sup']), infPct=recFieldNum(m,['infPct','infPercent','pctInf','boaInfPct','% Boa Inf']);
+        if(supPct!=null){ lossTH+=supTH*(supPct/100); hasQuality=true; }
+        if(infPct!=null){ lossTH+=infTH*(infPct/100); hasQuality=true; }
+      });
+    }else{
+      const supPct=recFieldNum(r,['supPct','supPercent','pctSup','boaSupPct','% Boa Sup']), infPct=recFieldNum(r,['infPct','infPercent','pctInf','boaInfPct','% Boa Inf']);
+      if(supPct!=null){ lossTH+=(recFieldTH(r,['supTH','supTh','superiorTH','sup','supKg','superiorKg'])||0)*(supPct/100); hasQuality=true; }
+      if(infPct!=null){ lossTH+=(recFieldTH(r,['infTH','infTh','inferiorTH','inf','infKg','inferiorKg'])||0)*(infPct/100); hasQuality=true; }
+    }
   } else if(r._type==='posl'||r._type==='fin'){
-    (r.mesas||[]).forEach(m=>{ if(m.descTH&&m.boaPct!=null) lossTH+=m.descTH*(m.boaPct/100); });
+    asArray(r.mesas).forEach(m=>{
+      const boaPct=recFieldNum(m,['boaPct','graobomPct','graoBomPct','pctBoa','% boa','% grão bom']);
+      if(boaPct!=null){ lossTH+=(recFieldTH(m,['descTH','descarteTH','descarte','Desc. t/h','desc','descKg','descarteKg'])||0)*(boaPct/100); hasQuality=true; }
+    });
   } else if(r._type==='esp'){
-    lossTH = (r.descTH||0)*((r.graobomPct||0)/100);
+    const graobomPct=recFieldNum(r,['graobomPct','graoBomPct','boaPct','pctBoa','% grão bom']);
+    if(graobomPct!=null){ lossTH=(recFieldTH(r,['descTH','descarteTH','descarte','Desc. t/h','desc','descKg','descarteKg'])||0)*(graobomPct/100); hasQuality=true; }
   } else if(r._type==='pad'){
-    if(r.machines&&r.machines.length){
-      r.machines.forEach(m=>{ lossTH+=(m.supTH||0)*((m.supPct||0)/100)+(m.infTH||0)*((m.infPct||0)/100); });
+    const machines=asArray(r.machines);
+    if(machines.length){
+      machines.forEach(m=>{
+        const supPct=recFieldNum(m,['supPct','supPercent','pctSup','boaSupPct','% Boa Sup']), infPct=recFieldNum(m,['infPct','infPercent','pctInf','boaInfPct','% Boa Inf']);
+        if(supPct!=null){ lossTH+=(recFieldTH(m,['supTH','supTh','superiorTH','sup','supKg','superiorKg'])||0)*(supPct/100); hasQuality=true; }
+        if(infPct!=null){ lossTH+=(recFieldTH(m,['infTH','infTh','inferiorTH','inf','infKg','inferiorKg'])||0)*(infPct/100); hasQuality=true; }
+      });
     } else {
-      lossTH = (r.supTH||0)*((r.supPct||0)/100)+(r.infTH||0)*((r.infPct||0)/100);
+      const supPct=recFieldNum(r,['supPct','supPercent','pctSup','boaSupPct','% Boa Sup']), infPct=recFieldNum(r,['infPct','infPercent','pctInf','boaInfPct','% Boa Inf']);
+      if(supPct!=null){ lossTH+=(recFieldTH(r,['supTH','supTh','superiorTH','sup','supKg','superiorKg'])||0)*(supPct/100); hasQuality=true; }
+      if(infPct!=null){ lossTH+=(recFieldTH(r,['infTH','infTh','inferiorTH','inf','infKg','inferiorKg'])||0)*(infPct/100); hasQuality=true; }
     }
   } else { return null; }
+  if(!hasQuality) return null;
   const lossPct = entTH>0 ? parseFloat((lossTH/entTH*100).toFixed(2)) : null;
   return { lossTH:parseFloat(lossTH.toFixed(3)), lossPct };
 }
-// Convenience wrapper — returns lossPct only (for backward compat in machine cards)
-function calcLoss(r){ const v=calcLossThAndPct(r); return v?v.lossPct:null; }
+function calcLoss(r, allRecs){ const v=calcLossThAndPct(r, allRecs); return v?v.lossPct:null; }
 
 const LOSS_SOURCES = [
-  { type:'map',  label:'MAP',           color:'#1D9E75' },
-  { type:'posl', label:'Pós-limpeza',   color:'#BA7517' },
-  { type:'esp',  label:'Espirais',      color:'#00ACC1' },
-  { type:'pad',  label:'Padronizadores',color:'#FB8C00' },
-  { type:'fin',  label:'Mesas Finais',  color:'#7C3AED' },
+  { type:'map',  label:'MAP',             color:'#1D9E75' },
+  { type:'posl', label:'Pós-limpeza',     color:'#BA7517' },
+  { type:'esp',  label:'Espirais',        color:'#00ACC1' },
+  { type:'pad',  label:'Padronizadores',  color:'#FB8C00' },
+  { type:'fin',  label:'Mesas Finais',    color:'#7C3AED' },
 ];
 
 async function indInit(){
   updateDropdowns();
   const now = new Date(); const start = new Date(now); start.setDate(now.getDate()-7);
   const fmt = d => d.toISOString().slice(0,10);
-  const ds = document.getElementById('ind-date-start'); if(ds&&!ds.value) ds.value=fmt(start);
-  const de = document.getElementById('ind-date-end');   if(de&&!de.value) de.value=fmt(now);
+  // Always reset date filters to last 7 days on every visit
+  const ds = document.getElementById('ind-date-start'); if(ds) ds.value=fmt(start);
+  const de = document.getElementById('ind-date-end');   if(de) de.value=fmt(now);
   const ubsFilter=document.getElementById('ind-ubs-filter');
   if(ubsFilter) ubsFilter.style.display=isAdmin()?'block':'none';
   if(!isAdmin()) indSelectedUbs=getUnit();
@@ -2195,12 +2520,18 @@ async function indInit(){
   if(backBtn) backBtn.title=isAdmin()?'Sair':'Voltar';
   const badge=document.getElementById('ind-header-badge');
   if(badge) badge.textContent=isAdmin()?(indSelectedUbs||'Todas as UBSs'):getUnit();
-  // Show cache immediately, sync in background
-  indSwitchTab(indCurrentTab);
-  // Background sync — re-render when new data arrives
-  Promise.all(Object.keys(DB).map(s=>dbSync(s)))
-    .then(()=>indRender())
-    .catch(()=>{});
+  // Show loader and force-sync all sheets on every visit
+  showModuleLoader('Carregando indicadores...','Sincronizando todos os dados. Aguarde.');
+  // Indicadores precisam de leitura completa. Incremental com cache antigo pode deixar campos vazios
+  // e o gráfico fica parecendo que "não carregou". Aqui zeramos o cache em memória
+  // antes do fetch para impedir o parâmetro since e puxar todas as linhas da planilha.
+  Object.keys(DB).forEach(s=>{ DB[s]=[]; dbSyncedAt[s]=0; dbSyncing[s]=false; });
+  cacheWrite();
+  try{
+    await Promise.all(Object.keys(DB).map(s=>dbSync(s)));
+  }catch(e){ console.warn('indInit sync error', e); }
+  hideModuleLoader();
+  indRender();
 }
 
 function indSwitchTab(tab){
@@ -2209,9 +2540,9 @@ function indSwitchTab(tab){
 }
 function indSetUbs(ubs){
   indSelectedUbs=ubs;
-  // update button styles
-  ['','UBS 01','UBS 03','UBS 04'].forEach(u=>{
-    const id='ind-ubs-'+(u===''?'all':u.toLowerCase().replace(' ',''));
+  // update button styles — IDs reais são ind-ubs-all, ind-ubs-01, ind-ubs-03, ind-ubs-04
+  const idMap = {'':'ind-ubs-all','UBS 01':'ind-ubs-01','UBS 03':'ind-ubs-03','UBS 04':'ind-ubs-04'};
+  Object.entries(idMap).forEach(([u,id])=>{
     const el=document.getElementById(id); if(!el) return;
     el.classList.toggle('active', u===ubs);
   });
@@ -2229,10 +2560,18 @@ function indGetFilteredRecs(){
   const unit=isAdmin()?indSelectedUbs:getUnit();
   let all=[];
   REG_SOURCES.forEach(s=>{
-    (DB[s.sheet]||[]).filter(r=>(!unit||r.unidade===unit)&&r.id>=startTs&&r.id<=endTs)
-      .forEach(r=>all.push({...r,_type:s.type,_label:s.label,_color:s.color}));
+    (DB[s.sheet]||[]).filter(r=>{
+      if(unit&&r.unidade&&r.unidade!==unit) return false;
+      const ts = parseRecDt(r.dt) ?? (typeof r.id==='number'&&r.id>1e12?r.id:null);
+      if(ts===null) return true; // no timestamp — include rather than exclude
+      return ts>=startTs && ts<=endTs;
+    }).forEach(r=>all.push({...r,_type:s.type,_label:s.label,_color:s.color}));
   });
-  return all.sort((a,b)=>a.id-b.id);
+  return all.sort((a,b)=>{
+    const ta = parseRecDt(a.dt) ?? a.id ?? 0;
+    const tb = parseRecDt(b.dt) ?? b.id ?? 0;
+    return ta-tb;
+  });
 }
 
 function indRender(){
@@ -2242,35 +2581,73 @@ function indRender(){
 
 // ── FLUXO + tabela de % perda ──
 function indRenderFluxo(allRecs){
-  // Gráfico de linhas
-  const datasets = IND_SERIES.map(s=>({ label:s.label, color:s.color, pts:s.getVals(allRecs).filter(p=>p.v!==null) }));
-  const allTs = [...new Set(datasets.flatMap(d=>d.pts.map(p=>p.dt)))].sort((a,b)=>a-b);
-  document.getElementById('ind-legend').innerHTML = IND_SERIES.map(s=>`<span style="display:inline-flex;align-items:center;gap:5px"><span style="width:20px;height:3px;background:${s.color};display:inline-block;border-radius:2px"></span><span style="font-size:11px">${s.label}</span></span>`).join('');
-  document.getElementById('ind-summary-grid').innerHTML = IND_SERIES.map(s=>{
-    const pts=s.getVals(allRecs).filter(p=>p.v!==null); const last=pts.length?pts[pts.length-1]:null;
-    return `<div class="metric" style="border-left:3px solid ${s.color}"><div class="metric-label" style="font-size:10px">${s.label}</div><div class="metric-value" style="font-size:15px;color:${s.color}">${last?last.v.toFixed(2):'—'}</div><div class="metric-unit">t/h</div></div>`;
+  // Status bar
+  const statusEl = document.getElementById('ind-status-bar');
+  if(statusEl){
+    const counts = {};
+    REG_SOURCES.forEach(s=>{ counts[s.type]={ total:(DB[s.sheet]||[]).length, filtered:allRecs.filter(r=>r._type===s.type).length }; });
+    const parts = REG_SOURCES.filter(s=>counts[s.type].total>0).map(s=>
+      `<span style="display:inline-flex;align-items:center;gap:4px;margin-right:10px">
+        <span style="width:8px;height:8px;border-radius:50%;background:${s.color};display:inline-block"></span>
+        <span style="font-size:11px;color:var(--text-muted)">${s.label}: <b style="color:var(--text)">${counts[s.type].filtered}</b>/${counts[s.type].total}</span>
+      </span>`
+    );
+    statusEl.innerHTML = parts.length
+      ? `<div style="padding:8px 0 4px;font-size:11px;color:var(--text-hint)">Registros no período / total carregado: ${parts.join('')}<span style="margin-left:8px;color:var(--text-hint);font-family:var(--mono)">v12 registros plotados</span></div>`
+      : `<div style="padding:8px 0 4px;font-size:11px;color:var(--red-400)">⚠ Nenhum dado carregado. Verifique a conexão com a API.</div>`;
+  }
+  // Gráfico de linhas em cascata — tudo em t/h
+  const fluxo = buildFluxoState(allRecs);
+  const datasets = IND_SERIES.map(s=>({
+    label:s.label,
+    color:s.color,
+    pts:(fluxo[s.key]||[]).filter(p=>p && p.v!=null && Number.isFinite(p.v) && p.dt!=null && Number.isFinite(p.dt))
+  }));
+  // Build allTs: deduplicate by exact value using Map, then sort ascending
+  const tsSet = new Map();
+  datasets.forEach(d=>d.pts.forEach(p=>{ if(Number.isFinite(p.dt) && !tsSet.has(p.dt)) tsSet.set(p.dt,p.dt); }));
+  const allTs = [...tsSet.keys()].sort((a,b)=>a-b);
+  document.getElementById('ind-legend').innerHTML = IND_SERIES.map(s=>{
+    const n=(datasets.find(d=>d.label===s.label)?.pts||[]).length;
+    const muted=n?'' :'opacity:.45;filter:grayscale(.3)';
+    return `<span style="display:inline-flex;align-items:center;gap:5px;${muted}"><span style="width:20px;height:3px;background:${s.color};display:inline-block;border-radius:2px"></span><span style="font-size:11px">${s.label}${n?` (${n})`:''}</span></span>`;
   }).join('');
+
+  const yieldInfo = indFinalYield(allRecs);
+  const seriesCards = IND_SERIES.map(s=>{
+    const last=indLastPoint(s, allRecs);
+    const dtTxt=last?dtFormat(last.dt):'sem leitura no período';
+    return `<div class="metric" style="border-left:3px solid ${s.color}">
+      <div class="metric-label" style="font-size:10px">${s.label}</div>
+      <div class="metric-value" style="font-size:15px;color:${s.color}">${last?last.v.toFixed(2):'—'}</div>
+      <div class="metric-unit">t/h · ${dtTxt}</div>
+    </div>`;
+  }).join('');
+  const yieldCard = `<div class="metric highlight" style="border-left:3px solid var(--green-600);grid-column:1/-1">
+    <div class="metric-label" style="font-size:10px">Aproveitamento final</div>
+    <div class="metric-value" style="font-size:20px;color:var(--green-600)">${yieldInfo.pct!=null?yieldInfo.pct.toFixed(1)+'%':'—'}</div>
+    <div class="metric-unit">${yieldInfo.finalSeries?yieldInfo.finalSeries.label:'saída final'} ÷ Entrada bruta${yieldInfo.entrada&&yieldInfo.final?` · ${yieldInfo.final.v.toFixed(2)} / ${yieldInfo.entrada.v.toFixed(2)} t/h`:''}</div>
+  </div>`;
+  document.getElementById('ind-summary-grid').innerHTML = seriesCards + yieldCard;
   indDrawLineChart('ind-chart', datasets, allTs, 320, 't/h');
 
   // Tabela % grão bom no descarte por equipamento
   const tabela = document.getElementById('ind-perda-tabela');
   if(!tabela) return;
   const rows = LOSS_SOURCES.map(src=>{
-    const recs = allRecs.filter(r=>r._type===src.type);
-    if(!recs.length) return null;
-    const pts = recs.map(r=>{ const v=calcLossThAndPct(r); return v?.lossPct??null; }).filter(v=>v!==null);
-    if(!pts.length) return null;
+    const recs = allRecs.filter(r=>r._type===src.type).sort((a,b)=>(recTime(a)||0)-(recTime(b)||0));
+    const pts = recs.map(r=>{
+      const v=calcLossThAndPct(r, allRecs);
+      return (v && v.lossTH!=null && Number.isFinite(v.lossTH)) ? { pct:v.lossPct, th:v.lossTH, dt:recTime(r) } : null;
+    }).filter(Boolean);
+    if(!pts.length) return { src, last:null, lastTH:null, avg:null, min:null, max:null, n:0, total:recs.length };
     const last = pts[pts.length-1];
-    const avg  = pts.reduce((a,v)=>a+v,0)/pts.length;
-    const min  = Math.min(...pts);
-    const max  = Math.max(...pts);
-    return { src, last, avg, min, max, n:pts.length };
-  }).filter(Boolean);
-
-  if(!rows.length){
-    tabela.innerHTML='<div style="padding:16px;text-align:center;color:var(--text-hint);font-size:13px">Nenhum dado com análise de qualidade no período.</div>';
-    return;
-  }
+    const pctPts = pts.filter(v=>v.pct!=null && Number.isFinite(v.pct));
+    const avg  = pctPts.length ? pctPts.reduce((a,v)=>a+v.pct,0)/pctPts.length : null;
+    const min  = pctPts.length ? Math.min(...pctPts.map(v=>v.pct)) : null;
+    const max  = pctPts.length ? Math.max(...pctPts.map(v=>v.pct)) : null;
+    return { src, last:last.pct, lastTH:last.th, avg, min, max, n:pts.length, total:recs.length };
+  });
 
   // cabeçalho
   let t = `<div style="overflow-x:auto">
@@ -2278,8 +2655,9 @@ function indRenderFluxo(allRecs){
     <thead>
       <tr style="border-bottom:1.5px solid var(--border-md)">
         <th style="text-align:left;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Equipamento</th>
-        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Último</th>
-        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Média</th>
+        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Último %</th>
+        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--red-400)">Últ. t/h boa</th>
+        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Média %</th>
         <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Mín</th>
         <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Máx</th>
         <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Regs</th>
@@ -2287,19 +2665,21 @@ function indRenderFluxo(allRecs){
     </thead>
     <tbody>`;
 
-  rows.forEach(({src,last,avg,min,max,n})=>{
-    const col = last>2?'var(--red-400)':last>1?'var(--amber-400)':'var(--green-600)';
-    const bg  = last>2?'var(--red-50)':last>1?'var(--amber-50)':'var(--green-50)';
+  rows.forEach(({src,last,lastTH,avg,min,max,n,total})=>{
+    const has=last!=null && Number.isFinite(last);
+    const col = !has?'var(--text-hint)':last>2?'var(--red-400)':last>1?'var(--amber-400)':'var(--green-600)';
+    const bg  = !has?'var(--gray-50)':last>2?'var(--red-50)':last>1?'var(--amber-50)':'var(--green-50)';
     const dot = `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${src.color};margin-right:6px;vertical-align:middle"></span>`;
     t+=`<tr style="border-bottom:0.5px solid var(--border)">
       <td style="padding:10px 6px;font-weight:500">${dot}${src.label}</td>
       <td style="padding:10px 6px;text-align:center">
-        <span style="background:${bg};color:${col};font-family:var(--mono);font-size:12px;font-weight:500;padding:3px 8px;border-radius:99px">${last.toFixed(2)}%</span>
+        <span style="background:${bg};color:${col};font-family:var(--mono);font-size:12px;font-weight:500;padding:3px 8px;border-radius:99px">${has?last.toFixed(2)+'%':'—'}</span>
       </td>
-      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);color:var(--text-muted)">${avg.toFixed(2)}%</td>
-      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);color:var(--green-600)">${min.toFixed(2)}%</td>
-      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);color:var(--red-400)">${max.toFixed(2)}%</td>
-      <td style="padding:10px 6px;text-align:center;color:var(--text-hint)">${n}</td>
+      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);font-size:12px;font-weight:500;color:var(--red-400)">${lastTH!=null?lastTH.toFixed(3)+' t/h':'—'}</td>
+      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);color:var(--text-muted)">${avg!=null?avg.toFixed(2)+'%':'—'}</td>
+      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);color:var(--green-600)">${min!=null?min.toFixed(2)+'%':'—'}</td>
+      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);color:var(--red-400)">${max!=null?max.toFixed(2)+'%':'—'}</td>
+      <td style="padding:10px 6px;text-align:center;color:var(--text-hint)">${n}${total&&!n?`/${total}`:''}</td>
     </tr>`;
   });
 
@@ -2314,42 +2694,62 @@ function indRenderFluxo(allRecs){
 
 // ── Shared canvas line chart ──
 function indDrawLineChart(canvasId, datasets, allTs, H, yLabel){
+  // Defer to next frame so the canvas has a real layout width
   const canvas=document.getElementById(canvasId); if(!canvas) return;
-  const ctx=canvas.getContext('2d');
-  const dpr=window.devicePixelRatio||1;
-  const W=canvas.parentElement.offsetWidth||600;
-  canvas.width=W*dpr; canvas.height=H*dpr;
-  canvas.style.width=W+'px'; canvas.style.height=H+'px';
-  ctx.scale(dpr,dpr); ctx.clearRect(0,0,W,H);
-  const PAD={top:16,right:16,bottom:52,left:52};
-  const cw=W-PAD.left-PAD.right; const ch=H-PAD.top-PAD.bottom;
-  const allVals=datasets.flatMap(d=>d.pts.map(p=>p.v)).filter(v=>v!=null);
-  const yMax=allVals.length?Math.max(...allVals)*1.15:10;
-  const yRange=yMax||1;
-  ctx.strokeStyle='rgba(0,0,0,0.07)'; ctx.lineWidth=1;
-  ctx.font='10px DM Mono,monospace'; ctx.fillStyle='#9A9893'; ctx.textAlign='right';
-  for(let i=0;i<=5;i++){
-    const y=PAD.top+ch-(i/5)*ch; const val=(i/5)*yRange;
-    ctx.beginPath(); ctx.moveTo(PAD.left,y); ctx.lineTo(PAD.left+cw,y); ctx.stroke();
-    ctx.fillText(val.toFixed(2),PAD.left-5,y+4);
-  }
-  ctx.save(); ctx.translate(12,PAD.top+ch/2); ctx.rotate(-Math.PI/2);
-  ctx.textAlign='center'; ctx.font='9px DM Sans,sans-serif'; ctx.fillStyle='#9A9893';
-  ctx.fillText(yLabel,0,0); ctx.restore();
-  if(!allTs.length){
-    ctx.font='13px DM Sans,sans-serif'; ctx.fillStyle='#9A9893'; ctx.textAlign='center';
-    ctx.fillText('Nenhum dado no período',PAD.left+cw/2,PAD.top+ch/2); return;
-  }
-  const step=Math.max(1,Math.ceil(allTs.length/8));
-  ctx.textAlign='center'; ctx.font='9px DM Mono,monospace'; ctx.fillStyle='#9A9893';
-  allTs.forEach((ts,i)=>{ if(i%step===0){ const x=PAD.left+(i/(allTs.length-1||1))*cw; const d=new Date(ts); ctx.fillText(`${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`,x,PAD.top+ch+18); } });
-  datasets.forEach(ds=>{
-    if(!ds.pts.length) return;
-    ctx.strokeStyle=ds.color; ctx.lineWidth=2; ctx.lineJoin='round'; ctx.lineCap='round';
-    ctx.beginPath(); let first=true;
-    ds.pts.forEach(p=>{ const xi=allTs.indexOf(p.dt); const x=PAD.left+(xi/(allTs.length-1||1))*cw; const y=PAD.top+ch-(p.v/yRange)*ch; if(first){ctx.moveTo(x,y);first=false;}else ctx.lineTo(x,y); });
-    ctx.stroke();
-    ds.pts.forEach(p=>{ const xi=allTs.indexOf(p.dt); const x=PAD.left+(xi/(allTs.length-1||1))*cw; const y=PAD.top+ch-(p.v/yRange)*ch; ctx.beginPath(); ctx.arc(x,y,3,0,2*Math.PI); ctx.fillStyle=ds.color; ctx.fill(); });
+  requestAnimationFrame(()=>{
+    const ctx=canvas.getContext('2d');
+    const dpr=window.devicePixelRatio||1;
+    const W=canvas.parentElement.offsetWidth||canvas.offsetWidth||640;
+    if(!W) return;
+    canvas.width=W*dpr; canvas.height=H*dpr;
+    canvas.style.width=W+'px'; canvas.style.height=H+'px';
+    ctx.scale(dpr,dpr); ctx.clearRect(0,0,W,H);
+    const PAD={top:16,right:16,bottom:52,left:52};
+    const cw=W-PAD.left-PAD.right; const ch=H-PAD.top-PAD.bottom;
+    const allVals=datasets.flatMap(d=>d.pts.map(p=>p.v)).filter(v=>v!=null);
+    const yMax=allVals.length?Math.max(...allVals)*1.15:10;
+    const yRange=yMax||1;
+    ctx.strokeStyle='rgba(0,0,0,0.07)'; ctx.lineWidth=1;
+    ctx.font='10px DM Mono,monospace'; ctx.fillStyle='#9A9893'; ctx.textAlign='right';
+    for(let i=0;i<=5;i++){
+      const y=PAD.top+ch-(i/5)*ch; const val=(i/5)*yRange;
+      ctx.beginPath(); ctx.moveTo(PAD.left,y); ctx.lineTo(PAD.left+cw,y); ctx.stroke();
+      ctx.fillText(val.toFixed(2),PAD.left-5,y+4);
+    }
+    ctx.save(); ctx.translate(12,PAD.top+ch/2); ctx.rotate(-Math.PI/2);
+    ctx.textAlign='center'; ctx.font='9px DM Sans,sans-serif'; ctx.fillStyle='#9A9893';
+    ctx.fillText(yLabel,0,0); ctx.restore();
+    if(!allTs.length){
+      ctx.font='13px DM Sans,sans-serif'; ctx.fillStyle='#9A9893'; ctx.textAlign='center';
+      ctx.fillText('Nenhum dado no período',PAD.left+cw/2,PAD.top+ch/2); return;
+    }
+    // Build a lookup map: ts -> index for O(1) positioning
+    const tsIndex = new Map(allTs.map((ts,i)=>[ts,i]));
+    const n=allTs.length;
+    const step=Math.max(1,Math.ceil(n/8));
+    ctx.textAlign='center'; ctx.font='9px DM Mono,monospace'; ctx.fillStyle='#9A9893';
+    allTs.forEach((ts,i)=>{ if(i%step===0){ const x=PAD.left+(i/(n-1||1))*cw; const d=new Date(ts); ctx.fillText(`${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`,x,PAD.top+ch+18); } });
+    datasets.forEach(ds=>{
+      if(!ds.pts.length) return;
+      // Sort pts by dt so lines are drawn in order
+      const sorted=[...ds.pts].sort((a,b)=>a.dt-b.dt);
+      ctx.strokeStyle=ds.color; ctx.lineWidth=2; ctx.lineJoin='round'; ctx.lineCap='round';
+      ctx.beginPath(); let first=true;
+      sorted.forEach(p=>{
+        // find closest ts in allTs (tolerance for float rounding)
+        let xi = tsIndex.has(p.dt) ? tsIndex.get(p.dt) : allTs.findIndex(t=>Math.abs(t-p.dt)<1000);
+        if(xi<0) return;
+        const x=PAD.left+(xi/(n-1||1))*cw; const y=PAD.top+ch-(p.v/yRange)*ch;
+        if(first){ctx.moveTo(x,y);first=false;}else ctx.lineTo(x,y);
+      });
+      ctx.stroke();
+      sorted.forEach(p=>{
+        let xi = tsIndex.has(p.dt) ? tsIndex.get(p.dt) : allTs.findIndex(t=>Math.abs(t-p.dt)<1000);
+        if(xi<0) return;
+        const x=PAD.left+(xi/(n-1||1))*cw; const y=PAD.top+ch-(p.v/yRange)*ch;
+        ctx.beginPath(); ctx.arc(x,y,3,0,2*Math.PI); ctx.fillStyle=ds.color; ctx.fill();
+      });
+    });
   });
 }
 
