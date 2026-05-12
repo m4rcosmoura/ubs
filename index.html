@@ -548,12 +548,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
           <input type="text" id="posl-dt-field" readonly>
         </div>
         <div class="field" style="margin-bottom:0">
-          <label>Entrada — vazão total</label>
-          <div class="input-unit-wrap"><input type="number" id="posl-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="poslCalcAll()"><span class="input-unit">t/h</span></div>
+          <label>Entrada — saída líquida da MAP <span style="font-size:10px;color:var(--green-600);font-weight:500">(automático)</span></label>
+          <div class="input-unit-wrap"><input type="text" id="posl-entrada-th" readonly placeholder="—"><span class="input-unit">t/h</span></div>
         </div>
 
       </div>
-      <div class="info-note">Descarte: amostra de 6 segundos em kg → t/h. Semente boa: amostra fixa de 500g.</div>
+      <div class="info-note">Entrada preenchida automaticamente com a saída líquida da MAP (último registro). Descarte: amostra de 6 segundos em kg → t/h. Semente boa: amostra fixa de 500g.</div>
       <div id="posl-mesas-container"></div>
       <div class="card">
         <div class="card-header"><div class="card-pill pill-amber">Resumo</div><div class="card-heading" id="posl-sum-title">Balanço das mesas</div></div>
@@ -621,8 +621,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         </div>
         <div class="field-row">
           <div class="field">
-            <label>Entrada — vazão total</label>
-            <div class="input-unit-wrap"><input type="number" id="esp-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="espCalcAll()"><span class="input-unit">t/h</span></div>
+            <label>Entrada — saída líquida da Pós-limpeza <span style="font-size:10px;color:var(--teal-600);font-weight:500">(automático)</span></label>
+            <div class="input-unit-wrap"><input type="text" id="esp-entrada-th" readonly placeholder="—"><span class="input-unit">t/h</span></div>
           </div>
           <div class="field">
             <label>Frequência</label>
@@ -727,12 +727,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
           <input type="text" id="pad-dt-field" readonly>
         </div>
         <div class="field" style="margin-bottom:0">
-          <label>Entrada — vazão total</label>
-          <div class="input-unit-wrap"><input type="number" id="pad-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="padCalcAll()"><span class="input-unit">t/h</span></div>
+          <label>Entrada — saída líquida dos Espirais <span style="font-size:10px;color:var(--orange-400);font-weight:500">(automático)</span></label>
+          <div class="input-unit-wrap"><input type="text" id="pad-entrada-th" readonly placeholder="—"><span class="input-unit">t/h</span></div>
         </div>
 
       </div>
-      <div class="info-note">Colete a amostra por 6 segundos e pese em kg. O sistema converte para t/h automaticamente.</div>
+      <div class="info-note">Entrada preenchida automaticamente com a saída líquida dos Espirais (último registro). Colete a amostra por 6 segundos e pese em kg. O sistema converte para t/h automaticamente.</div>
       <div id="pad-machines-container"></div>
       <div class="card">
         <div class="card-header"><div class="card-pill pill-orange">Resumo</div><div class="card-heading" id="pad-sum-title">Balanço total</div></div>
@@ -799,8 +799,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
           <input type="text" id="fin-dt-field" readonly>
         </div>
         <div class="field" style="margin-bottom:0">
-          <label>Entrada — vazão total</label>
-          <div class="input-unit-wrap"><input type="number" id="fin-entrada-th" placeholder="0.00" min="0" step="0.01" oninput="finCalcAll()"><span class="input-unit">t/h</span></div>
+          <label>Entrada — saída líquida dos Padronizadores <span style="font-size:10px;color:var(--purple-400);font-weight:500">(automático)</span></label>
+          <div class="input-unit-wrap"><input type="text" id="fin-entrada-th" readonly placeholder="—"><span class="input-unit">t/h</span></div>
         </div>
 
       </div>
@@ -1166,10 +1166,10 @@ function prefillEntrada(prefix, value){
   const el = document.getElementById(prefix+'-entrada-th');
   if(!el) return;
   // always overwrite with latest saida on page open
-  el.value = value;
+  el.value = value !== null ? value.toFixed(2) : '';
   const fn = {posl:poslCalcAll, esp:espCalcAll, pad:padCalcAll, fin:finCalcAll}[prefix];
   if(fn) fn();
-  toast('Entrada: '+value+' t/h (ultimo registro da etapa anterior)');
+  toast('Entrada: '+value.toFixed(2)+' t/h (último registro da etapa anterior)');
 }
 
 // ══════════════════════════════════════════════
@@ -1221,11 +1221,21 @@ async function apiGet(params){
 // ── Row normaliser ─────────────────────────────────────
 function normaliseRow(r){
   ['mesas','machines'].forEach(f=>{ if(typeof r[f]==='string'){ try{ r[f]=JSON.parse(r[f]); }catch(_){} } });
+  // Converte campos numericos; string vazia/undefined vira null
   ['id','entTH','supTH','supPct','infTH','infPct','saidaTH','descTH','pctDesc',
    'graobomSem','graobomPct','graoruin200','graoruinPct','freqHz',
-   'totalDescTH','totalSem','hiloQtd','hiloPct'].forEach(f=>{
-    if(r[f]!==null&&r[f]!==''&&r[f]!==undefined) r[f]=parseFloat(r[f])||r[f];
+   'totalDescTH','totalSem','hiloQtd','hiloPct','entKg','supKg','infKg'].forEach(f=>{
+    if(r[f]!==null&&r[f]!==undefined&&r[f]!==''){
+      const n=parseFloat(r[f]); r[f]=isNaN(n)?r[f]:n;
+    } else { r[f]=null; }
   });
+  // Registros antigos tem apenas Kg — recalcula t/h (amostra 6s: kg*600/1000)
+  if((!r.entTH||r.entTH===0)&&r.entKg>0) r.entTH=parseFloat((r.entKg*600/1000).toFixed(2));
+  if((!r.supTH||r.supTH===0)&&r.supKg>0) r.supTH=parseFloat((r.supKg*600/1000).toFixed(2));
+  if((!r.infTH||r.infTH===0)&&r.infKg>0) r.infTH=parseFloat((r.infKg*600/1000).toFixed(2));
+  // Recalcula saidaTH se ausente
+  if((!r.saidaTH||r.saidaTH===0)&&r.entTH>0&&r.supTH!=null&&r.infTH!=null)
+    r.saidaTH=parseFloat(Math.max(0,r.entTH-(r.supTH||0)-(r.infTH||0)).toFixed(2));
   return r;
 }
 
@@ -1390,27 +1400,153 @@ function dtFormat(val){
   }catch(e){ return String(val); }
 }
 
+// ── Helper: formata número com 2 casas ou '—' ──
+function fmtTH(v){
+  if(v===null||v===undefined||v==='') return '—';
+  const n=parseFloat(v); return isNaN(n)?'—':n.toFixed(2);
+}
+function fmtPct(v){
+  if(v===null||v===undefined||v==='') return '—';
+  const n=parseFloat(v); return isNaN(n)?'—':n.toFixed(1)+'%';
+}
+// resolveTH: usa _TH quando disponivel e >0, senao reconverte do _Kg (6s: kg*600/1000=t/h)
+// Compatibilidade com registros antigos salvos so com kg
+function resolveTH(thVal, kgVal){
+  const th=parseFloat(thVal);
+  if(!isNaN(th)&&th>0) return th;
+  const kg=parseFloat(kgVal);
+  if(!isNaN(kg)&&kg>0) return (kg*600)/1000;
+  if(!isNaN(th)) return th;
+  return null;
+}
+
 function renderLocalRecords(containerId, records, type){
   const c = document.getElementById(containerId);
-  if(!records.length){ c.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--text-hint);font-size:13px">Nenhum registro ainda.</div>'; return; }
-  const rows = records.map(r=>{
-    if(type==='map'||type==='pad'){
-      return `<tr><td>${dtFormat(r.dt)}</td><td>${r.operator||'—'}</td><td>${r.cultivar||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.supTH??'—'}</td><td class="td-val">${r.supPct!=null?r.supPct+'%':'—'}</td><td class="td-val">${r.infTH??'—'}</td><td class="td-val">${r.infPct!=null?r.infPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td></tr>`;
-    }else if(type==='esp'){
-      return `<tr><td>${dtFormat(r.dt)}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.descTH??'—'}</td><td class="td-val">${r.graobomPct!=null?r.graobomPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td></tr>`;
-    }else{
-      const mesas = (r.mesas||[]).map((m,i)=>`M${i+1}: ${m.descTH??'—'} t/h${m.boaPct!=null?' ('+m.boaPct+'%)':''}`).join(' | ');
-      const saida = r.entTH!=null&&r.totalDescTH!=null ? Math.max(0,r.entTH-r.totalDescTH).toFixed(2) : '—';
-      return `<tr><td>${dtFormat(r.dt)}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td colspan="3" style="font-size:10px;color:var(--text-muted)">${mesas}</td><td class="td-val">${r.totalDescTH??'—'}</td><td class="td-saida">${saida}</td></tr>`;
-    }
+  if(!c) return;
+  if(!records||!records.length){
+    c.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--text-hint);font-size:13px">Nenhum registro ainda.</div>';
+    return;
+  }
+
+  // ── MAP ──────────────────────────────────────────────────────────────
+  // Campos salvos: entTH, supTH, supPct, infTH, infPct, saidaTH
+  // Colunas: Data/Hora | Operador | Cultivar | Entrada t/h | Desc.Sup t/h | % Boa Sup | Desc.Inf t/h | % Boa Inf | Saída Líq. t/h
+  if(type==='map'){
+    const hdrs=['Data/Hora','Operador','Cultivar','Entrada t/h','Desc. Sup t/h','% Boa Sup','Desc. Inf t/h','% Boa Inf','Saída Líq. t/h'];
+    const rowsHtml=records.map(r=>{
+      // Compatibilidade: registros antigos podem ter apenas os campos Kg; recalcula t/h se necessario
+      const entTH = resolveTH(r.entTH, r.entKg);
+      const supTH = resolveTH(r.supTH, r.supKg);
+      const infTH = resolveTH(r.infTH, r.infKg);
+      const saida = r.saidaTH!=null ? fmtTH(r.saidaTH)
+                  : (entTH!=null&&supTH!=null&&infTH!=null)
+                    ? fmtTH(Math.max(0, entTH - supTH - infTH)) : '—';
+      return `<tr>
+        <td>${dtFormat(r.dt)}</td>
+        <td>${r.operator||'—'}</td>
+        <td style="font-size:10px">${r.cultivar||'—'}</td>
+        <td class="td-val">${fmtTH(entTH)}</td>
+        <td class="td-val" style="color:var(--amber-400)">${fmtTH(supTH)}</td>
+        <td class="td-val">${fmtPct(r.supPct)}</td>
+        <td class="td-val" style="color:var(--blue-400)">${fmtTH(infTH)}</td>
+        <td class="td-val">${fmtPct(r.infPct)}</td>
+        <td class="td-saida">${saida}</td>
+      </tr>`;
+    }).join('');
+    c.innerHTML=buildTable(hdrs, rowsHtml);
+    return;
+  }
+
+  // ── PAD ──────────────────────────────────────────────────────────────
+  // Campos salvos: entTH, supTH, supPct, infTH, infPct, saidaTH, machines[]
+  // Colunas: Data/Hora | Operador | Cultivar | Entrada t/h | Desc.Sup t/h | % Boa Sup | Desc.Inf t/h | % Boa Inf | Saída Líq. t/h
+  if(type==='pad'){
+    const hdrs=['Data/Hora','Operador','Cultivar','Entrada t/h','Desc. Sup t/h','% Boa Sup','Desc. Inf t/h','% Boa Inf','Saída Líq. t/h'];
+    const rowsHtml=records.map(r=>{
+      const entTH = resolveTH(r.entTH, null);
+      const supTH = resolveTH(r.supTH, null);
+      const infTH = resolveTH(r.infTH, null);
+      const saida = r.saidaTH!=null ? fmtTH(r.saidaTH)
+                  : (entTH!=null&&supTH!=null&&infTH!=null)
+                    ? fmtTH(Math.max(0, entTH - supTH - infTH)) : '—';
+      return `<tr>
+        <td>${dtFormat(r.dt)}</td>
+        <td>${r.operator||'—'}</td>
+        <td style="font-size:10px">${r.cultivar||'—'}</td>
+        <td class="td-val">${fmtTH(entTH)}</td>
+        <td class="td-val" style="color:var(--amber-400)">${fmtTH(supTH)}</td>
+        <td class="td-val">${fmtPct(r.supPct)}</td>
+        <td class="td-val" style="color:var(--blue-400)">${fmtTH(infTH)}</td>
+        <td class="td-val">${fmtPct(r.infPct)}</td>
+        <td class="td-saida">${saida}</td>
+      </tr>`;
+    }).join('');
+    c.innerHTML=buildTable(hdrs, rowsHtml);
+    return;
+  }
+
+  // ── ESP ──────────────────────────────────────────────────────────────
+  // Campos salvos: entTH, descTH, pctDesc, graobomPct, graoruinPct, saidaTH, efic
+  // Colunas: Data/Hora | Operador | Cultivar | Entrada t/h | Desc. t/h | % Desc. | % Boa no Desc. | % Ruim na Saída | Saída Líq. t/h | Efic.
+  if(type==='esp'){
+    const hdrs=['Data/Hora','Operador','Cultivar','Entrada t/h','Desc. t/h','% Desc.','% Boa no Desc.','% Ruim na Saída','Saída Líq. t/h','Efic.'];
+    const rowsHtml=records.map(r=>{
+      const pctDesc = r.pctDesc!=null ? fmtPct(r.pctDesc)
+                    : (r.entTH&&r.descTH) ? fmtPct(r.descTH/r.entTH*100) : '—';
+      const saida = r.saidaTH!=null ? fmtTH(r.saidaTH)
+                  : (r.entTH!=null&&r.descTH!=null) ? fmtTH(Math.max(0,r.entTH-r.descTH)) : '—';
+      return `<tr>
+        <td>${dtFormat(r.dt)}</td>
+        <td>${r.operator||'—'}</td>
+        <td style="font-size:10px">${r.cultivar||'—'}</td>
+        <td class="td-val">${fmtTH(r.entTH)}</td>
+        <td class="td-val" style="color:var(--teal-400)">${fmtTH(r.descTH)}</td>
+        <td class="td-val">${pctDesc}</td>
+        <td class="td-val">${fmtPct(r.graobomPct)}</td>
+        <td class="td-val">${fmtPct(r.graoruinPct)}</td>
+        <td class="td-saida">${saida}</td>
+        <td class="td-val">${r.efic?r.efic+'%':'—'}</td>
+      </tr>`;
+    }).join('');
+    c.innerHTML=buildTable(hdrs, rowsHtml);
+    return;
+  }
+
+  // ── POSL / FIN (mesas) ───────────────────────────────────────────────
+  // Campos salvos: entTH, mesas:[{descTH, boaPct}], totalDescTH
+  // Colunas: Data/Hora | Operador | Cultivar | Entrada t/h | [Mesa N: Desc t/h | % Boa] ... | Desc.Total t/h | % Desc. | Saída Est. t/h
+  const maxMesas = Math.max(...records.map(r=>(r.mesas||[]).length), 1);
+  const mesaHdrs = Array.from({length:maxMesas},(_,i)=>[`M${i+1} Desc t/h`,`M${i+1} % Boa`]).flat();
+  const hdrs = ['Data/Hora','Operador','Cultivar','Entrada t/h', ...mesaHdrs, 'Desc. Total t/h','% Desc.','Saída Est. t/h'];
+  const rowsHtml = records.map(r=>{
+    const ms = r.mesas||[];
+    const totalDesc = r.totalDescTH!=null ? r.totalDescTH
+                    : ms.reduce((a,m)=>a+(parseFloat(m.descTH)||0),0);
+    const saida = r.entTH!=null ? fmtTH(Math.max(0, r.entTH - totalDesc)) : '—';
+    const pctDesc = r.entTH&&totalDesc ? fmtPct(totalDesc/r.entTH*100) : '—';
+    const mesaCols = Array.from({length:maxMesas},(_,i)=>{
+      const m = ms[i];
+      return m
+        ? `<td class="td-val" style="color:var(--purple-400)">${fmtTH(m.descTH)}</td><td class="td-val">${fmtPct(m.boaPct)}</td>`
+        : `<td>—</td><td>—</td>`;
+    }).join('');
+    return `<tr>
+      <td>${dtFormat(r.dt)}</td>
+      <td>${r.operator||'—'}</td>
+      <td style="font-size:10px">${r.cultivar||'—'}</td>
+      <td class="td-val">${fmtTH(r.entTH)}</td>
+      ${mesaCols}
+      <td class="td-val">${fmtTH(totalDesc||null)}</td>
+      <td class="td-val">${pctDesc}</td>
+      <td class="td-saida">${saida}</td>
+    </tr>`;
   }).join('');
+  c.innerHTML=buildTable(hdrs, rowsHtml);
+}
 
-  let headers;
-  if(type==='map'||type==='pad') headers='<th>Data/Hora</th><th>Operador</th><th>Cultivar</th><th>Entrada t/h</th><th>Sup t/h</th><th>% Boa Sup</th><th>Inf t/h</th><th>% Boa Inf</th><th>Saída t/h</th><th>Efic.</th>';
-  else if(type==='esp') headers='<th>Data/Hora</th><th>Operador</th><th>Entrada t/h</th><th>Desc. t/h</th><th>% Bom Desc.</th><th>Saída t/h</th><th>Efic.</th>';
-  else headers='<th>Data/Hora</th><th>Operador</th><th>Entrada t/h</th><th colspan="3">Mesas</th><th>Desc. total</th><th>Saída est.</th>';
-
-  c.innerHTML=`<table class="reg-table"><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
+function buildTable(headers, rowsHtml){
+  const ths = headers.map(h=>`<th>${h}</th>`).join('');
+  return `<div style="overflow-x:auto"><table class="reg-table"><thead><tr>${ths}</tr></thead><tbody>${rowsHtml}</tbody></table></div>`;
 }
 
 
@@ -1477,26 +1613,89 @@ function regRender(){
     const src = REG_SOURCES.find(s=>s.type===t);
     let headers, rows;
     if(t==='moega'){
-      headers='<th>Data/Hora</th><th>Unidade</th><th>Operador</th><th>Lote</th><th>Total Sem.</th><th>Hilo</th><th>% Hilo</th><th>Obs</th>';
-      rows=recs.map(r=>`<tr><td>${dtFormat(r.dt)}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td><td>${r.lote||'—'}</td><td class="td-val">${r.totalSem??200}</td><td>${r.hiloSim?'⚠ Sim':'✓ Não'}</td><td class="td-val">${r.hiloPct!=null?r.hiloPct+'%':'—'}</td><td style="font-size:10px;color:var(--text-muted)">${r.obs||''}</td></tr>`).join('');
+      const hdrs=['Data/Hora','Unidade','Operador','Lote','Total Sem.','Hilo','% Hilo','Obs'];
+      const rowsHtml=recs.map(r=>`<tr>
+        <td>${dtFormat(r.dt)}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td>
+        <td>${r.lote||'—'}</td>
+        <td class="td-val">${r.totalSem??200}</td>
+        <td>${r.hiloSim?'⚠ Sim':'✓ Não'}</td>
+        <td class="td-val">${fmtPct(r.hiloPct)}</td>
+        <td style="font-size:10px;color:var(--text-muted)">${r.obs||''}</td>
+      </tr>`).join('');
+      headers=hdrs.map(h=>`<th>${h}</th>`).join(''); rows=rowsHtml;
+
     }else if(t==='map'||t==='pad'){
-      headers='<th>Data/Hora</th><th>Unidade</th><th>Operador</th><th>Cultivar</th><th>Entrada t/h</th><th>Sup t/h</th><th>%Boa Sup</th><th>Inf t/h</th><th>%Boa Inf</th><th>Saída t/h</th><th>Efic.</th><th>Obs</th>';
-      rows=recs.map(r=>`<tr><td>${dtFormat(r.dt)}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td><td>${r.cultivar||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.supTH??'—'}</td><td class="td-val">${r.supPct!=null?r.supPct+'%':'—'}</td><td class="td-val">${r.infTH??'—'}</td><td class="td-val">${r.infPct!=null?r.infPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td><td style="font-size:10px;color:var(--text-muted)">${r.obs||''}</td></tr>`).join('');
+      // MAP e PAD: entTH/entKg, supTH/supKg, supPct, infTH/infKg, infPct, saidaTH
+      const hdrs=['Data/Hora','Unidade','Operador','Cultivar','Entrada t/h','Desc. Sup t/h','% Boa Sup','Desc. Inf t/h','% Boa Inf','Saída Líq. t/h'];
+      const rowsHtml=recs.map(r=>{
+        const entTH = resolveTH(r.entTH, r.entKg);
+        const supTH = resolveTH(r.supTH, r.supKg);
+        const infTH = resolveTH(r.infTH, r.infKg);
+        const saida = r.saidaTH!=null ? fmtTH(r.saidaTH)
+                    : (entTH!=null&&supTH!=null&&infTH!=null)
+                      ? fmtTH(Math.max(0,entTH-supTH-infTH)) : '—';
+        return `<tr>
+          <td>${dtFormat(r.dt)}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td>
+          <td style="font-size:10px">${r.cultivar||'—'}</td>
+          <td class="td-val">${fmtTH(entTH)}</td>
+          <td class="td-val" style="color:var(--amber-400)">${fmtTH(supTH)}</td>
+          <td class="td-val">${fmtPct(r.supPct)}</td>
+          <td class="td-val" style="color:var(--blue-400)">${fmtTH(infTH)}</td>
+          <td class="td-val">${fmtPct(r.infPct)}</td>
+          <td class="td-saida">${saida}</td>
+        </tr>`;
+      }).join('');
+      headers=hdrs.map(h=>`<th>${h}</th>`).join(''); rows=rowsHtml;
+
     }else if(t==='esp'){
-      headers='<th>Data/Hora</th><th>Unidade</th><th>Operador</th><th>Entrada t/h</th><th>Desc. t/h</th><th>%Bom Desc.</th><th>%Ruim Saída</th><th>Saída t/h</th><th>Efic.</th><th>Obs</th>';
-      rows=recs.map(r=>`<tr><td>${dtFormat(r.dt)}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td><td class="td-val">${r.descTH??'—'}</td><td class="td-val">${r.graobomPct!=null?r.graobomPct+'%':'—'}</td><td class="td-val">${r.graoruinPct!=null?r.graoruinPct+'%':'—'}</td><td class="td-saida">${r.saidaTH??'—'}</td><td class="td-val">${r.efic?r.efic+'%':'—'}</td><td style="font-size:10px;color:var(--text-muted)">${r.obs||''}</td></tr>`).join('');
+      // ESP: entTH, descTH, pctDesc, graobomPct, graoruinPct, saidaTH, efic
+      const hdrs=['Data/Hora','Unidade','Operador','Cultivar','Entrada t/h','Desc. t/h','% Desc.','% Boa no Desc.','% Ruim na Saída','Saída Líq. t/h','Efic.'];
+      const rowsHtml=recs.map(r=>{
+        const pctDesc = r.pctDesc!=null ? fmtPct(r.pctDesc)
+                      : (r.entTH&&r.descTH) ? fmtPct(r.descTH/r.entTH*100) : '—';
+        const saida = r.saidaTH!=null ? fmtTH(r.saidaTH)
+                    : (r.entTH!=null&&r.descTH!=null) ? fmtTH(Math.max(0,r.entTH-r.descTH)) : '—';
+        return `<tr>
+          <td>${dtFormat(r.dt)}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td>
+          <td style="font-size:10px">${r.cultivar||'—'}</td>
+          <td class="td-val">${fmtTH(r.entTH)}</td>
+          <td class="td-val" style="color:var(--teal-400)">${fmtTH(r.descTH)}</td>
+          <td class="td-val">${pctDesc}</td>
+          <td class="td-val">${fmtPct(r.graobomPct)}</td>
+          <td class="td-val">${fmtPct(r.graoruinPct)}</td>
+          <td class="td-saida">${saida}</td>
+          <td class="td-val">${r.efic?r.efic+'%':'—'}</td>
+        </tr>`;
+      }).join('');
+      headers=hdrs.map(h=>`<th>${h}</th>`).join(''); rows=rowsHtml;
+
     }else{
-      {
-        const maxMesas=Math.max(...recs.map(r=>(r.mesas||[]).length),1);
-        const mHeaders=Array.from({length:maxMesas},(_,i)=>`<th>M${i+1} Desc</th>`).join('');
-        headers=`<th>Data/Hora</th><th>Unidade</th><th>Operador</th><th>Entrada t/h</th>${mHeaders}<th>Desc.Total</th><th>Saída est.</th><th>Obs</th>`;
-        rows=recs.map(r=>{
-          const ms=(r.mesas||[]);
-          const saida=r.entTH!=null&&r.totalDescTH!=null?Math.max(0,r.entTH-r.totalDescTH).toFixed(2):'—';
-          const mCols=Array.from({length:maxMesas},(_,i)=>ms[i]?`${ms[i].descTH??'—'}${ms[i].boaPct!=null?' ('+ms[i].boaPct+'%)':''}`:'—').map(v=>`<td class="td-val" style="font-size:10px">${v}</td>`).join('');
-          return `<tr><td>${dtFormat(r.dt)}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td><td class="td-val">${r.entTH??'—'}</td>${mCols}<td class="td-val">${r.totalDescTH??'—'}</td><td class="td-saida">${saida}</td><td style="font-size:10px;color:var(--text-muted)">${r.obs||''}</td></tr>`;
+      // POSL e FIN: entTH, mesas:[{descTH,boaPct}], totalDescTH
+      const maxMesas=Math.max(...recs.map(r=>(r.mesas||[]).length),1);
+      const mesaHdrs=Array.from({length:maxMesas},(_,i)=>[`M${i+1} Desc t/h`,`M${i+1} % Boa`]).flat();
+      const allHdrs=['Data/Hora','Unidade','Operador','Cultivar','Entrada t/h',...mesaHdrs,'Desc. Total t/h','% Desc.','Saída Est. t/h'];
+      const rowsHtml=recs.map(r=>{
+        const ms=r.mesas||[];
+        const totalDesc=r.totalDescTH!=null?r.totalDescTH:ms.reduce((a,m)=>a+(parseFloat(m.descTH)||0),0);
+        const saida=r.entTH!=null?fmtTH(Math.max(0,r.entTH-totalDesc)):'—';
+        const pctDesc=r.entTH&&totalDesc?fmtPct(totalDesc/r.entTH*100):'—';
+        const mesaCols=Array.from({length:maxMesas},(_,i)=>{
+          const m=ms[i];
+          return m
+            ?`<td class="td-val" style="color:var(--purple-400)">${fmtTH(m.descTH)}</td><td class="td-val">${fmtPct(m.boaPct)}</td>`
+            :`<td>—</td><td>—</td>`;
         }).join('');
-      }
+        return `<tr>
+          <td>${dtFormat(r.dt)}</td><td>${r.unidade||'—'}</td><td>${r.operator||'—'}</td>
+          <td style="font-size:10px">${r.cultivar||'—'}</td>
+          <td class="td-val">${fmtTH(r.entTH)}</td>
+          ${mesaCols}
+          <td class="td-val">${fmtTH(totalDesc||null)}</td>
+          <td class="td-val">${pctDesc}</td>
+          <td class="td-saida">${saida}</td>
+        </tr>`;
+      }).join('');
+      headers=allHdrs.map(h=>`<th>${h}</th>`).join(''); rows=rowsHtml;
     }
     html+=`<div style="margin-bottom:20px">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
@@ -1737,7 +1936,7 @@ function poslCalcAll(){
 function poslSalvar(){
   const op=document.getElementById('posl-operator').value;
   const entTH=document.getElementById('posl-entrada-th').value;
-  if(!op){toast('Selecione o operador.',true);return;} if(!entTH){toast('Informe a entrada em t/h.',true);return;}
+  if(!op){toast('Selecione o operador.',true);return;} if(!entTH||parseFloat(entTH)<=0){toast('Entrada não disponível. Registre primeiro um teste na MAP.',true);return;}
   const cfg=getUnitCfg(); const count=cfg.posl.count;
   const eVal=parseFloat(entTH)||0; const mesas=[]; let totalDescTH=0;
   for(let n=1;n<=count;n++){
@@ -1806,7 +2005,7 @@ function espCalcAll(){
 function espSalvar(){
   const op=document.getElementById('esp-operator').value;
   const entTH=document.getElementById('esp-entrada-th').value;
-  if(!op){toast('Selecione o operador.',true);return;} if(!entTH){toast('Informe a entrada em t/h.',true);return;}
+  if(!op){toast('Selecione o operador.',true);return;} if(!entTH||parseFloat(entTH)<=0){toast('Entrada não disponível. Registre primeiro um teste na Pós-limpeza.',true);return;}
   const eVal=parseFloat(entTH)||0;
   const descKg=parseFloat(document.getElementById('esp-desc-kg').value)||0;
   const graobomSem=parseFloat(document.getElementById('esp-graobom-200').value);
@@ -1920,7 +2119,7 @@ function padCalcAll(){
 function padSalvar(){
   const op=document.getElementById('pad-operator').value;
   const entTH=document.getElementById('pad-entrada-th').value;
-  if(!op){toast('Selecione o operador.',true);return;} if(!entTH){toast('Informe a entrada em t/h.',true);return;}
+  if(!op){toast('Selecione o operador.',true);return;} if(!entTH||parseFloat(entTH)<=0){toast('Entrada não disponível. Registre primeiro um teste nos Espirais.',true);return;}
   const cfg=getUnitCfg(); const count=cfg.pad.count;
   const eVal=parseFloat(entTH)||0; let totalSupTH=0, totalInfTH=0;
   const machines=[];
@@ -2062,7 +2261,7 @@ function finCalcAll(){
 function finSalvar(){
   const op=document.getElementById('fin-operator').value;
   const entTH=document.getElementById('fin-entrada-th').value;
-  if(!op){toast('Selecione o operador.',true);return;} if(!entTH){toast('Informe a entrada em t/h.',true);return;}
+  if(!op){toast('Selecione o operador.',true);return;} if(!entTH||parseFloat(entTH)<=0){toast('Entrada não disponível. Registre primeiro um teste nos Padronizadores.',true);return;}
   const eVal=parseFloat(entTH)||0; const mesas=[]; let totalDescTH=0;
   finMesaIds.forEach(mid=>{
     const kg=parseFloat(document.getElementById(`fin-${mid}-kg`).value)||0;
@@ -2654,63 +2853,156 @@ function indRenderFluxo(allRecs){
   document.getElementById('ind-summary-grid').innerHTML = seriesCards + yieldCard;
   indDrawLineChart('ind-chart', datasets, allTs, 320, 't/h');
 
-  // Tabela % grão bom no descarte por equipamento
+  // ── Tabela: descarte de grão bom por equipamento ──────────────────────────
+  // Colunas: Equipamento | Desc. t/h (último) | % grão bom no desc. | Grão bom t/h | Média ponderada t/h | Regs
+  // Totalizador: soma dos últimos valores + média ponderada acumulada
   const tabela = document.getElementById('ind-perda-tabela');
   if(!tabela) return;
+
+  // Para cada equipamento calcula os campos necessários
   const rows = LOSS_SOURCES.map(src=>{
     const recs = allRecs.filter(r=>r._type===src.type).sort((a,b)=>(recTime(a)||0)-(recTime(b)||0));
+
     const pts = recs.map(r=>{
-      const v=calcLossThAndPct(r, allRecs);
-      return (v && v.lossTH!=null && Number.isFinite(v.lossTH)) ? { pct:v.lossPct, th:v.lossTH, dt:recTime(r) } : null;
+      // descTH: volume de descarte em t/h
+      let descTH = null;
+      if(src.type==='map'){
+        const machines=asArray(r.machines);
+        if(machines.length){
+          descTH = machines.reduce((s,m)=>{
+            return s + (recFieldTH(m,['supTH','supKg'])||0) + (recFieldTH(m,['infTH','infKg'])||0);
+          }, 0);
+        } else {
+          descTH = (recFieldTH(r,['supTH','supKg'])||0) + (recFieldTH(r,['infTH','infKg'])||0);
+        }
+      } else if(src.type==='pad'){
+        const machines=asArray(r.machines);
+        if(machines.length){
+          descTH = machines.reduce((s,m)=>{
+            return s + (recFieldTH(m,['supTH','supKg'])||0) + (recFieldTH(m,['infTH','infKg'])||0);
+          }, 0);
+        } else {
+          descTH = (recFieldTH(r,['supTH','supKg'])||0) + (recFieldTH(r,['infTH','infKg'])||0);
+        }
+      } else if(src.type==='esp'){
+        descTH = recFieldTH(r,['descTH','descKg'])||0;
+      } else {
+        // posl / fin: soma das mesas
+        descTH = asArray(r.mesas).reduce((s,m)=>s+(recFieldTH(m,['descTH','descKg'])||0), 0);
+      }
+
+      // % grão bom no descarte (boaPct por máquina/mesa)
+      let boaPct = null;
+      if(src.type==='map'||src.type==='pad'){
+        const machines=asArray(r.machines);
+        if(machines.length){
+          // média ponderada: (supTH*supPct + infTH*infPct) / (supTH+infTH)
+          let num=0, den=0;
+          machines.forEach(m=>{
+            const st=recFieldTH(m,['supTH','supKg'])||0, it=recFieldTH(m,['infTH','infKg'])||0;
+            const sp=recFieldNum(m,['supPct'])||0,        ip=recFieldNum(m,['infPct'])||0;
+            num += st*sp + it*ip; den += st + it;
+          });
+          boaPct = den>0 ? num/den : null;
+        } else {
+          const st=recFieldTH(r,['supTH','supKg'])||0, it=recFieldTH(r,['infTH','infKg'])||0;
+          const sp=recFieldNum(r,['supPct'])||0,        ip=recFieldNum(r,['infPct'])||0;
+          const den2 = st+it;
+          boaPct = den2>0 ? (st*sp + it*ip)/den2 : null;
+        }
+      } else if(src.type==='esp'){
+        boaPct = recFieldNum(r,['graobomPct']);
+      } else {
+        // posl / fin: média ponderada das mesas
+        let num=0, den=0;
+        asArray(r.mesas).forEach(m=>{
+          const dt=recFieldTH(m,['descTH','descKg'])||0;
+          const bp=recFieldNum(m,['boaPct','graobomPct'])||0;
+          num += dt*bp; den += dt;
+        });
+        boaPct = den>0 ? num/den : null;
+      }
+
+      if(descTH==null || !Number.isFinite(descTH)) return null;
+      const boaTH = (boaPct!=null && Number.isFinite(boaPct)) ? descTH*(boaPct/100) : null;
+      return { descTH, boaPct, boaTH, dt: recTime(r) };
     }).filter(Boolean);
-    if(!pts.length) return { src, last:null, lastTH:null, avg:null, min:null, max:null, n:0, total:recs.length };
+
+    if(!pts.length) return { src, last:null, n:0, total:recs.length };
     const last = pts[pts.length-1];
-    const pctPts = pts.filter(v=>v.pct!=null && Number.isFinite(v.pct));
-    const avg  = pctPts.length ? pctPts.reduce((a,v)=>a+v.pct,0)/pctPts.length : null;
-    const min  = pctPts.length ? Math.min(...pctPts.map(v=>v.pct)) : null;
-    const max  = pctPts.length ? Math.max(...pctPts.map(v=>v.pct)) : null;
-    return { src, last:last.pct, lastTH:last.th, avg, min, max, n:pts.length, total:recs.length };
+
+    // Média ponderada acumulada: Σ(descTH_i * boaPct_i) / Σ(descTH_i)
+    const validPts = pts.filter(p=>p.boaPct!=null && Number.isFinite(p.boaPct));
+    let avgNum=0, avgDen=0;
+    validPts.forEach(p=>{ avgNum+=p.descTH*(p.boaPct/100); avgDen+=p.descTH; });
+    const avgBoaTHperDesc = avgDen>0 ? avgNum/avgDen : null; // % média como decimal
+    const avgBoaTH = avgDen>0 ? avgNum : null; // t/h média de boa perdida (por registro)
+
+    return { src, last, n: pts.length, total: recs.length, avgBoaPct: avgBoaTHperDesc!=null?avgBoaTHperDesc*100:null, avgBoaTH: avgBoaTH!=null?avgBoaTH/pts.length:null };
   });
 
-  // cabeçalho
+  // ── Totalizador: soma dos últimos valores de cada etapa ─────────────────
+  const totalLastDescTH = rows.reduce((s,r)=>s+(r.last?.descTH||0), 0);
+  const totalLastBoaTH  = rows.reduce((s,r)=>s+(r.last?.boaTH||0), 0);
+  // Média ponderada geral: Σ(descTH * boaPct) / Σ(descTH) sobre todos os últimos registros
+  let totalNum=0, totalDen=0;
+  rows.forEach(r=>{ if(r.last?.boaPct!=null){ totalNum+=r.last.descTH*(r.last.boaPct/100); totalDen+=r.last.descTH; } });
+  const totalBoaPct = totalDen>0 ? totalNum/totalDen*100 : null;
+
+  // ── HTML ─────────────────────────────────────────────────────────────────
+  const thStyle = 'padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint);white-space:nowrap';
+  const tdC = 'padding:10px 6px;text-align:center;font-family:var(--mono);font-size:12px';
+  const tdL = 'padding:10px 6px;font-weight:500';
+
+  function boaBadge(pct){
+    if(pct==null||!Number.isFinite(pct)) return '—';
+    const col = pct>2?'var(--red-400)':pct>1?'var(--amber-400)':'var(--green-600)';
+    const bg  = pct>2?'var(--red-50)':pct>1?'var(--amber-50)':'var(--green-50)';
+    return `<span style="background:${bg};color:${col};font-family:var(--mono);font-size:12px;font-weight:500;padding:3px 8px;border-radius:99px">${pct.toFixed(2)}%</span>`;
+  }
+  function thVal(v, decimals=3){
+    return (v==null||!Number.isFinite(v)) ? '—' : `<span style="color:var(--red-400);font-weight:500">${v.toFixed(decimals)} t/h</span>`;
+  }
+
   let t = `<div style="overflow-x:auto">
   <table style="width:100%;border-collapse:collapse;font-size:12px">
     <thead>
       <tr style="border-bottom:1.5px solid var(--border-md)">
-        <th style="text-align:left;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Equipamento</th>
-        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Último %</th>
-        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--red-400)">Últ. t/h boa</th>
-        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Média %</th>
-        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Mín</th>
-        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Máx</th>
-        <th style="text-align:center;padding:8px 6px;font-size:11px;font-weight:500;color:var(--text-hint)">Regs</th>
+        <th style="${thStyle};text-align:left">Equipamento</th>
+        <th style="${thStyle};text-align:center">Desc. t/h</th>
+        <th style="${thStyle};text-align:center">% grão bom<br><span style="font-weight:400;font-size:10px">no descarte</span></th>
+        <th style="${thStyle};text-align:center;color:var(--red-400)">Grão bom<br><span style="font-weight:400;font-size:10px">perdido t/h</span></th>
+        <th style="${thStyle};text-align:center;color:var(--text-hint)">Regs</th>
       </tr>
     </thead>
     <tbody>`;
 
-  rows.forEach(({src,last,lastTH,avg,min,max,n,total})=>{
-    const has=last!=null && Number.isFinite(last);
-    const col = !has?'var(--text-hint)':last>2?'var(--red-400)':last>1?'var(--amber-400)':'var(--green-600)';
-    const bg  = !has?'var(--gray-50)':last>2?'var(--red-50)':last>1?'var(--amber-50)':'var(--green-50)';
+  rows.forEach(({src, last, n, total, avgBoaPct, avgBoaTH})=>{
     const dot = `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${src.color};margin-right:6px;vertical-align:middle"></span>`;
-    t+=`<tr style="border-bottom:0.5px solid var(--border)">
-      <td style="padding:10px 6px;font-weight:500">${dot}${src.label}</td>
-      <td style="padding:10px 6px;text-align:center">
-        <span style="background:${bg};color:${col};font-family:var(--mono);font-size:12px;font-weight:500;padding:3px 8px;border-radius:99px">${has?last.toFixed(2)+'%':'—'}</span>
-      </td>
-      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);font-size:12px;font-weight:500;color:var(--red-400)">${lastTH!=null?lastTH.toFixed(3)+' t/h':'—'}</td>
-      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);color:var(--text-muted)">${avg!=null?avg.toFixed(2)+'%':'—'}</td>
-      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);color:var(--green-600)">${min!=null?min.toFixed(2)+'%':'—'}</td>
-      <td style="padding:10px 6px;text-align:center;font-family:var(--mono);color:var(--red-400)">${max!=null?max.toFixed(2)+'%':'—'}</td>
-      <td style="padding:10px 6px;text-align:center;color:var(--text-hint)">${n}${total&&!n?`/${total}`:''}</td>
+    t += `<tr style="border-bottom:0.5px solid var(--border)">
+      <td style="${tdL}">${dot}${src.label}</td>
+      <td style="${tdC}">${last?.descTH!=null?`${last.descTH.toFixed(2)} t/h`:'—'}</td>
+      <td style="${tdC}">${boaBadge(last?.boaPct??null)}</td>
+      <td style="${tdC}">${thVal(last?.boaTH??null)}</td>
+      <td style="${tdC};color:var(--text-hint)">${n}${total&&!n?'/'+total:''}</td>
     </tr>`;
   });
 
-  t+=`</tbody></table></div>
+  // ── Linha de totalização ───────────────────────────────────────────────
+  t += `<tr style="border-top:1.5px solid var(--border-md);background:var(--gray-50)">
+    <td style="${tdL};color:var(--text-hint);font-size:11px">TOTAL (último registro)</td>
+    <td style="${tdC};font-weight:500">${totalLastDescTH>0?totalLastDescTH.toFixed(2)+' t/h':'—'}</td>
+    <td style="${tdC}">${boaBadge(totalBoaPct)}</td>
+    <td style="${tdC}">${thVal(totalLastBoaTH>0?totalLastBoaTH:null)}</td>
+    <td style="${tdC}"></td>
+  </tr>`;
+
+  t += `</tbody></table></div>
   <div style="margin-top:10px;display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--text-hint)">
-    <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green-600);margin-right:4px;vertical-align:middle"></span>≤ 1% — ideal</span>
+    <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green-600);margin-right:4px;vertical-align:middle"></span>≤ 1% grão bom — ideal</span>
     <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber-400);margin-right:4px;vertical-align:middle"></span>1–2% — atenção</span>
     <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red-400);margin-right:4px;vertical-align:middle"></span>&gt; 2% — crítico</span>
+    <span style="margin-left:auto">Méd. pond. = Σ(desc×%boa) / Σ(desc)</span>
   </div>`;
   tabela.innerHTML=t;
 }
@@ -2730,12 +3022,14 @@ function indDrawLineChart(canvasId, datasets, allTs, H, yLabel){
     const PAD={top:16,right:16,bottom:52,left:52};
     const cw=W-PAD.left-PAD.right; const ch=H-PAD.top-PAD.bottom;
     const allVals=datasets.flatMap(d=>d.pts.map(p=>p.v)).filter(v=>v!=null);
-    const yMax=allVals.length?Math.max(...allVals)*1.15:10;
-    const yRange=yMax||1;
+    // yMin: menor valor menos 2 (mínimo 0), yMax: maior valor mais margem de 5%
+    const yMin=allVals.length?Math.max(0,Math.min(...allVals)-2):0;
+    const yMax=allVals.length?Math.max(...allVals)+(Math.max(...allVals)-yMin)*0.08:10;
+    const yRange=(yMax-yMin)||1;
     ctx.strokeStyle='rgba(0,0,0,0.07)'; ctx.lineWidth=1;
     ctx.font='10px DM Mono,monospace'; ctx.fillStyle='#9A9893'; ctx.textAlign='right';
     for(let i=0;i<=5;i++){
-      const y=PAD.top+ch-(i/5)*ch; const val=(i/5)*yRange;
+      const y=PAD.top+ch-(i/5)*ch; const val=yMin+(i/5)*yRange;
       ctx.beginPath(); ctx.moveTo(PAD.left,y); ctx.lineTo(PAD.left+cw,y); ctx.stroke();
       ctx.fillText(val.toFixed(2),PAD.left-5,y+4);
     }
@@ -2762,14 +3056,14 @@ function indDrawLineChart(canvasId, datasets, allTs, H, yLabel){
         // find closest ts in allTs (tolerance for float rounding)
         let xi = tsIndex.has(p.dt) ? tsIndex.get(p.dt) : allTs.findIndex(t=>Math.abs(t-p.dt)<1000);
         if(xi<0) return;
-        const x=PAD.left+(xi/(n-1||1))*cw; const y=PAD.top+ch-(p.v/yRange)*ch;
+        const x=PAD.left+(xi/(n-1||1))*cw; const y=PAD.top+ch-((p.v-yMin)/yRange)*ch;
         if(first){ctx.moveTo(x,y);first=false;}else ctx.lineTo(x,y);
       });
       ctx.stroke();
       sorted.forEach(p=>{
         let xi = tsIndex.has(p.dt) ? tsIndex.get(p.dt) : allTs.findIndex(t=>Math.abs(t-p.dt)<1000);
         if(xi<0) return;
-        const x=PAD.left+(xi/(n-1||1))*cw; const y=PAD.top+ch-(p.v/yRange)*ch;
+        const x=PAD.left+(xi/(n-1||1))*cw; const y=PAD.top+ch-((p.v-yMin)/yRange)*ch;
         ctx.beginPath(); ctx.arc(x,y,3,0,2*Math.PI); ctx.fillStyle=ds.color; ctx.fill();
       });
     });
